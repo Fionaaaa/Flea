@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/white" />
+
+    <TextView
+        android:id="@+id/textView_add_sale"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blue_m"
+        android:gravity="center"
+        android:padding="20dp"
+        android:text="＋出售"
+        android:onClick="clickAddSelect"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/white" />
+
+    <TextView
+        android:id="@+id/textView_add_emption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blue_m"
+        android:gravity="center"
+        android:onClick="clickAddSelect"
+        android:padding="20dp"
+        android:text="＋求购"
+        android:textColor="@color/white" />
+
+</LinearLayout>

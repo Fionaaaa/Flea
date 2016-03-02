@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="8dp"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageView_home"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="#6699cc" />
+
+    <TextView
+        android:id="@+id/textView_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp"
+        android:text="19.8￥"
+        android:layout_marginBottom="9dp"
+        android:layout_alignBottom="@+id/imageView_home"
+        android:layout_toRightOf="@+id/imageView_home"
+        android:layout_toEndOf="@+id/imageView_home" />
+
+    <TextView
+        android:id="@+id/textView_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="电风扇"
+        android:layout_alignTop="@+id/imageView_home"
+        android:layout_alignRight="@+id/textView_price"
+        android:layout_alignEnd="@+id/textView_price"
+        android:layout_marginTop="7dp" />
+</RelativeLayout>

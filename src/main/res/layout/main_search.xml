@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/blue_m"
+    android:paddingBottom="10dp"
+    android:paddingLeft="10dp"
+    android:paddingTop="25dp">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginRight="13dp"
+        android:paddingLeft="10dp"
+        android:layout_toLeftOf="@+id/textView_search"
+        android:background="@drawable/home_search">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:background="@null"
+            android:textColor="@color/black_xh"
+            android:textColorHint="@color/black_m"
+            android:hint="搜索"
+            android:singleLine="true"
+            android:id="@+id/editText_search"
+            android:imeOptions="actionSearch"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textView_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/relativeLayout2"
+        android:layout_marginEnd="13dp"
+        android:layout_marginRight="13dp"
+        android:layout_marginTop="4dp"
+        android:textSize="18sp"
+        android:text="取消"
+        android:onClick="clickCancel"
+        android:textColor="@color/white" />
+
+</RelativeLayout>

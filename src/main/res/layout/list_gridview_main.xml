@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="2dp"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageView_grid_view"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/textView_grid_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView_grid_view"
+        android:layout_centerHorizontal="true"
+        android:text="丁祖湘"
+        android:textColor="@color/black_h"
+        android:textSize="10sp" />
+</RelativeLayout>

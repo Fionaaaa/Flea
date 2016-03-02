@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.fiona.tiaozao.ProductActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimary"
+        android:popupTheme="@style/Theme.AppCompat.Light"
+        android:titleTextColor="@color/white" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignBottom="@+id/toolbar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:onClick="clickBackPurchaseActivity"
+        android:src="@drawable/activity_return_2" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageView6"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="2dp"
+        android:text="求购详情"
+        android:textColor="@color/white"
+        android:textSize="19sp" />
+
+    <ImageView
+        android:id="@+id/imageView_discover_right"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:background="@drawable/shape_head_portrait"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/textView_discover_classify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageView_discover_right"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/imageView_discover_right"
+        android:layout_toRightOf="@+id/imageView_discover_right"
+        android:text="[求购：书籍]"
+        android:textColor="@color/blue_m" />
+
+    <TextView
+        android:id="@+id/textView_discover_theme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView_discover_classify"
+        android:layout_marginLeft="5dp"
+        android:layout_toEndOf="@+id/textView_discover_classify"
+        android:layout_toRightOf="@+id/textView_discover_classify"
+        android:text="西方求败"
+        android:textColor="@color/black_h" />
+
+    <TextView
+        android:id="@+id/textView_discover_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="我想淘一本《失控》"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:textSize="16sp"
+        android:layout_below="@+id/view2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/textView_discover_right_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/textView_discover_theme"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:text="下午3:54"
+        android:textColor="@color/black_xh"
+        android:textSize="10sp" />
+
+    <com.fiona.tiaozao.myself.Line
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/imageView_discover_right"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
+</RelativeLayout>

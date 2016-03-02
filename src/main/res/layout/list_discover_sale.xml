@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/relativeLayout_discover_left"
+    android:paddingTop="20dp">
+
+    <ImageView
+        android:id="@+id/imageView_discover_left"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="10dp"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/shape_head_portrait" />
+
+    <TextView
+        android:id="@+id/textView_saler"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageView_discover_left"
+        android:layout_marginLeft="7dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="3dp"
+        android:layout_toEndOf="@+id/imageView_discover_left"
+        android:layout_toRightOf="@+id/imageView_discover_left"
+        android:text="老王&amp;老张" />
+
+    <TextView
+        android:id="@+id/textView_description_saler"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView_saler"
+        android:layout_alignStart="@+id/textView_saler"
+        android:layout_below="@+id/textView_saler"
+        android:layout_marginTop="7dp"
+        android:text="描述：全场最低价，假一赔十。风扇，耳机……"
+        android:textColor="@color/black_h"
+        android:textSize="12sp" />
+
+    <com.fiona.tiaozao.myself.Line
+        android:id="@+id/view_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="5dp"
+        android:layout_below="@+id/imageView_discover_left"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:id="@+id/textView_discover_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/textView_saler"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:text="上午8:54"
+        android:textColor="@color/black_h"
+        android:textSize="10sp" />
+</RelativeLayout>

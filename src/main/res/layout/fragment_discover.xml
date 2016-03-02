@@ -1,0 +1,76 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".discover.DiscoverFragment">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:id="@+id/toolbar"
+        android:background="@color/colorPrimary"
+        android:titleTextColor="@color/white"
+        android:popupTheme="@style/Theme.AppCompat.Light"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="64dp"
+        android:layout_height="30dp"
+        android:text="摊位"
+        android:id="@+id/button_left_discover"
+        android:onClick="clickButtonDiscover"
+        android:background="@drawable/discover_tab_left_white"
+        android:layout_marginBottom="8dp"
+        android:textColor="@color/blue_m"
+        android:layout_alignBottom="@+id/toolbar"
+        android:layout_toLeftOf="@+id/button_right_discover"
+        android:layout_toStartOf="@+id/button_right_discover" />
+
+    <Button
+        android:layout_width="64dp"
+        android:layout_height="30dp"
+        android:text="求购"
+        android:id="@+id/button_right_discover"
+        android:background="@drawable/discover_tab_right_blue"
+        android:layout_marginRight="118dp"
+        android:onClick="clickButtonDiscover"
+        android:layout_marginEnd="118dp"
+        android:textColor="@color/white"
+        android:layout_alignTop="@+id/button_left_discover"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/viewPager_discover"
+        android:layout_below="@+id/toolbar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:id="@+id/imageView4"
+        android:layout_marginRight="15dp"
+        android:onClick="clickAdd"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/ic_add_white"
+        android:layout_above="@+id/viewPager_discover"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <RelativeLayout
+        android:id="@+id/add"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/toolbar">
+
+        <include layout="@layout/main_add" />
+    </RelativeLayout>
+</RelativeLayout>

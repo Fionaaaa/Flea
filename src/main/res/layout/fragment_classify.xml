@@ -1,0 +1,60 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".classify.ClassifyFragment">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimary"
+        android:popupTheme="@style/Theme.AppCompat.Light"
+        android:titleTextColor="@color/white" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_classify"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/toolbar" />
+
+    <ImageView
+        android:id="@+id/imageView20"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignBottom="@+id/toolbar"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="15dp"
+        android:onClick="clickAdd"
+        android:src="@drawable/ic_add_white" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/toolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:text="分 类"
+        android:textColor="@color/white"
+        android:textSize="19sp" />
+
+    <RelativeLayout
+        android:id="@+id/add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/toolbar"
+        android:visibility="invisible">
+
+        <include layout="@layout/main_add" />
+    </RelativeLayout>
+</RelativeLayout>

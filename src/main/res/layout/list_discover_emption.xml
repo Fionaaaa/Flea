@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_marginTop="10dp"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageView_discover_right"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/shape_head_portrait" />
+
+    <TextView
+        android:id="@+id/textView_discover_classify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageView_discover_right"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/imageView_discover_right"
+        android:layout_toRightOf="@+id/imageView_discover_right"
+        android:text="[求购：书籍]"
+        android:textColor="@color/blue_m" />
+
+    <TextView
+        android:id="@+id/textView_discover_theme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView_discover_classify"
+        android:layout_marginLeft="5dp"
+        android:layout_toEndOf="@+id/textView_discover_classify"
+        android:layout_toRightOf="@+id/textView_discover_classify"
+        android:text="西方求败"
+        android:textColor="@color/black_h" />
+
+    <TextView
+        android:id="@+id/textView_discover_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imageView_discover_right"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:text="我想淘一本《失控》"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textView_discover_right_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/textView_discover_theme"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:text="下午3:54"
+        android:textColor="@color/black_xh"
+        android:textSize="10sp" />
+
+    <com.fiona.tiaozao.myself.Line
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignEnd="@+id/textView_discover_right_time"
+        android:layout_alignRight="@+id/textView_discover_right_time"
+        android:layout_below="@+id/textView_discover_author"
+        android:layout_marginTop="10dp" />
+
+</RelativeLayout>

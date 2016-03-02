@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.fiona.tiaozao">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SearchActivity"
+            android:windowSoftInputMode="stateVisible" />
+        <activity android:name=".SaleActivity" />
+        <activity android:name=".PurchaseActivity" />
+        <activity android:name=".ProductActivity" />
+        <activity android:name=".home.AfficheActivity" />
+        <activity android:name=".classify.ClassifyActivity" />
+        <activity android:name=".discover.StallActivity" />
+        <activity android:name=".discover.PurchaseActivity" />
+        <activity android:name=".myself.MyPurchaseActivity" />
+        <activity android:name=".myself.MyCollectionActivity" />
+        <activity android:name=".myself.AboutActivity" />
+        <activity android:name=".myself.SettingActivity" />
+        <activity android:name=".myself.MyStallActivity" />
+        <activity android:name=".myself.FeedbackActivity" />
+        <activity android:name=".account.LoginActivity"></activity>
+    </application>
+
+</manifest>

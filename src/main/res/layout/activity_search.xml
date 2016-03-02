@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.fiona.tiaozao.SearchActivity">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+
+        <include
+            android:id="@+id/include"
+            layout="@layout/main_search" />
+
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/include"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="大家都在搜：" />
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textView15"
+            android:layout_alignStart="@+id/textView15"
+            android:layout_below="@+id/textView15"
+            android:layout_marginLeft="31dp"
+            android:layout_marginStart="31dp"
+            android:layout_marginTop="5dp"
+            android:onClick="clickTaoZiHai"
+            android:text="涛自嗨"
+            android:textColor="@color/blue_m" />
+
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/textView16"
+            android:layout_toEndOf="@+id/textView15"
+            android:layout_toRightOf="@+id/textView15"
+            android:onClick="clickTaoZiHai"
+            android:text="刘谦"
+            android:textColor="@color/blue_m" />
+
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/textView17"
+            android:layout_marginLeft="14dp"
+            android:layout_marginStart="14dp"
+            android:layout_toEndOf="@+id/textView17"
+            android:layout_toRightOf="@+id/textView17"
+            android:onClick="clickTaoZiHai"
+            android:text="泰迪"
+            android:textColor="@color/blue_m" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:id="@+id/textView14"
+            android:layout_below="@+id/textView16"
+            android:background="@color/black_h"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="19dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="搜索历史："
+            android:id="@+id/textView19"
+            android:layout_below="@+id/textView14"
+            android:layout_alignLeft="@+id/textView15"
+            android:layout_alignStart="@+id/textView15"
+            android:layout_marginTop="14dp" />
+
+    </RelativeLayout>
+</RelativeLayout>

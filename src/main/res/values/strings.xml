@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">跳蚤市场</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_search">SearchActivity</string>
+
+    <string-array name="classify">
+        <item>数码</item>
+        <item>电器</item>
+        <item>日常用品</item>
+        <item>书籍</item>
+        <item>服饰</item>
+        <item>体育用品</item>
+        <item>其他</item>
+    </string-array>
+</resources>

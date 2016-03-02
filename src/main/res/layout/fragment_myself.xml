@@ -1,0 +1,452 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".myself.MyselfFragment">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimary"
+        android:popupTheme="@style/Theme.AppCompat.Light"
+        android:titleTextColor="@color/white" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout_myself_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:onClick="onClick">
+
+
+        <com.fiona.tiaozao.myself.Line
+            android:id="@+id/line_1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true" />
+
+        <ImageView
+            android:id="@+id/imageView_myself"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/line_1"
+            android:layout_margin="5dp"
+            android:background="@drawable/shape_head_portrait" />
+
+        <TextView
+            android:id="@+id/textView_myself_account_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/line_1"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="13dp"
+            android:layout_toEndOf="@+id/imageView_myself"
+            android:layout_toRightOf="@+id/imageView_myself"
+            android:text="王露涛" />
+
+        <TextView
+            android:id="@+id/textView_myself_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/imageView_myself"
+            android:layout_alignLeft="@+id/textView_myself_account_name"
+            android:layout_alignStart="@+id/textView_myself_account_name"
+            android:layout_marginBottom="7dp"
+            android:text="zhongfuqiang@outlook.com" />
+
+        <com.fiona.tiaozao.myself.Line
+            android:id="@+id/view3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/imageView_myself" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout_myself_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/relativeLayout_myself_1"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:onClick="onClick">
+
+        <com.fiona.tiaozao.myself.Line
+            android:id="@+id/view4"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="5dp" />
+
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/view4"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/mine_sale" />
+
+        <ImageView
+            android:id="@+id/imageView10"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/imageView9"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="3dp"
+            android:src="@drawable/myself_next" />
+
+        <TextView
+            android:id="@+id/textView_myself_sale"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_below="@+id/view4"
+            android:layout_marginLeft="10dp"
+            android:layout_toEndOf="@+id/imageView9"
+            android:layout_toLeftOf="@+id/imageView10"
+            android:layout_toRightOf="@+id/imageView9"
+            android:gravity="center"
+            android:text="我的摊位"
+            android:textSize="18sp" />
+
+        <com.fiona.tiaozao.myself.Line
+            android:id="@+id/view5"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/imageView9"
+            android:layout_marginTop="5dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout_myself_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/relativeLayout_myself_2"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:onClick="onClick">
+
+        <com.fiona.tiaozao.myself.Line
+            android:id="@+id/view6"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="5dp" />
+
+        <ImageView
+            android:id="@+id/imageView11"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/view6"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:src="@drawable/mine_emption" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_alignTop="@+id/imageView11"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/imageView11"
+            android:layout_toRightOf="@+id/imageView11"
+            android:gravity="center"
+            android:text="我的求购"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/imageView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/view6"
+            android:layout_marginEnd="19dp"
+            android:layout_marginRight="19dp" />
+
+        <ImageView
+            android:id="@+id/imageView13"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/imageView12"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="3dp"
+            android:src="@drawable/myself_next" />
+
+        <com.fiona.tiaozao.myself.Line
+            android:id="@+id/view7"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/imageView11"
+            android:layout_marginTop="5dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout_myself_4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/relativeLayout_myself_3"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:onClick="onClick">
+
+        <com.fiona.tiaozao.myself.Line
+            android:id="@+id/view8"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="5dp" />
+
+        <ImageView
+            android:id="@+id/imageView14"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/view8"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/mine_collection" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_below="@+id/view8"
+            android:layout_toEndOf="@+id/imageView14"
+            android:layout_toRightOf="@+id/imageView14"
+            android:gravity="center"
+            android:text="收藏"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/imageView15"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/textView3"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="3dp"
+            android:src="@drawable/myself_next" />
+
+        <com.fiona.tiaozao.myself.Line
+            android:id="@+id/view9"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/imageView14"
+            android:layout_marginTop="5dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout_myself_5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/relativeLayout_myself_4"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:onClick="onClick">
+
+        <com.fiona.tiaozao.myself.Line
+            android:id="@+id/view10"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="5dp" />
+
+        <ImageView
+            android:id="@+id/imageView16"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/view10"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/mine_about" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_below="@+id/view10"
+            android:layout_toEndOf="@+id/imageView16"
+            android:layout_toRightOf="@+id/imageView16"
+            android:gravity="center"
+            android:text="关于我们"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/imageView17"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/view10"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="3dp"
+            android:src="@drawable/myself_next" />
+
+        <com.fiona.tiaozao.myself.Line
+            android:id="@+id/view11"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/imageView16"
+            android:layout_marginTop="5dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout_myself_6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/relativeLayout_myself_5"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:onClick="onClick">
+
+        <com.fiona.tiaozao.myself.Line
+            android:id="@+id/view12"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="5dp" />
+
+        <ImageView
+            android:id="@+id/imageView18"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/view12"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/mine_setting" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_below="@+id/view12"
+            android:layout_toEndOf="@+id/imageView18"
+            android:layout_toRightOf="@+id/imageView18"
+            android:gravity="center"
+            android:text="设置"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/imageView19"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/textView5"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="3dp"
+            android:src="@drawable/myself_next" />
+
+        <com.fiona.tiaozao.myself.Line
+            android:id="@+id/view13"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/imageView18"
+            android:layout_marginTop="5dp" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignBottom="@+id/toolbar"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="15dp"
+        android:onClick="clickAdd"
+        android:src="@drawable/ic_add_white" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/toolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:text="我"
+        android:textColor="@color/white"
+        android:textSize="19sp" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/toolbar">
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/add"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/toolbar">
+
+        <include layout="@layout/main_add" />
+    </RelativeLayout>
+
+
+</RelativeLayout>
