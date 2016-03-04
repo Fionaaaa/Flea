@@ -3,6 +3,8 @@ package com.fiona.tiaozao;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -10,24 +12,25 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.GridView;
 
 import com.fiona.tiaozao.account.LoginActivity;
 import com.fiona.tiaozao.classify.ClassifyFragment;
 import com.fiona.tiaozao.discover.DiscoverFragment;
 import com.fiona.tiaozao.home.HomeFragment;
+import com.fiona.tiaozao.model.Goods;
 import com.fiona.tiaozao.myself.AboutActivity;
 import com.fiona.tiaozao.myself.MyCollectionActivity;
 import com.fiona.tiaozao.myself.MyPurchaseActivity;
 import com.fiona.tiaozao.myself.MyStallActivity;
 import com.fiona.tiaozao.myself.MyselfFragment;
 import com.fiona.tiaozao.myself.SettingActivity;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 

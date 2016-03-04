@@ -4,6 +4,8 @@ package com.fiona.tiaozao.discover;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,14 +16,27 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.fiona.tiaozao.App;
 import com.fiona.tiaozao.MainActivity;
 import com.fiona.tiaozao.R;
+import com.fiona.tiaozao.model.Goods;
+import com.fiona.tiaozao.net.NetQuery;
+import com.fiona.tiaozao.net.NetQueryImpl;
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class DiscoverRightFragment extends Fragment {
 
+    ArrayList<Goods> data = new ArrayList<>();
+
+    RecyclerView recyclerView;
+
+    Handler handler;
 
     public DiscoverRightFragment() {
     }
@@ -30,11 +45,15 @@ public class DiscoverRightFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        handler = new MyHandler();
+        NetQuery query = new NetQueryImpl(getActivity(), handler);
+        query.getEmptionGoods();
+
         View view = inflater.inflate(R.layout.fragment_discover_right, container, false);
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycle_discover_right);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycle_discover_right);
 
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, GridLayoutManager.VERTICAL));
-        recyclerView.setAdapter(new Rvadapter(getActivity()));
+        recyclerView.setAdapter(new Rvadapter(getActivity(), data));
         return view;
     }
 
@@ -43,9 +62,11 @@ public class DiscoverRightFragment extends Fragment {
      */
     private class Rvadapter extends RecyclerView.Adapter<Holder> implements View.OnClickListener {
         Context context;
+        ArrayList<Goods> data;
 
-        public Rvadapter(Context context) {
+        public Rvadapter(Context context, ArrayList<Goods> data) {
             this.context = context;
+            this.data = data;
         }
 
         @Override
@@ -63,11 +84,22 @@ public class DiscoverRightFragment extends Fragment {
             /**
              * 加载网络（缓存）数据
              */
+            Goods goods = data.get(position);
+            Picasso.with(getActivity()).load(App.URL + goods.getPic_location()).into(holder.imageView);
+
+            holder.textViewAuthor.setText(goods.getUserName());
+
+            holder.textViewClassify.setText(goods.getClassify());
+            holder.textViewDescription.setText(goods.getDescribe());
+            holder.textViewTime.setText(String.valueOf(goods.getTime().getMonth() + 1) + "." + String.valueOf(goods.getTime().getDay()));
+
+
+            holder.view.setId(position);
         }
 
         @Override
         public int getItemCount() {
-            return 50;
+            return data.size();
         }
 
         @Override
@@ -76,6 +108,7 @@ public class DiscoverRightFragment extends Fragment {
             ((MainActivity) getActivity()).clickChangeBackgroundColor(v);
 
             Intent intent = new Intent(getActivity(), PurchaseActivity.class);
+            intent.putExtra(App.GOODS, data.get(v.getId()));
             startActivity(intent);
         }
     }
@@ -98,10 +131,22 @@ public class DiscoverRightFragment extends Fragment {
 
             imageView = (ImageView) v.findViewById(R.id.imageView_discover_right);
             textViewClassify = (TextView) v.findViewById(R.id.textView_discover_classify);
-            textViewDescription = (TextView) v.findViewById(R.id.textView_discover_theme);
+            textViewDescription = (TextView) v.findViewById(R.id.textView_discover_describe);
             textViewAuthor = (TextView) v.findViewById(R.id.textView_discover_author);
+
+
             textViewTime = (TextView) v.findViewById(R.id.textView_discover_right_time);
         }
     }
 
+    /**
+     * 网络请求
+     */
+    class MyHandler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            data = (ArrayList<Goods>) msg.obj;
+            recyclerView.setAdapter(new Rvadapter(getActivity(), data));
+        }
+    }
 }

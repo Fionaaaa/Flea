@@ -40,8 +40,9 @@
         android:textSize="19sp" />
 
     <ImageView
-        android:id="@+id/imageView7"
+        android:id="@+id/imageView_product_picture"
         android:layout_width="match_parent"
+        android:scaleType="fitXY"
         android:layout_height="250dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -54,7 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/imageView6"
         android:layout_alignStart="@+id/imageView6"
-        android:layout_below="@+id/imageView7"
+        android:layout_below="@+id/imageView_product_picture"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="15dp"
@@ -63,21 +64,19 @@
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/textView21"
+        android:id="@+id/textView21_product_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/textView20"
         android:layout_toEndOf="@+id/textView20"
         android:layout_toRightOf="@+id/textView20"
-        android:text="电风扇"
         android:layout_marginTop="1dp"
         android:textColor="@color/black_h" />
 
     <TextView
-        android:id="@+id/textView23"
+        android:id="@+id/textView23_product_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="29.80￥"
         android:textSize="25sp"
         android:layout_marginTop="5dp"
         android:textColor="@color/green_m"
@@ -93,19 +92,18 @@
         android:textColor="@color/black_h"
         android:textSize="16sp"
         android:layout_marginTop="20dp"
-        android:layout_below="@+id/textView23"
+        android:layout_below="@+id/textView23_product_price"
         android:layout_alignLeft="@+id/textView20"
         android:layout_alignStart="@+id/textView20" />
 
     <TextView
-        android:id="@+id/textView25"
+        android:id="@+id/textView25_product_describe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/textView24"
         android:layout_toEndOf="@+id/textView24"
         android:layout_marginTop="1dp"
         android:layout_toRightOf="@+id/textView24"
-        android:text="风扇上个月才买，不说10成新也有9.9成新，买的时候是70块，现在超低价转手，要买的联系我."
         android:textColor="@color/black_h" />
 
     <TextView
@@ -114,21 +112,20 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView24"
         android:layout_alignStart="@+id/textView24"
-        android:layout_below="@+id/textView25"
+        android:layout_below="@+id/textView25_product_describe"
         android:layout_marginTop="25dp"
         android:text="摊主："
         android:textColor="@color/black_h"
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/textView27"
+        android:id="@+id/textView27_product_saler"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/textView26"
         android:layout_marginTop="1dp"
         android:layout_toEndOf="@+id/textView26"
         android:layout_toRightOf="@+id/textView26"
-        android:text="熊元娇"
         android:textColor="@color/black_h" />
 
     <TextView
@@ -144,14 +141,13 @@
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/textView29"
+        android:id="@+id/textView29_product_contact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/textView28"
         android:layout_marginTop="1dp"
         android:layout_toEndOf="@+id/textView28"
         android:layout_toRightOf="@+id/textView28"
-        android:text="手机15574923812    QQ164627928"
         android:autoLink="all"
         android:textColor="@color/black_h" />
 

@@ -4,21 +4,29 @@ package com.fiona.tiaozao.home;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.fiona.tiaozao.App;
 import com.fiona.tiaozao.MainActivity;
 import com.fiona.tiaozao.ProductActivity;
 import com.fiona.tiaozao.R;
+import com.fiona.tiaozao.model.Goods;
+import com.fiona.tiaozao.net.NetQuery;
+import com.fiona.tiaozao.net.NetQueryImpl;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -37,8 +45,22 @@ public class HomeFragment extends Fragment {
     int count = 0;          //viewpager当前页
     boolean isAuto = false; //判断是否自动滑动
 
+    RvAdapter adapter;
+
+    public Handler handler = new MyHandler();
+
+    ArrayList<Goods> goodsList = new ArrayList<>();
+
     public HomeFragment() {
-        // Required empty public constructor
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (goodsList.size() == 0) {
+            NetQuery query = new NetQueryImpl(context, handler);
+            query.getSaleGoods();
+        }
     }
 
 
@@ -75,7 +97,8 @@ public class HomeFragment extends Fragment {
          */
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_home);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, GridLayoutManager.VERTICAL));
-        recyclerView.setAdapter(new RvAdapter(getActivity()));
+        adapter = new RvAdapter(getActivity(), goodsList);
+        recyclerView.setAdapter(adapter);
 
         return view;
     }
@@ -86,9 +109,11 @@ public class HomeFragment extends Fragment {
     public class RvAdapter extends RecyclerView.Adapter<RvAdapter.Holder> implements View.OnClickListener {
 
         Context context;
+        ArrayList<Goods> data;
 
-        public RvAdapter(Context context) {
+        public RvAdapter(Context context, ArrayList<Goods> data) {
             this.context = context;
+            this.data = data;
         }
 
         @Override
@@ -103,25 +128,33 @@ public class HomeFragment extends Fragment {
         @Override
         public void onBindViewHolder(Holder holder, int position) {
 
-//            holder.imageView.setImageBitmap();
-//            holder.textViewName.setText();
-//            holder.textViewPrice.setText();
+            Picasso.with(context).load(App.URL + data.get(position).getPic_location()).into(holder.imageView);
 
+            holder.textViewName.setText(data.get(position).getTitle());
+            holder.textViewPrice.setText(String.valueOf(data.get(position).getPrice()));
+
+            holder.view.setId(position);
             holder.view.setOnClickListener(this);
 
         }
 
         @Override
         public int getItemCount() {
-            return 24;
+            return data.size();
         }
 
+        /**
+         * 点击某件物品进行浏览
+         *
+         * @param v
+         */
         @Override
         public void onClick(View v) {
 
-            ((MainActivity)getActivity()).clickChangeBackgroundColor(v);
+            ((MainActivity) getActivity()).clickChangeBackgroundColor(v);
 
             Intent intent = new Intent(getActivity(), ProductActivity.class);
+            intent.putExtra(App.GOODS, goodsList.get(v.getId()));
             startActivity(intent);
         }
 
@@ -337,4 +370,21 @@ public class HomeFragment extends Fragment {
             startActivity(intent);
         }
     }
+
+    /**
+     * 处理消息
+     */
+    class MyHandler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == App.GOODS_SALE) {
+                goodsList = (ArrayList<Goods>) msg.obj;
+
+                adapter = new RvAdapter(getActivity(), goodsList);
+                recyclerView.setAdapter(adapter);
+
+            }
+        }
+    }
 }
+

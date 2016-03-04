@@ -64,7 +64,7 @@
         android:textColor="@color/blue_m" />
 
     <TextView
-        android:id="@+id/textView_discover_theme"
+        android:id="@+id/textView_discover_author"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/textView_discover_classify"
@@ -75,7 +75,7 @@
         android:textColor="@color/black_h" />
 
     <TextView
-        android:id="@+id/textView_discover_author"
+        android:id="@+id/textView_discover_describe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="我想淘一本《失控》"
@@ -92,7 +92,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/textView_discover_theme"
+        android:layout_alignTop="@+id/textView_discover_author"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
         android:text="下午3:54"
