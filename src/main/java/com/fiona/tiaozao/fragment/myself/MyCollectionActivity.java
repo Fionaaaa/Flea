@@ -1,4 +1,4 @@
-package com.fiona.tiaozao.myself;
+package com.fiona.tiaozao.fragment.myself;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.fiona.tiaozao.ProductActivity;
 import com.fiona.tiaozao.R;
-import com.fiona.tiaozao.discover.StallActivity;
+import com.fiona.tiaozao.fragment.discover.StallActivity;
 
 public class MyCollectionActivity extends AppCompatActivity {
 
@@ -78,7 +78,7 @@ public class MyCollectionActivity extends AppCompatActivity {
                 convertView = inflater.inflate(R.layout.list_discover_sale, parent, false);
 
                 convertView.findViewById(R.id.view_line).setVisibility(View.INVISIBLE);
-                convertView.findViewById(R.id.textView_discover_time).setVisibility(View.INVISIBLE);
+                convertView.findViewById(R.id.textView_discover_left_time).setVisibility(View.INVISIBLE);
 
             } else if (position == 6) {
                 convertView = inflater.inflate(R.layout.item_my_collection, parent, false);

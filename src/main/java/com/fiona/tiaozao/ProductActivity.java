@@ -29,7 +29,7 @@ public class ProductActivity extends AppCompatActivity {
      * 初始化视图
      */
     private void initView() {
-        Goods goods = (Goods) getIntent().getExtras().get(App.GOODS);
+        Goods goods = (Goods) getIntent().getExtras().get(App.ACTION_GOODS);
 
         Picasso.with(this).load(App.URL + goods.getPic_location()).into((ImageView) findViewById(R.id.imageView_product_picture));
         ((TextView) findViewById(R.id.textView21_product_title)).setText(goods.getTitle());
@@ -45,8 +45,8 @@ public class ProductActivity extends AppCompatActivity {
             }
         };
 
-        NetQuery query=new NetQueryImpl(this,handler);
-        query.getUser(goods.getUserId());
+        NetQuery query=NetQueryImpl.getInstance(this);
+        query.getUser(goods.getUserId(),handler);
     }
 
     /**

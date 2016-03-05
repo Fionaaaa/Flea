@@ -18,7 +18,7 @@
         android:textColor="@color/blue_m"
         android:textSize="20sp" />
 
-    <com.fiona.tiaozao.myself.Line
+    <com.fiona.tiaozao.fragment.myself.Line
         android:id="@+id/view"
         android:layout_width="wrap_content"
         android:layout_height="1dp"
@@ -60,7 +60,7 @@
             android:layout_alignParentStart="true" />
     </RelativeLayout>
 
-    <com.fiona.tiaozao.myself.Line
+    <com.fiona.tiaozao.fragment.myself.Line
         android:id="@+id/view14"
         android:layout_width="wrap_content"
         android:layout_height="1dp"

@@ -25,7 +25,8 @@ public class App extends Application{
     public final static int GOODS_EMPTION=0x02;
     public final static int USER=0x51;
 
-    public final static String GOODS="goods";   //意图携带的数据
+    public final static String ACTION_GOODS="goods";   //意图携带的数据
+    public final static String ACTION_USER="user";
 
 
     /**

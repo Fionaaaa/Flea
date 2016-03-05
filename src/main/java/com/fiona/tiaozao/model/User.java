@@ -1,11 +1,12 @@
 package com.fiona.tiaozao.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * 用户实体类
  */
-public class User {
+public class User implements Serializable{
 
     private String id;            //id
     private String icon;    //名字
@@ -15,6 +16,8 @@ public class User {
     private int flag;        //1：qq		0:微博
 
     private ArrayList<Goods> listSale;            //用户出售的物品
+
+    private String describe;        //摊位描述  mark：服务器暂时没添加
 
 
     /**
@@ -120,6 +123,14 @@ public class User {
 
     public void setFlag(int flag) {
         this.flag = flag;
+    }
+
+    public String getDescribe() {
+        return describe;
+    }
+
+    public void setDescribe(String describe) {
+        this.describe = describe;
     }
 
     @Override

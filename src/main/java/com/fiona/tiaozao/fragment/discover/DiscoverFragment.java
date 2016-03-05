@@ -1,4 +1,4 @@
-package com.fiona.tiaozao.discover;
+package com.fiona.tiaozao.fragment.discover;
 
 
 import android.os.Bundle;

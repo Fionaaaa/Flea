@@ -28,4 +28,6 @@ dependencies {
     compile files('libs/volley.jar')
     compile files('libs/gson-2.5.jar')
     compile files('libs/picasso-2.5.2.jar')
+    compile 'com.facebook.fresco:fresco:0.9.0+'
+    compile 'com.google.android.gms:play-services-appindexing:8.1.0'
 }

@@ -1,4 +1,4 @@
-package com.fiona.tiaozao.home;
+package com.fiona.tiaozao.fragment.home;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

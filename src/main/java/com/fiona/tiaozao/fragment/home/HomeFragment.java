@@ -1,4 +1,4 @@
-package com.fiona.tiaozao.home;
+package com.fiona.tiaozao.fragment.home;
 
 
 import android.content.Context;
@@ -12,7 +12,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,8 +57,8 @@ public class HomeFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         if (goodsList.size() == 0) {
-            NetQuery query = new NetQueryImpl(context, handler);
-            query.getSaleGoods();
+            NetQuery query = NetQueryImpl.getInstance(context);
+            query.getSaleGoods(handler);
         }
     }
 
@@ -154,7 +153,7 @@ public class HomeFragment extends Fragment {
             ((MainActivity) getActivity()).clickChangeBackgroundColor(v);
 
             Intent intent = new Intent(getActivity(), ProductActivity.class);
-            intent.putExtra(App.GOODS, goodsList.get(v.getId()));
+            intent.putExtra(App.ACTION_GOODS, goodsList.get(v.getId()));
             startActivity(intent);
         }
 

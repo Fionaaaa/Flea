@@ -1,8 +1,9 @@
-package com.fiona.tiaozao.discover;
+package com.fiona.tiaozao.fragment.discover;
 
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.fiona.tiaozao.App;
 import com.fiona.tiaozao.MainActivity;
 import com.fiona.tiaozao.R;
@@ -25,7 +27,6 @@ import com.fiona.tiaozao.net.NetQueryImpl;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,8 +47,8 @@ public class DiscoverRightFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         handler = new MyHandler();
-        NetQuery query = new NetQueryImpl(getActivity(), handler);
-        query.getEmptionGoods();
+        NetQuery query = NetQueryImpl.getInstance(getActivity());
+        query.getEmptionGoods(handler);
 
         View view = inflater.inflate(R.layout.fragment_discover_right, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycle_discover_right);
@@ -85,7 +86,8 @@ public class DiscoverRightFragment extends Fragment {
              * 加载网络（缓存）数据
              */
             Goods goods = data.get(position);
-            Picasso.with(getActivity()).load(App.URL + goods.getPic_location()).into(holder.imageView);
+            Uri uri=Uri.parse(App.URL+goods.getPic_location());
+            holder.imageView.setImageURI(uri);
 
             holder.textViewAuthor.setText(goods.getUserName());
 
@@ -108,7 +110,7 @@ public class DiscoverRightFragment extends Fragment {
             ((MainActivity) getActivity()).clickChangeBackgroundColor(v);
 
             Intent intent = new Intent(getActivity(), PurchaseActivity.class);
-            intent.putExtra(App.GOODS, data.get(v.getId()));
+            intent.putExtra(App.ACTION_GOODS, data.get(v.getId()));
             startActivity(intent);
         }
     }
@@ -117,7 +119,7 @@ public class DiscoverRightFragment extends Fragment {
      * holder类
      */
     private class Holder extends RecyclerView.ViewHolder {
-        ImageView imageView;
+        SimpleDraweeView imageView;
         TextView textViewClassify;
         TextView textViewDescription;
         TextView textViewAuthor;
@@ -129,13 +131,13 @@ public class DiscoverRightFragment extends Fragment {
             super(v);
             this.view = v;
 
-            imageView = (ImageView) v.findViewById(R.id.imageView_discover_right);
-            textViewClassify = (TextView) v.findViewById(R.id.textView_discover_classify);
-            textViewDescription = (TextView) v.findViewById(R.id.textView_discover_describe);
-            textViewAuthor = (TextView) v.findViewById(R.id.textView_discover_author);
+            imageView = (SimpleDraweeView) v.findViewById(R.id.imageView_discover_right);
+            textViewClassify = (TextView) v.findViewById(R.id.textView_purchase_classify);
+            textViewDescription = (TextView) v.findViewById(R.id.textView_purchase_describe);
+            textViewAuthor = (TextView) v.findViewById(R.id.textView_purchase_author);
 
 
-            textViewTime = (TextView) v.findViewById(R.id.textView_discover_right_time);
+            textViewTime = (TextView) v.findViewById(R.id.textView_purchase_time);
         }
     }
 

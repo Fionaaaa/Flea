@@ -24,17 +24,22 @@
         <activity android:name=".SaleActivity" />
         <activity android:name=".PurchaseActivity" />
         <activity android:name=".ProductActivity" />
-        <activity android:name=".home.AfficheActivity" />
-        <activity android:name=".classify.ClassifyActivity" />
-        <activity android:name=".discover.StallActivity" />
-        <activity android:name=".discover.PurchaseActivity" />
-        <activity android:name=".myself.MyPurchaseActivity" />
-        <activity android:name=".myself.MyCollectionActivity" />
-        <activity android:name=".myself.AboutActivity" />
-        <activity android:name=".myself.SettingActivity" />
-        <activity android:name=".myself.MyStallActivity" />
-        <activity android:name=".myself.FeedbackActivity" />
+        <activity android:name=".fragment.home.AfficheActivity" />
+        <activity android:name=".fragment.classify.ClassifyActivity" />
+        <activity android:name=".fragment.discover.StallActivity" />
+        <activity android:name=".fragment.discover.PurchaseActivity" />
+        <activity android:name=".fragment.myself.MyPurchaseActivity" />
+        <activity android:name=".fragment.myself.MyCollectionActivity" />
+        <activity android:name=".fragment.myself.AboutActivity" />
+        <activity android:name=".fragment.myself.SettingActivity" />
+        <activity android:name=".fragment.myself.MyStallActivity" />
+        <activity android:name=".fragment.myself.FeedbackActivity" />
         <activity android:name=".account.LoginActivity"></activity>
+        <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+             App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>

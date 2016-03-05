@@ -1,4 +1,4 @@
-package com.fiona.tiaozao.myself;
+package com.fiona.tiaozao.fragment.myself;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -39,19 +40,21 @@
         android:textColor="@color/white"
         android:textSize="19sp" />
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/imageView_discover_right"
         android:layout_width="36dp"
         android:layout_height="36dp"
-        android:background="@drawable/shape_head_portrait"
-        android:layout_below="@+id/toolbar"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="10dp"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/shape_head_portrait"
+        fresco:actualImageScaleType="fitXY"
+        fresco:roundedCornerRadius="180dp" />
 
     <TextView
-        android:id="@+id/textView_discover_classify"
+        android:id="@+id/textView_purchase_classify"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/imageView_discover_right"
@@ -64,49 +67,49 @@
         android:textColor="@color/blue_m" />
 
     <TextView
-        android:id="@+id/textView_discover_author"
+        android:id="@+id/textView_purchase_author"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView_discover_classify"
+        android:layout_alignTop="@+id/textView_purchase_classify"
         android:layout_marginLeft="5dp"
-        android:layout_toEndOf="@+id/textView_discover_classify"
-        android:layout_toRightOf="@+id/textView_discover_classify"
+        android:layout_toEndOf="@+id/textView_purchase_classify"
+        android:layout_toRightOf="@+id/textView_purchase_classify"
         android:text="西方求败"
         android:textColor="@color/black_h" />
 
     <TextView
-        android:id="@+id/textView_discover_describe"
+        android:id="@+id/textView_purchase_describe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="我想淘一本《失控》"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="10dp"
-        android:textSize="16sp"
-        android:layout_below="@+id/view2"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/view2"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:text="我想淘一本《失控》"
+        android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/textView_discover_right_time"
+        android:id="@+id/textView_purchase_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/textView_discover_author"
+        android:layout_alignTop="@+id/textView_purchase_author"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
         android:text="下午3:54"
         android:textColor="@color/black_xh"
         android:textSize="10sp" />
 
-    <com.fiona.tiaozao.myself.Line
+    <com.fiona.tiaozao.fragment.myself.Line
         android:id="@+id/view2"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="15dp"
-        android:layout_below="@+id/imageView_discover_right"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imageView_discover_right"
+        android:layout_marginTop="15dp" />
 
 
 </RelativeLayout>

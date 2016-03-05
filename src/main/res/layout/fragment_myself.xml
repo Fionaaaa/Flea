@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".myself.MyselfFragment">
+    tools:context=".fragment.myself.MyselfFragment">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -27,7 +27,7 @@
         android:onClick="onClick">
 
 
-        <com.fiona.tiaozao.myself.Line
+        <com.fiona.tiaozao.fragment.myself.Line
             android:id="@+id/line_1"
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -67,7 +67,7 @@
             android:layout_marginBottom="7dp"
             android:text="zhongfuqiang@outlook.com" />
 
-        <com.fiona.tiaozao.myself.Line
+        <com.fiona.tiaozao.fragment.myself.Line
             android:id="@+id/view3"
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -87,7 +87,7 @@
         android:background="@color/white"
         android:onClick="onClick">
 
-        <com.fiona.tiaozao.myself.Line
+        <com.fiona.tiaozao.fragment.myself.Line
             android:id="@+id/view4"
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -130,7 +130,7 @@
             android:text="我的摊位"
             android:textSize="18sp" />
 
-        <com.fiona.tiaozao.myself.Line
+        <com.fiona.tiaozao.fragment.myself.Line
             android:id="@+id/view5"
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -151,7 +151,7 @@
         android:background="@color/white"
         android:onClick="onClick">
 
-        <com.fiona.tiaozao.myself.Line
+        <com.fiona.tiaozao.fragment.myself.Line
             android:id="@+id/view6"
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -205,7 +205,7 @@
             android:layout_marginTop="3dp"
             android:src="@drawable/myself_next" />
 
-        <com.fiona.tiaozao.myself.Line
+        <com.fiona.tiaozao.fragment.myself.Line
             android:id="@+id/view7"
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -226,7 +226,7 @@
         android:background="@color/white"
         android:onClick="onClick">
 
-        <com.fiona.tiaozao.myself.Line
+        <com.fiona.tiaozao.fragment.myself.Line
             android:id="@+id/view8"
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -268,7 +268,7 @@
             android:layout_marginTop="3dp"
             android:src="@drawable/myself_next" />
 
-        <com.fiona.tiaozao.myself.Line
+        <com.fiona.tiaozao.fragment.myself.Line
             android:id="@+id/view9"
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -289,7 +289,7 @@
         android:background="@color/white"
         android:onClick="onClick">
 
-        <com.fiona.tiaozao.myself.Line
+        <com.fiona.tiaozao.fragment.myself.Line
             android:id="@+id/view10"
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -331,7 +331,7 @@
             android:layout_marginTop="3dp"
             android:src="@drawable/myself_next" />
 
-        <com.fiona.tiaozao.myself.Line
+        <com.fiona.tiaozao.fragment.myself.Line
             android:id="@+id/view11"
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -352,7 +352,7 @@
         android:background="@color/white"
         android:onClick="onClick">
 
-        <com.fiona.tiaozao.myself.Line
+        <com.fiona.tiaozao.fragment.myself.Line
             android:id="@+id/view12"
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -394,7 +394,7 @@
             android:layout_marginTop="3dp"
             android:src="@drawable/myself_next" />
 
-        <com.fiona.tiaozao.myself.Line
+        <com.fiona.tiaozao.fragment.myself.Line
             android:id="@+id/view13"
             android:layout_width="match_parent"
             android:layout_height="1dp"

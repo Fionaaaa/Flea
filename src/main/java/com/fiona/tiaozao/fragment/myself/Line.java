@@ -1,4 +1,4 @@
-package com.fiona.tiaozao.myself;
+package com.fiona.tiaozao.fragment.myself;
 
 import android.content.Context;
 import android.graphics.Canvas;

@@ -3,12 +3,9 @@ package com.fiona.tiaozao;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,18 +16,15 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.fiona.tiaozao.account.LoginActivity;
-import com.fiona.tiaozao.classify.ClassifyFragment;
-import com.fiona.tiaozao.discover.DiscoverFragment;
-import com.fiona.tiaozao.home.HomeFragment;
-import com.fiona.tiaozao.model.Goods;
-import com.fiona.tiaozao.myself.AboutActivity;
-import com.fiona.tiaozao.myself.MyCollectionActivity;
-import com.fiona.tiaozao.myself.MyPurchaseActivity;
-import com.fiona.tiaozao.myself.MyStallActivity;
-import com.fiona.tiaozao.myself.MyselfFragment;
-import com.fiona.tiaozao.myself.SettingActivity;
-
-import java.util.List;
+import com.fiona.tiaozao.fragment.classify.ClassifyFragment;
+import com.fiona.tiaozao.fragment.discover.DiscoverFragment;
+import com.fiona.tiaozao.fragment.home.HomeFragment;
+import com.fiona.tiaozao.fragment.myself.AboutActivity;
+import com.fiona.tiaozao.fragment.myself.MyCollectionActivity;
+import com.fiona.tiaozao.fragment.myself.MyPurchaseActivity;
+import com.fiona.tiaozao.fragment.myself.MyStallActivity;
+import com.fiona.tiaozao.fragment.myself.MyselfFragment;
+import com.fiona.tiaozao.fragment.myself.SettingActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -59,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         //片段实例化
         homeFragment = new HomeFragment();
