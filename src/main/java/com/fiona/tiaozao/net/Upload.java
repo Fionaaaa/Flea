@@ -1,6 +1,10 @@
 package com.fiona.tiaozao.net;
 
 import com.fiona.tiaozao.model.Goods;
+import com.fiona.tiaozao.model.User;
+
+import java.io.File;
+import java.util.Map;
 
 /**
  * 数据上传接口
@@ -11,7 +15,7 @@ public interface Upload {
     /**
      * 出售物品/求购物品
      */
-    void addGoods(Goods goods);
+    void addGoods(File file,Map<String,String> map,boolean isSale);
 
     /**
      * 删除一件物品
@@ -27,13 +31,25 @@ public interface Upload {
 
     /**
      * 添加一个收藏
-     * @param goods_user_id
+     * @param
      */
-    void addCollection(int goods_user_id);
+    void addCollection(final String userID, final String user_goods_id);
 
     /**
      * 删除一个收藏
-     * @param goods_user_id
+     * @param
      */
-    void deleteCollection(int goods_user_id);
+    void deleteCollection(final String userID, final String user_goods_id);
+
+    /**
+     * 添加一个用户
+     * @param user
+     */
+    void insertUser(User user);
+
+    /**
+     * 更新用户
+     * @param user
+     */
+    void updateUser(User user);
 }

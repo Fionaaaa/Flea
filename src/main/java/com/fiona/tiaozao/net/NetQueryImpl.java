@@ -34,7 +34,7 @@ import java.util.Map;
  */
 public class NetQueryImpl implements NetQuery {
 
-    static RequestQueue queue;     //请求队列，唯一的
+    public static RequestQueue queue;     //请求队列，唯一的
 
     /**
      * 单例模式
@@ -86,12 +86,13 @@ public class NetQueryImpl implements NetQuery {
                 Message message = new Message();
                 message.what = App.GOODS_SALE;
                 message.obj = data;
+
                 handler.sendMessage(message);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.d("debug", "error");
+                Log.d("debug", "请求物品列表：error");
             }
         });
 

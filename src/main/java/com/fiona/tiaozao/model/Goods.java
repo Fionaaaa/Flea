@@ -14,6 +14,7 @@ public class Goods implements Serializable {
     private String describe;    //描述
     private String userId;            //用户id
     private String classify;    //分类
+    private String contact;
     private Date time;            //时间
     private int flag;            //1：出售		0：求购
     private String userName;     //用户名
@@ -177,6 +178,14 @@ public class Goods implements Serializable {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
     }
 
     @Override

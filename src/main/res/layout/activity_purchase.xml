@@ -91,7 +91,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText2"
+        android:id="@+id/editText2_edit_purchase_describe"
         android:layout_below="@+id/textView37"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"

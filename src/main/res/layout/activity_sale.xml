@@ -66,6 +66,7 @@
         android:layout_below="@+id/toolbar"
         android:background="@color/black_m"
         android:onClick="clickAddPicture"
+        android:scaleType="centerCrop"
         android:src="@drawable/ic_add_white" />
 
     <TextView
@@ -83,20 +84,25 @@
         android:textSize="16sp" />
 
     <EditText
-        android:id="@+id/textView21"
+        android:id="@+id/textView21_edit_sale_title"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/imageView7"
         android:layout_toEndOf="@+id/textView20"
+        android:hint="一缕阳光"
+        android:text="一缕阳光"
         android:layout_toRightOf="@+id/textView20"
         android:textColor="@color/black_h" />
 
     <EditText
-        android:id="@+id/textView23"
+        android:id="@+id/textView23_edit_sale_price"
+        android:hint="19"
+        android:text="19"
         android:layout_width="70dp"
+        android:inputType="number"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/textView29"
-        android:layout_alignRight="@+id/textView29"
+        android:layout_alignEnd="@+id/textView29_edit_sale_describe"
+        android:layout_alignRight="@+id/textView29_edit_sale_describe"
         android:layout_below="@+id/imageView7"
         android:layout_toStartOf="@+id/textView12"
         android:textColor="@color/green_m" />
@@ -107,43 +113,47 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView20"
         android:layout_alignStart="@+id/textView20"
-        android:layout_below="@+id/textView21"
+        android:layout_below="@+id/textView21_edit_sale_title"
         android:layout_marginBottom="5dp"
-        android:layout_marginTop="39dp"
+        android:layout_marginTop="70dp"
         android:text="联系方式："
         android:textColor="@color/black_h"
         android:textSize="16sp" />
 
     <EditText
-        android:id="@+id/textView25"
+        android:id="@+id/textView25_edit_sale_contact"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView21"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="23dp"
-        android:layout_toEndOf="@+id/textView24"
+        android:hint="手机18234567411"
+        android:text="手机18234567411"
+        android:layout_below="@+id/spinner_edit_sale"
+        android:layout_marginTop="18dp"
         android:layout_toRightOf="@+id/textView24"
-        android:textColor="@color/black_h" />
+        android:textColor="@color/black_h"
+        android:layout_alignRight="@+id/textView29_edit_sale_describe"
+        android:layout_alignEnd="@+id/textView29_edit_sale_describe" />
 
     <TextView
         android:id="@+id/textView28"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView29_edit_sale_describe"
+        android:layout_alignBottom="@+id/textView29_edit_sale_describe"
+        android:layout_alignLeft="@+id/textView24"
+        android:layout_alignStart="@+id/textView24"
         android:text="描述："
         android:textColor="@color/black_h"
-        android:textSize="16sp"
-        android:layout_alignBaseline="@+id/textView29"
-        android:layout_alignBottom="@+id/textView29"
-        android:layout_alignLeft="@+id/textView24"
-        android:layout_alignStart="@+id/textView24" />
+        android:textSize="16sp" />
 
     <EditText
-        android:id="@+id/textView29"
+        android:id="@+id/textView29_edit_sale_describe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView25"
+        android:layout_below="@+id/textView25_edit_sale_contact"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="19dp"
+        android:hint="在漆黑的世界，一缕阳光是多么重要"
+        android:text="在漆黑的世界，一缕阳光是多么重要"
+        android:layout_marginTop="15dp"
         android:layout_toEndOf="@+id/textView28"
         android:layout_toRightOf="@+id/textView28"
         android:autoLink="all"
@@ -154,8 +164,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/textView20"
-        android:layout_toLeftOf="@+id/textView23"
-        android:layout_toStartOf="@+id/textView23"
+        android:layout_toLeftOf="@+id/textView23_edit_sale_price"
+        android:layout_toStartOf="@+id/textView23_edit_sale_price"
         android:text="价格：" />
+
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView20"
+        android:layout_alignStart="@+id/textView20"
+        android:layout_below="@+id/textView21_edit_sale_title"
+        android:layout_marginTop="20dp"
+        android:text="分类："
+        android:textColor="@color/black_h"
+        android:textSize="16sp" />
+
+    <Spinner
+        android:id="@+id/spinner_edit_sale"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView21"
+        android:layout_toEndOf="@+id/textView21"
+        android:layout_toRightOf="@+id/textView21"
+        android:entries="@array/classify" />
 
 </RelativeLayout>

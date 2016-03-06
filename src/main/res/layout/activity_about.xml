@@ -85,7 +85,7 @@
         android:text="New Text" />
 
     <TextView
-        android:id="@+id/textView21"
+        android:id="@+id/textView21_edit_sale_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
