@@ -14,29 +14,21 @@ public interface NetQuery {
      *
      * @return
      */
-    public void getSaleGoods(Handler handler);
+     void getSaleGoods();
 
     /**
      * 获得所有求购物品
      *
      * @return
      */
-    public void getEmptionGoods(Handler handler);
-
-    /**
-     * 获得分类物品
-     *
-     * @param classify
-     * @return
-     */
-    public void getClassifyGoods(String classify, Handler handler);
+     void getEmptionGoods();
 
     /**
      * 获得所有用户
      *
      * @return
      */
-    public void getUsers(Handler handler);
+     void getUsers();
 
     /**
      * 获得单个用户
@@ -44,7 +36,7 @@ public interface NetQuery {
      * @param userID
      * @return
      */
-    public void getUser(String userID, Handler handler);
+     void getUser(String userID, Handler handler);
 
     /**
      * 获得用户的求购
@@ -52,7 +44,7 @@ public interface NetQuery {
      * @param userID
      * @return
      */
-    public void getUserEmption(String userID, Handler handler);
+     void getUserEmption(String userID, Handler handler);
 
     /**
      * 获得用户的物品收藏
@@ -60,7 +52,7 @@ public interface NetQuery {
      * @param userID
      * @return
      */
-    public void getCollectGoods(String userID, Handler handler);
+     void getCollectGoods(String userID, Handler handler);
 
     /**
      * 获得用户的关注收藏
@@ -68,6 +60,6 @@ public interface NetQuery {
      * @param userID
      * @return
      */
-    public void getCollectUser(String userID, Handler handler);
+     void getCollectUser(String userID, Handler handler);
 
 }

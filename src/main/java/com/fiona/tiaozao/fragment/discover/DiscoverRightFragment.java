@@ -4,6 +4,7 @@ package com.fiona.tiaozao.fragment.discover;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,20 +12,20 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.fiona.tiaozao.App;
 import com.fiona.tiaozao.MainActivity;
 import com.fiona.tiaozao.R;
-import com.fiona.tiaozao.model.Goods;
+import com.fiona.tiaozao.bean.Goods;
+import com.fiona.tiaozao.bean.User;
 import com.fiona.tiaozao.net.NetQuery;
 import com.fiona.tiaozao.net.NetQueryImpl;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -37,7 +38,7 @@ public class DiscoverRightFragment extends Fragment {
 
     RecyclerView recyclerView;
 
-    Handler handler;
+//    Handler handler;
 
     public DiscoverRightFragment() {
     }
@@ -46,16 +47,24 @@ public class DiscoverRightFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        handler = new MyHandler();
+/*        handler = new MyHandler();
         NetQuery query = NetQueryImpl.getInstance(getActivity());
-        query.getEmptionGoods(handler);
+        query.getEmptionGoods(handler);*/
 
         View view = inflater.inflate(R.layout.fragment_discover_right, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycle_discover_right);
 
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        new SetDataSource().execute();
+
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, GridLayoutManager.VERTICAL));
         recyclerView.setAdapter(new Rvadapter(getActivity(), data));
-        return view;
     }
 
     /**
@@ -93,7 +102,7 @@ public class DiscoverRightFragment extends Fragment {
 
             holder.textViewClassify.setText(goods.getClassify());
             holder.textViewDescription.setText(goods.getDescribe());
-            holder.textViewTime.setText(String.valueOf(goods.getTime().getMonth() + 1) + "." + String.valueOf(goods.getTime().getDay()));
+            holder.textViewTime.setText(goods.getTime());
 
 
             holder.view.setId(position);
@@ -142,13 +151,25 @@ public class DiscoverRightFragment extends Fragment {
     }
 
     /**
-     * 网络请求
+     * 本地缓存取数据
      */
-    class MyHandler extends Handler {
+    private class SetDataSource extends AsyncTask<Void, Void, ArrayList<Goods>> {
+
         @Override
-        public void handleMessage(Message msg) {
-            data = (ArrayList<Goods>) msg.obj;
-            recyclerView.setAdapter(new Rvadapter(getActivity(), data));
+        protected ArrayList<Goods> doInBackground(Void... params) {
+            ArrayList<Goods> goodsList = (ArrayList<Goods>) Goods.find(Goods.class,"flag = ?","0");
+
+            return goodsList;
         }
+
+        @Override
+        protected void onPostExecute(ArrayList<Goods> data) {
+            setAdapter(data);
+        }
+    }
+
+    //设置适配器
+    private void setAdapter(ArrayList<Goods> data) {
+        recyclerView.setAdapter(new Rvadapter(getActivity(),data));
     }
 }

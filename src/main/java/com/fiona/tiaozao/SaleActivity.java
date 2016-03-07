@@ -15,13 +15,12 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.fiona.tiaozao.interactor.GoodsInteractor;
-import com.fiona.tiaozao.interactor.ImageOprator;
+import com.fiona.tiaozao.interactor.Interactor;
+import com.fiona.tiaozao.util.ImageOprator;
 import com.fiona.tiaozao.net.UploadImpl;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SaleActivity extends AppCompatActivity {
@@ -121,10 +120,10 @@ public class SaleActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case 0:
-                                new GoodsInteractor().doCapture(SaleActivity.this);
+                                new Interactor().doCapture(SaleActivity.this);
                                 break;
                             case 1:
-                                new GoodsInteractor().pickPicture(SaleActivity.this);
+                                new Interactor().pickPicture(SaleActivity.this);
                                 break;
                         }
                     }

@@ -5,15 +5,13 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.fiona.tiaozao.App;
 import com.fiona.tiaozao.R;
-import com.fiona.tiaozao.model.Goods;
-import com.squareup.picasso.Picasso;
+import com.fiona.tiaozao.bean.Goods;
 
 public class PurchaseActivity extends AppCompatActivity {
 
@@ -42,7 +40,7 @@ public class PurchaseActivity extends AppCompatActivity {
         tvAuthor.setText(goods.getUserName());
 
         TextView tvTime= (TextView) findViewById(R.id.textView_purchase_time);
-        tvTime.setText(String.valueOf(goods.getTime().getMonth()+1)+"."+String.valueOf(goods.getTime().getDay()));
+        tvTime.setText(String.valueOf(goods.getTime()));
 
         TextView tvDescribe= (TextView) findViewById(R.id.textView_purchase_describe);
         tvDescribe.setText(goods.getDescribe());

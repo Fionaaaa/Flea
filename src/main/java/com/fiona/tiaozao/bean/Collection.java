@@ -1,4 +1,4 @@
-package com.fiona.tiaozao.model;
+package com.fiona.tiaozao.bean;
 
 /**
  * 收藏实体类

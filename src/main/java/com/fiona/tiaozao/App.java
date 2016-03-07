@@ -29,9 +29,6 @@ public class App extends Application {
     public final static int REQUEST_CAPTURE=0x119;       //拍照
 
 
-    /**
-     * 程序启动
-     */
     @Override
     public void onCreate() {
         super.onCreate();

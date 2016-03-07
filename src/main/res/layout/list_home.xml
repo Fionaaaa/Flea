@@ -12,6 +12,7 @@
         android:scaleType="fitXY"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:background="@color/blue_m"
         />
 
     <TextView

@@ -1,7 +1,6 @@
 package com.fiona.tiaozao.net;
 
-import com.fiona.tiaozao.model.Goods;
-import com.fiona.tiaozao.model.User;
+import com.fiona.tiaozao.bean.User;
 
 import java.io.File;
 import java.util.Map;

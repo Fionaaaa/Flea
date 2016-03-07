@@ -2,6 +2,7 @@ package com.fiona.tiaozao.fragment.myself;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,7 +18,7 @@ import android.widget.TextView;
 import com.fiona.tiaozao.App;
 import com.fiona.tiaozao.R;
 import com.fiona.tiaozao.fragment.discover.PurchaseActivity;
-import com.fiona.tiaozao.model.Goods;
+import com.fiona.tiaozao.bean.Goods;
 import com.fiona.tiaozao.net.NetQuery;
 import com.fiona.tiaozao.net.NetQueryImpl;
 
@@ -29,6 +30,8 @@ public class MyPurchaseActivity extends AppCompatActivity {
 
     private String userID = "1";  //用户id，暂时用1
 
+    ArrayList<Goods> data=new ArrayList<>();
+
     ArrayList<Goods> listEmption;
 
     @Override
@@ -36,14 +39,21 @@ public class MyPurchaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_purchase);
 
-        //开始请求网络
-        Handler handler = new MyHandler();
+/*        Handler handler = new MyHandler();
         NetQuery query = NetQueryImpl.getInstance(this);
-        query.getUserEmption(userID,handler);
+        query.getUserEmption(userID,handler);*/
 
         listView = (ListView) findViewById(R.id.listView_my_purchase);
 
+        listView.setAdapter(new ListViewAdapter(this,data));
+
         listView.setOnItemClickListener(new ListViewListener());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new SetDataSource().execute(userID);
     }
 
     /**
@@ -131,20 +141,33 @@ public class MyPurchaseActivity extends AppCompatActivity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
             Intent intent = new Intent(MyPurchaseActivity.this, PurchaseActivity.class);
-            intent.putExtra(App.ACTION_GOODS, listEmption.get(position));
+            intent.putExtra(App.ACTION_GOODS, data.get(position));
             startActivity(intent);
 
         }
     }
 
     /**
-     * 网络请求成功
+     * 读取本地 数据
      */
-    class MyHandler extends Handler {
+    private class SetDataSource extends AsyncTask<String, Void, ArrayList<Goods>> {
+
         @Override
-        public void handleMessage(Message msg) {
-            listEmption = (ArrayList<Goods>) msg.obj;
-            listView.setAdapter(new ListViewAdapter(MyPurchaseActivity.this, listEmption));
+        protected ArrayList<Goods> doInBackground(String... params) {
+            String userID=params[0];
+            ArrayList<Goods> goodsList = (ArrayList<Goods>) Goods.find(Goods.class,"user_id= ? and flag= ?",userID,"0");
+            return goodsList;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Goods> data) {
+            setAdapter(data);
         }
     }
+
+    private void setAdapter(ArrayList<Goods> data) {
+        this.data=data;
+        listView.setAdapter(new ListViewAdapter(this,data));
+    }
+
 }

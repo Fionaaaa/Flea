@@ -1,4 +1,8 @@
-package com.fiona.tiaozao.model;
+package com.fiona.tiaozao.bean;
+
+import com.google.gson.annotations.Expose;
+import com.orm.SugarRecord;
+import com.orm.dsl.Ignore;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -6,50 +10,41 @@ import java.util.ArrayList;
 /**
  * 用户实体类
  */
-public class User implements Serializable{
+public class User extends SugarRecord implements Serializable {
 
-    private String id;            //id
-    private String icon;    //名字
-    private String name;    //����
+    @Expose
+    private String icon;    //头像
+    @Expose
+    private String name;    //名字
+    @Expose
     private String account;    //账户
+    @Expose
     private String contact;    //联系方式
+    @Expose
     private int flag;        //1：qq		0:微博
-
+    @Ignore
     private ArrayList<Goods> listSale;            //用户出售的物品
-
+    @Expose
     private String describe;        //摊位描述  mark：服务器暂时没添加
 
 
+    public User() {
+    }
+
     /**
-     * @param id
      * @param icon
      * @param name
      * @param account
      * @param contact
      * @param list
      */
-    public User(String id, String icon, String name, String account, String contact, ArrayList<Goods> list) {
+    public User(String icon, String name, String account, String contact, ArrayList<Goods> list) {
         super();
-        this.id = id;
         this.icon = icon;
         this.name = name;
         this.account = account;
         this.contact = contact;
         this.listSale = list;
-    }
-
-    /**
-     * @return the id
-     */
-    public String getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(String id) {
-        this.id = id;
     }
 
     /**
@@ -136,7 +131,6 @@ public class User implements Serializable{
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
                 ", icon='" + icon + '\'' +
                 ", name='" + name + '\'' +
                 ", account='" + account + '\'' +

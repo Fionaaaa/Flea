@@ -1,4 +1,4 @@
-package com.fiona.tiaozao.interactor;
+package com.fiona.tiaozao.util;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -16,7 +16,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
- * 图片工具类:类中的方法是从网上找来的，感谢这些贡献者
+ * 图片工具类:类中的方法是从网上找来的，感谢jackymvc,以及另外一位不知名的贡献者
  * Created by mine on 15-11-22.
  */
 public class ImageOprator {

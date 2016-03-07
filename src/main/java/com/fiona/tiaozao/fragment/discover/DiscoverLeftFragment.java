@@ -3,17 +3,16 @@ package com.fiona.tiaozao.fragment.discover;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -21,30 +20,33 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.fiona.tiaozao.App;
 import com.fiona.tiaozao.MainActivity;
 import com.fiona.tiaozao.R;
-import com.fiona.tiaozao.model.User;
-import com.fiona.tiaozao.net.NetQuery;
-import com.fiona.tiaozao.net.NetQueryImpl;
-import com.squareup.picasso.Picasso;
+import com.fiona.tiaozao.bean.Goods;
+import com.fiona.tiaozao.bean.User;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
 public class DiscoverLeftFragment extends Fragment {
     RecyclerView recyclerView;
 
-    ArrayList<User> data=new ArrayList<>();
+    ArrayList<User> data = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Fresco.initialize(getActivity());
+        EventBus.getDefault().register(this);
 
         View view = inflater.inflate(R.layout.fragment_discover_left, container, false);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycle_discover_left);
 
-        Handler handler=new MyHandler();
+/*        Handler handler=new MyHandler();
         NetQuery query=NetQueryImpl.getInstance(getActivity());
-        query.getUsers(handler);
+        query.getUsers(handler);*/
 
         return view;
     }
@@ -52,8 +54,18 @@ public class DiscoverLeftFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        new SetDataSource().execute();  //读取本地数据
+        Log.d("test", "本地去数据");
+
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, GridLayoutManager.VERTICAL));
         recyclerView.setAdapter(new RvAdapter(getActivity(), data));
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     /**
@@ -62,7 +74,7 @@ public class DiscoverLeftFragment extends Fragment {
     public class RvAdapter extends RecyclerView.Adapter<RvAdapter.Holder> implements View.OnClickListener {
 
         Context context;
-        ArrayList<User> data=new ArrayList<>();
+        ArrayList<User> data = new ArrayList<>();
 
         public RvAdapter(Context context, ArrayList<User> data) {
             this.context = context;
@@ -88,12 +100,12 @@ public class DiscoverLeftFragment extends Fragment {
              */
             User user = data.get(position);
 
-            Uri uri=Uri.parse(App.URL+user.getIcon());
+            Uri uri = Uri.parse(App.URL + user.getIcon());
             holder.imageView.setImageURI(uri);
 
             holder.textViewSale.setText(user.getName());
 
-            holder.textViewDescription.setText("描述:"+user.getDescribe());
+            holder.textViewDescription.setText("描述:" + user.getDescribe());
         }
 
         @Override
@@ -140,14 +152,37 @@ public class DiscoverLeftFragment extends Fragment {
         }
     }
 
-    /**
-     * 请求网络数据
-     */
-    class MyHandler extends Handler {
+    //从本地取得数据
+    private class SetDataSource extends AsyncTask<Void, Void, ArrayList<User>> {
+
         @Override
-        public void handleMessage(Message msg) {
-            data= (ArrayList<User>) msg.obj;
-            recyclerView.setAdapter(new RvAdapter(getActivity(),data));
+        protected ArrayList<User> doInBackground(Void... params) {
+            ArrayList<User> userList = (ArrayList<User>) User.listAll(User.class);
+            for (int i = 0; i < userList.size(); i++) {
+                ArrayList<Goods> goodsList = (ArrayList<Goods>) Goods.find(Goods.class, "user_id=? and flag=?", String.valueOf(userList.get(i).getId()),"1");
+                userList.get(i).setListSale(goodsList);
+            }
+            return userList;
         }
+
+        @Override
+        protected void onPostExecute(ArrayList<User> data) {
+            setAdapter(data);
+        }
+    }
+
+    /**
+     * recycleView设置适配器
+     *
+     * @param data
+     */
+    private void setAdapter(ArrayList<User> data) {
+        recyclerView.setAdapter(new RvAdapter(getActivity(), data));
+    }
+
+    //收到网络加载完毕通知
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void loadNetSource(ArrayList<User> data) {
+        // TODO: 16-3-7
     }
 }

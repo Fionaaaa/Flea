@@ -9,13 +9,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.fiona.tiaozao.App;
-import com.fiona.tiaozao.interactor.ImageOprator;
-import com.fiona.tiaozao.model.Goods;
-import com.fiona.tiaozao.model.User;
+import com.fiona.tiaozao.util.ImageOprator;
+import com.fiona.tiaozao.bean.User;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 

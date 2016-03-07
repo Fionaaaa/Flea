@@ -2,6 +2,7 @@ package com.fiona.tiaozao.fragment.myself;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -18,8 +19,8 @@ import android.widget.TextView;
 import com.fiona.tiaozao.App;
 import com.fiona.tiaozao.ProductActivity;
 import com.fiona.tiaozao.R;
-import com.fiona.tiaozao.model.Goods;
-import com.fiona.tiaozao.model.User;
+import com.fiona.tiaozao.bean.Goods;
+import com.fiona.tiaozao.bean.User;
 import com.fiona.tiaozao.net.NetQuery;
 import com.fiona.tiaozao.net.NetQueryImpl;
 import com.squareup.picasso.Picasso;
@@ -29,8 +30,11 @@ import java.util.ArrayList;
 public class MyStallActivity extends AppCompatActivity {
 
     ListView listView;
+    ListViewAdapter adapter;
 
     private String userID = "1";
+
+    ArrayList<Goods> data=new ArrayList<>();
 
     User user;
 
@@ -39,13 +43,22 @@ public class MyStallActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_stall);
 
-        Handler handler = new MyHandler();
+/*        Handler handler = new MyHandler();
         NetQuery query = NetQueryImpl.getInstance(this);
-        query.getUser(userID,handler);
+        query.getUser(userID,handler);*/
 
         listView = (ListView) findViewById(R.id.listView_my_stall_activity);
 
+        adapter=new ListViewAdapter(this,data);
+        listView.setAdapter(adapter);
+
         listView.setOnItemClickListener(new ListViewListener());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new SetDataSource().execute(userID);
     }
 
     /**
@@ -134,20 +147,33 @@ public class MyStallActivity extends AppCompatActivity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
             Intent intent = new Intent(MyStallActivity.this, ProductActivity.class);
-            intent.putExtra(App.ACTION_GOODS,user.getListSale().get(position));
+            intent.putExtra(App.ACTION_GOODS, data.get(position));
             startActivity(intent);
 
         }
     }
 
     /**
-     * 网络请求
+     * 本地数据
      */
-    class MyHandler extends Handler {
+
+    private class SetDataSource extends AsyncTask<String, Void, ArrayList<Goods>> {
+
         @Override
-        public void handleMessage(Message msg) {
-            user = (User) msg.obj;
-            listView.setAdapter(new ListViewAdapter(MyStallActivity.this, user.getListSale()));
+        protected ArrayList<Goods> doInBackground(String... params) {
+            String userID=params[0];
+            ArrayList<Goods> goodsList = (ArrayList<Goods>) Goods.find(Goods.class,"user_id= ? and flag= ?",userID,"1");
+            return goodsList;
         }
+
+        @Override
+        protected void onPostExecute(ArrayList<Goods> data) {
+            setAdapter(data);
+        }
+    }
+
+    private void setAdapter(ArrayList<Goods> data) {
+        this.data=data;
+        listView.setAdapter(new ListViewAdapter(this,data));
     }
 }

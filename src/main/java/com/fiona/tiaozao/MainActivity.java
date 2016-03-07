@@ -2,6 +2,7 @@ package com.fiona.tiaozao;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
@@ -15,7 +16,7 @@ import android.view.animation.RotateAnimation;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
-import com.fiona.tiaozao.account.LoginActivity;
+import com.fiona.tiaozao.account.LoginAsQQActivity;
 import com.fiona.tiaozao.fragment.classify.ClassifyFragment;
 import com.fiona.tiaozao.fragment.discover.DiscoverFragment;
 import com.fiona.tiaozao.fragment.home.HomeFragment;
@@ -25,6 +26,9 @@ import com.fiona.tiaozao.fragment.myself.MyPurchaseActivity;
 import com.fiona.tiaozao.fragment.myself.MyStallActivity;
 import com.fiona.tiaozao.fragment.myself.MyselfFragment;
 import com.fiona.tiaozao.fragment.myself.SettingActivity;
+import com.fiona.tiaozao.interactor.Interactor;
+
+import org.greenrobot.eventbus.EventBus;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -53,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        new NetTask().execute();
 
 
         //片段实例化
@@ -174,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
     private void login(int id) {
         dialog.cancel();    //  对话框取消
 
-        Intent intent = new Intent(this, LoginActivity.class);
+        Intent intent = new Intent(this, LoginAsQQActivity.class);
         startActivity(intent);
     }
 
@@ -274,6 +280,24 @@ public class MainActivity extends AppCompatActivity {
             clickAdd(viewAdd);
         }
         return super.dispatchTouchEvent(ev);
+    }
+
+
+    //开始所有的网络请求（异步任务）
+    private class NetTask extends AsyncTask<Void,Void,Void>{
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            Interactor.startAllNetTask(MainActivity.this);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            EventBus.getDefault().post("NetTask is completed"); //  任务完成通知(总线)
+        }
     }
 
 }

@@ -2,8 +2,9 @@ package com.fiona.tiaozao.fragment.discover;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +17,8 @@ import android.widget.TextView;
 import com.fiona.tiaozao.App;
 import com.fiona.tiaozao.ProductActivity;
 import com.fiona.tiaozao.R;
-import com.fiona.tiaozao.model.Goods;
-import com.fiona.tiaozao.model.User;
+import com.fiona.tiaozao.bean.Goods;
+import com.fiona.tiaozao.bean.User;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -25,20 +26,22 @@ import java.util.ArrayList;
 public class StallActivity extends AppCompatActivity {
     ListView listView;
 
-    ArrayList<Goods> data=new ArrayList<>();
+    ArrayList<Goods> data = new ArrayList<>();
 
+    ListViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stall);
 
-        User user= (User) getIntent().getExtras().get(App.ACTION_USER);
-        data=user.getListSale();
+        User user = (User) getIntent().getExtras().get(App.ACTION_USER);
+        data = user.getListSale();
 
         listView = (ListView) findViewById(R.id.listView_discover_stall_activity);
 
-        listView.setAdapter(new ListViewAdapter(this, data));
+        adapter=new ListViewAdapter(this,data);
+        listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new ListViewListener());
     }
@@ -52,7 +55,7 @@ public class StallActivity extends AppCompatActivity {
      */
     class ListViewAdapter extends BaseAdapter {
 
-        ArrayList<Goods> data=new ArrayList<>();
+        ArrayList<Goods> data;
 
         Context context;
         LayoutInflater inflater;
@@ -75,7 +78,7 @@ public class StallActivity extends AppCompatActivity {
 
         @Override
         public long getItemId(int position) {
-            return data.get(position).getId();
+            return 0;
         }
 
         @Override
@@ -90,10 +93,10 @@ public class StallActivity extends AppCompatActivity {
                 holder = (Holder) convertView.getTag();
             }
 
-            Goods goods=data.get(position);
-            Picasso.with(context).load(App.URL+goods.getPic_location()).into(holder.imageView);
+            Goods goods = data.get(position);
+            Picasso.with(context).load(App.URL + goods.getPic_location()).into(holder.imageView);
             holder.tvTitle.setText(goods.getTitle());
-            holder.tvPrice.setText(String.valueOf(goods.getPrice())+"￥");
+            holder.tvPrice.setText(String.valueOf(goods.getPrice()) + "￥");
             holder.tvDescribe.setText(goods.getDescribe());
 
             return convertView;
@@ -126,7 +129,7 @@ public class StallActivity extends AppCompatActivity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
             Intent intent = new Intent(StallActivity.this, ProductActivity.class);
-            intent.putExtra(App.ACTION_GOODS,data.get(position));
+            intent.putExtra(App.ACTION_GOODS, data.get(position));
             startActivity(intent);
         }
     }

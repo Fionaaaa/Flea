@@ -3,9 +3,8 @@ package com.fiona.tiaozao.fragment.home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -23,10 +22,12 @@ import com.fiona.tiaozao.App;
 import com.fiona.tiaozao.MainActivity;
 import com.fiona.tiaozao.ProductActivity;
 import com.fiona.tiaozao.R;
-import com.fiona.tiaozao.model.Goods;
-import com.fiona.tiaozao.net.NetQuery;
-import com.fiona.tiaozao.net.NetQueryImpl;
+import com.fiona.tiaozao.bean.Goods;
 import com.squareup.picasso.Picasso;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
@@ -47,9 +48,7 @@ public class HomeFragment extends Fragment {
 
     RvAdapter adapter;
 
-    public Handler handler = new MyHandler();
-
-    ArrayList<Goods> goodsList = new ArrayList<>();
+//    public Handler handler = new MyHandler();
 
     public HomeFragment() {
     }
@@ -57,10 +56,36 @@ public class HomeFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (goodsList.size() == 0) {
-            NetQuery query = NetQueryImpl.getInstance(context);
-            query.getSaleGoods(handler);
+        EventBus.getDefault().register(this);
+    }
+
+    //订阅网络加载
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void loadNetSource(ArrayList<Goods> list) {
+        if (list.get(0) instanceof Goods) {
+            adapter.notifyItemRangeChanged(0, adapter.data.size());
+            adapter.data = list;
+            adapter.notifyItemRangeInserted(0, list.size());
         }
+    }
+
+    //本地加载
+    private void loadLocalSource() {
+
+        new AsyncTask<String, String, ArrayList<Goods>>() {
+
+            @Override
+            protected ArrayList<Goods> doInBackground(String... params) {
+                ArrayList<Goods> list;
+                list = (ArrayList<Goods>) Goods.find(Goods.class, "flag = ?", "1");
+                return list;
+            }
+
+            @Override
+            protected void onPostExecute(ArrayList<Goods> list) {
+                setAdapter(list);
+            }
+        }.execute();
     }
 
 
@@ -97,10 +122,31 @@ public class HomeFragment extends Fragment {
          */
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_home);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, GridLayoutManager.VERTICAL));
-        adapter = new RvAdapter(getActivity(), goodsList);
-        recyclerView.setAdapter(adapter);
+
+        recyclerView.setAdapter(new RvAdapter(getActivity(), new ArrayList<Goods>()));
+
+        loadLocalSource();
 
         return view;
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    /**
+     * 设置适配器
+     */
+    private void setAdapter(ArrayList<Goods> list) {
+        if (adapter != null) {
+            adapter.notifyItemRangeChanged(0, adapter.data.size());
+            adapter.notifyItemRangeRemoved(0, adapter.data.size());
+        }
+        adapter = new RvAdapter(getActivity(), list);
+        recyclerView.setAdapter(adapter);
     }
 
     /**
@@ -154,7 +200,7 @@ public class HomeFragment extends Fragment {
             ((MainActivity) getActivity()).clickChangeBackgroundColor(v);
 
             Intent intent = new Intent(getActivity(), ProductActivity.class);
-            intent.putExtra(App.ACTION_GOODS, goodsList.get(v.getId()));
+            intent.putExtra(App.ACTION_GOODS, data.get(v.getId()));
             startActivity(intent);
         }
 
@@ -368,22 +414,6 @@ public class HomeFragment extends Fragment {
 
             Intent intent = new Intent(getActivity(), AfficheActivity.class);
             startActivity(intent);
-        }
-    }
-
-    /**
-     * 处理消息
-     */
-    class MyHandler extends Handler {
-        @Override
-        public void handleMessage(Message msg) {
-            if (msg.what == App.GOODS_SALE) {
-                goodsList = (ArrayList<Goods>) msg.obj;
-
-                adapter = new RvAdapter(getActivity(), goodsList);
-                recyclerView.setAdapter(adapter);
-
-            }
         }
     }
 }

@@ -1,28 +1,42 @@
-package com.fiona.tiaozao.model;
+package com.fiona.tiaozao.bean;
+
+import com.google.gson.annotations.Expose;
+import com.orm.SugarRecord;
 
 import java.io.Serializable;
-import java.sql.Date;
 
 /**
  * 物品实体类
  */
-public class Goods implements Serializable {
+public class Goods extends SugarRecord implements Serializable {
 
-    private int id;                //id
+    @Expose
     private String title;        //名字
+    @Expose
     private float price;        //价格
+    @Expose
     private String describe;    //描述
-    private String userId;            //用户id
+    @Expose
+    private String userId;      //用户id
+    @Expose
     private String classify;    //分类
-    private String contact;
-    private Date time;            //时间
+    @Expose
+    private String contact;     //描述
+    @Expose
+    private String time;           //时间
+    @Expose
     private int flag;            //1：出售		0：求购
+    @Expose
     private String userName;     //用户名
 
+    @Expose
     private String pic_location;    //图片地址
 
+    public Goods() {
+
+    }
+
     /**
-     * @param id
      * @param title
      * @param price
      * @param describe
@@ -30,9 +44,8 @@ public class Goods implements Serializable {
      * @param flag
      * @param classify
      */
-    public Goods(int id, String title, float price, String describe, String userId, String classify, Date time, int flag, String pic) {
+    public Goods(String title, float price, String describe, String userId, String classify, String time, int flag, String pic) {
         super();
-        this.id = id;
         this.title = title;
         this.price = price;
         this.describe = describe;
@@ -44,10 +57,9 @@ public class Goods implements Serializable {
     }
 
 
-    public Goods(int id, String title, float price, String describe, String userId, String classify, Date time,
+    public Goods(String title, float price, String describe, String userId, String classify, String time,
                  String pic_location) {
         super();
-        this.id = id;
         this.title = title;
         this.price = price;
         this.describe = describe;
@@ -55,21 +67,6 @@ public class Goods implements Serializable {
         this.classify = classify;
         this.time = time;
         this.pic_location = pic_location;
-    }
-
-
-    /**
-     * @return the id
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(int id) {
-        this.id = id;
     }
 
     /**
@@ -145,14 +142,14 @@ public class Goods implements Serializable {
     /**
      * @return the time
      */
-    public Date getTime() {
+    public String getTime() {
         return time;
     }
 
     /**
      * @param time the time to set
      */
-    public void setTime(Date time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
@@ -191,7 +188,6 @@ public class Goods implements Serializable {
     @Override
     public String toString() {
         return "Goods{" +
-                "id=" + id +
                 ", title='" + title + '\'' +
                 ", price=" + price +
                 ", describe='" + describe + '\'' +
