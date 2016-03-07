@@ -11,6 +11,7 @@ import android.util.Log;
 import com.fiona.tiaozao.App;
 import com.fiona.tiaozao.SaleActivity;
 import com.fiona.tiaozao.bean.Goods;
+import com.fiona.tiaozao.bean.User;
 import com.fiona.tiaozao.net.NetQuery;
 import com.fiona.tiaozao.net.NetQueryImpl;
 
@@ -74,6 +75,14 @@ public class Interactor {
         query.getUsers();       //获得所有用户
 
         query.getEmptionGoods();//请求求购的物品
+
+    }
+
+    //添加一个用户
+    public static void insertUser(User user,File file){
+        //头像保存到内部存储
+
+        //从本地数据判断是否存在此用户，不存在则上传服务器
 
     }
 }

@@ -31,6 +31,13 @@ public class User extends SugarRecord implements Serializable {
     public User() {
     }
 
+    public User(String icon, String name, String account, int flag) {
+        this.icon = icon;
+        this.name = name;
+        this.account = account;
+        this.flag = flag;
+    }
+
     /**
      * @param icon
      * @param name
