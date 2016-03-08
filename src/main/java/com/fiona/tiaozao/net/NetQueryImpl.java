@@ -24,7 +24,9 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * <p/>
@@ -39,6 +41,8 @@ public class NetQueryImpl implements NetQuery {
 
     public static RequestQueue queue;     //请求队列，唯一的
 
+    private static Context mContext;
+
     /**
      * 单例模式
      */
@@ -52,6 +56,7 @@ public class NetQueryImpl implements NetQuery {
      * @return
      */
     public static NetQueryImpl getInstance(Context context) {
+        mContext = context;
         if (queue == null) {
             queue = Volley.newRequestQueue(context);
             queue.start();
@@ -64,7 +69,7 @@ public class NetQueryImpl implements NetQuery {
     }
 
 
-    //从网络获得出售的物品(缓存)
+    //从网络获得出售的物品(缓存)    1
     @Override
     public void getSaleGoods() {
 
@@ -84,7 +89,7 @@ public class NetQueryImpl implements NetQuery {
                 }
 
                 //更新缓存
-                Goods.deleteAll(Goods.class,"flag=?","1");
+                Goods.deleteAll(Goods.class, "flag=?", "1");
                 Goods.saveInTx(data);
 
                 //发送通知到总线
@@ -102,7 +107,7 @@ public class NetQueryImpl implements NetQuery {
     }
 
 
-    //获得求购的物品
+    //获得求购的物品   2
     @Override
     public void getEmptionGoods() {
         StringRequest request = new StringRequest(App.URL + App.GOODS_SERVLET + "?type=emption", new Response.Listener<String>() {
@@ -121,7 +126,7 @@ public class NetQueryImpl implements NetQuery {
                 }
 
                 //本地缓存
-                Goods.deleteAll(Goods.class,"flag=?","0");
+                Goods.deleteAll(Goods.class, "flag=?", "0");
                 Goods.saveInTx(data);
 
                 //发通知到总线
@@ -139,7 +144,7 @@ public class NetQueryImpl implements NetQuery {
     }
 
 
-    //获得所有用户
+    //获得所有用户    3
     @Override
     public void getUsers() {
 
@@ -233,10 +238,11 @@ public class NetQueryImpl implements NetQuery {
     }
 
 
-    //获得收藏的物品
+    //获得收藏的物品   4
     @Override
-    public void getCollectGoods(final String userID, final Handler handler) {
+    public void getCollectGoods(final String userID) {
         final ArrayList<Goods> listGoods = new ArrayList<>();
+        final Set<String> ids = new HashSet<>();
         StringRequest request = new StringRequest(StringRequest.Method.POST, App.URL + App.USER_SERVLET, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
@@ -248,10 +254,11 @@ public class NetQueryImpl implements NetQuery {
                     element = jsonArray.get(i);
                     Goods goods = gson.fromJson(element, Goods.class);
                     listGoods.add(goods);
+                    ids.add(String.valueOf(goods.getId()));
                 }
-                Message message = new Message();
-                message.obj = listGoods;
-                handler.sendMessage(message);
+
+                //将收藏记录写到本地
+                mContext.getSharedPreferences("user", Context.MODE_PRIVATE).edit().putStringSet("collect_goods",ids).commit();
             }
         }, null) {
             @Override
@@ -266,10 +273,11 @@ public class NetQueryImpl implements NetQuery {
     }
 
 
-    //获得收藏用户
+    //获得收藏用户    5
     @Override
-    public void getCollectUser(final String userID, final Handler handler) {
+    public void getCollectUser(final String userID) {
         final ArrayList<User> listUser = new ArrayList<>();
+        final Set<String> ids = new HashSet<>();
         StringRequest request = new StringRequest(StringRequest.Method.POST, App.URL + App.USER_SERVLET, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
@@ -281,10 +289,11 @@ public class NetQueryImpl implements NetQuery {
                     element = jsonArray.get(i);
                     User user = gson.fromJson(element, User.class);
                     listUser.add(user);
+                    ids.add(String.valueOf(user.getId()));
                 }
-                Message message = new Message();
-                message.obj = listUser;
-                handler.sendMessage(message);
+
+                //将收藏记录写到本地
+                mContext.getSharedPreferences("user", Context.MODE_PRIVATE).edit().putStringSet("collect_user",ids).commit();
             }
         }, null) {
             @Override

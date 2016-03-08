@@ -12,6 +12,7 @@ import com.fiona.tiaozao.R;
 import com.fiona.tiaozao.bean.User;
 import com.fiona.tiaozao.interactor.Interactor;
 import com.fiona.tiaozao.util.ImageOprator;
+import com.fiona.tiaozao.util.Util;
 import com.tencent.connect.UserInfo;
 import com.tencent.connect.auth.QQAuth;
 import com.tencent.tauth.IUiListener;
@@ -70,6 +71,7 @@ public class LoginAsQQActivity extends AppCompatActivity {
 
             @Override
             public void onError(UiError uiError) {
+                Toast.makeText(LoginAsQQActivity.this, "登陆失败", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -92,6 +94,7 @@ public class LoginAsQQActivity extends AppCompatActivity {
 
         @Override
         public void onError(UiError e) {
+            Toast.makeText(LoginAsQQActivity.this, "登陆失败", Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -106,23 +109,32 @@ public class LoginAsQQActivity extends AppCompatActivity {
             userName = (String) object.get("nickname");
             picURL = (String) object.get("figureurl_qq_2");
 
-            Bitmap bitmap = TencentUtil.getbitmap(picURL);
-            file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "flea_" + openId + ".jpg");
-            ImageOprator.saveFile(bitmap, file);
+            //存到本地（不是很需要）
+//            Bitmap bitmap = TencentUtil.getbitmap(picURL);
+//            file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "flea_" + openId + ".jpg");
+//            ImageOprator.saveFile(bitmap, file);
 
         } catch (JSONException e) {
             e.printStackTrace();
-        } catch (IOException e) {
+//        } catch (IOException e) {
             e.printStackTrace();
         }
 
         //设置登陆状态（写到选项文件）
+        getSharedPreferences("user", MODE_PRIVATE).edit().putBoolean("isLoad", true).commit();
+        getSharedPreferences("user", MODE_PRIVATE).edit().putString("icon", Util.picUrlFormat(picURL)).commit();
+        getSharedPreferences("user", MODE_PRIVATE).edit().putString("name", userName).commit();
+        getSharedPreferences("user", MODE_PRIVATE).edit().putString("account", openId).commit();
+        getSharedPreferences("user",MODE_PRIVATE).edit().putString("flag", "1").commit();
+
+        Log.d("debug77", String.valueOf(getPreferences(MODE_PRIVATE).getBoolean("isLoad", false)));
 
         //保存到网络
-        User user = new User(file.getAbsolutePath(), userName, openId, 1);
+        User user = new User(Util.picUrlFormat(picURL), userName, openId, 1);
 
-        Toast.makeText(LoginAsQQActivity.this, user.toString(), Toast.LENGTH_SHORT).show();
+        Interactor.insertUser(this, user);
 
-        Interactor.insertUser(user, file);
+        Toast.makeText(LoginAsQQActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
+        finish();   //结束活动
     }
 }

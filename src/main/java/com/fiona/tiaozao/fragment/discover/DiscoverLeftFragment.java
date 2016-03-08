@@ -22,6 +22,7 @@ import com.fiona.tiaozao.MainActivity;
 import com.fiona.tiaozao.R;
 import com.fiona.tiaozao.bean.Goods;
 import com.fiona.tiaozao.bean.User;
+import com.fiona.tiaozao.interactor.Interactor;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -158,11 +159,7 @@ public class DiscoverLeftFragment extends Fragment {
         @Override
         protected ArrayList<User> doInBackground(Void... params) {
             ArrayList<User> userList = (ArrayList<User>) User.listAll(User.class);
-            for (int i = 0; i < userList.size(); i++) {
-                ArrayList<Goods> goodsList = (ArrayList<Goods>) Goods.find(Goods.class, "user_id=? and flag=?", String.valueOf(userList.get(i).getId()),"1");
-                userList.get(i).setListSale(goodsList);
-            }
-            return userList;
+            return Interactor.getGoodsToUser(userList);
         }
 
         @Override

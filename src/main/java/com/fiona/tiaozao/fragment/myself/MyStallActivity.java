@@ -26,17 +26,16 @@ import com.fiona.tiaozao.net.NetQueryImpl;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MyStallActivity extends AppCompatActivity {
 
     ListView listView;
     ListViewAdapter adapter;
 
-    private String userID = "1";
+    private String userID;
 
-    ArrayList<Goods> data=new ArrayList<>();
-
-    User user;
+    ArrayList<Goods> data = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +46,15 @@ public class MyStallActivity extends AppCompatActivity {
         NetQuery query = NetQueryImpl.getInstance(this);
         query.getUser(userID,handler);*/
 
+        String account = getSharedPreferences("user", MODE_PRIVATE).getString("account", "000");
+        List<User> userList = User.find(User.class, "account=?", account);
+        if (userList.size() > 0) {
+            userID = String.valueOf(userList.get(0).getId());
+        }
+
         listView = (ListView) findViewById(R.id.listView_my_stall_activity);
 
-        adapter=new ListViewAdapter(this,data);
+        adapter = new ListViewAdapter(this, data);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new ListViewListener());
@@ -161,8 +166,8 @@ public class MyStallActivity extends AppCompatActivity {
 
         @Override
         protected ArrayList<Goods> doInBackground(String... params) {
-            String userID=params[0];
-            ArrayList<Goods> goodsList = (ArrayList<Goods>) Goods.find(Goods.class,"user_id= ? and flag= ?",userID,"1");
+            String userID = params[0];
+            ArrayList<Goods> goodsList = (ArrayList<Goods>) Goods.find(Goods.class, "user_id= ? and flag= ?", userID, "1");
             return goodsList;
         }
 
@@ -173,7 +178,7 @@ public class MyStallActivity extends AppCompatActivity {
     }
 
     private void setAdapter(ArrayList<Goods> data) {
-        this.data=data;
-        listView.setAdapter(new ListViewAdapter(this,data));
+        this.data = data;
+        listView.setAdapter(new ListViewAdapter(this, data));
     }
 }

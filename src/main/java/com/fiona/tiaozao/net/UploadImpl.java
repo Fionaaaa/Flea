@@ -152,8 +152,31 @@ public class UploadImpl implements Upload {
 
     //添加用户
     @Override
-    public void insertUser(User user) {
+    public void insertUser(final User user) {
+        StringRequest request=new StringRequest(StringRequest.Method.POST,App.URL+App.USER_OPERATE_SERVLET, new com.android.volley.Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                Log.d("debug","添加用户成功");
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.d("debug","添加用户失败");
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> map=new HashMap<>();
+                map.put("type","3");
+                map.put("icon",user.getIcon());
+                map.put("name",user.getName());
+                map.put("account",user.getAccount());
+                map.put("flag", String.valueOf(user.getFlag()));
 
+                return map;
+            }
+        };
+        queue.add(request);
     }
 
     //更新用户

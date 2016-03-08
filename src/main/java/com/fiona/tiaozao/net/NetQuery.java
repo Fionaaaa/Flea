@@ -52,7 +52,7 @@ public interface NetQuery {
      * @param userID
      * @return
      */
-     void getCollectGoods(String userID, Handler handler);
+     void getCollectGoods(String userID);
 
     /**
      * 获得用户的关注收藏
@@ -60,6 +60,6 @@ public interface NetQuery {
      * @param userID
      * @return
      */
-     void getCollectUser(String userID, Handler handler);
+     void getCollectUser(String userID);
 
 }

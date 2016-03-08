@@ -17,18 +17,20 @@ import android.widget.TextView;
 
 import com.fiona.tiaozao.App;
 import com.fiona.tiaozao.R;
+import com.fiona.tiaozao.bean.User;
 import com.fiona.tiaozao.fragment.discover.PurchaseActivity;
 import com.fiona.tiaozao.bean.Goods;
 import com.fiona.tiaozao.net.NetQuery;
 import com.fiona.tiaozao.net.NetQueryImpl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MyPurchaseActivity extends AppCompatActivity {
 
     ListView listView;
 
-    private String userID = "1";  //用户id，暂时用1
+    private String userID;
 
     ArrayList<Goods> data=new ArrayList<>();
 
@@ -42,6 +44,12 @@ public class MyPurchaseActivity extends AppCompatActivity {
 /*        Handler handler = new MyHandler();
         NetQuery query = NetQueryImpl.getInstance(this);
         query.getUserEmption(userID,handler);*/
+
+        String account = getSharedPreferences("user", MODE_PRIVATE).getString("account", "000");
+        List<User> userList = User.find(User.class, "account=?", account);
+        if (userList.size() > 0) {
+            userID = String.valueOf(userList.get(0).getId());
+        }
 
         listView = (ListView) findViewById(R.id.listView_my_purchase);
 

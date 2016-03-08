@@ -38,17 +38,6 @@ public class ProductActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.textView27_product_saler)).setText(goods.getUserName());
         ((TextView) findViewById(R.id.textView29_product_contact)).setText(goods.getContact());
 
-        /*Handler handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                User user = (User) msg.obj;
-                ((TextView) findViewById(R.id.textView27_product_saler)).setText(user.getName());
-                ((TextView) findViewById(R.id.textView29_product_contact)).setText(user.getContact());
-            }
-        };
-
-        NetQuery query=NetQueryImpl.getInstance(this);
-        query.getUser(goods.getUserId(),handler);*/
     }
 
     /**

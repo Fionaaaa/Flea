@@ -36,4 +36,5 @@ dependencies {
     compile 'com.github.satyan:sugar:1.4'
     compile files('libs/eventbus-3.0.0.jar')
     compile files('libs/mta-sdk-1.6.2.jar')
+    compile 'com.android.support:design:23.1.1'
 }

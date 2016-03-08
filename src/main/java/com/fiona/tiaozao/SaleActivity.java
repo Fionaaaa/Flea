@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -15,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.fiona.tiaozao.bean.User;
 import com.fiona.tiaozao.interactor.Interactor;
 import com.fiona.tiaozao.util.ImageOprator;
 import com.fiona.tiaozao.net.UploadImpl;
@@ -22,6 +24,7 @@ import com.fiona.tiaozao.net.UploadImpl;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 public class SaleActivity extends AppCompatActivity {
 
@@ -32,7 +35,7 @@ public class SaleActivity extends AppCompatActivity {
     String contact;              //  联系方式
     String describe;             //  描述
     String classify;             //  分类 （暂时为电器）
-    String userID = "1";        //  用户id (暂时为1)
+    String userID ;        //  用户id (暂时为1)
 
     public File file;                //  物品图片
 
@@ -47,6 +50,15 @@ public class SaleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Fresco.initialize(this);
         setContentView(R.layout.activity_sale);
+
+        //获取本地用户ID
+        String account = getSharedPreferences("user", MODE_PRIVATE).getString("account", "000");
+        List<User> list = User.find(User.class, "account=?", account);
+        if (list.size() > 0) {
+            userID = String.valueOf(list.get(0).getId());
+        }
+
+        Log.d("debug","用户ID"+userID);
 
         final String[] data = getResources().getStringArray(R.array.classify);
 

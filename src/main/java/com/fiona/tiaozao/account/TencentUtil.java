@@ -12,6 +12,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.fiona.tiaozao.util.Util;
+
 import junit.framework.Assert;
 
 import java.io.ByteArrayOutputStream;
@@ -408,7 +410,7 @@ public class TencentUtil {
      *
      * @param activity
      * @param message
-     * @param logLevel 填d, w, e分别代表debug, warn, error; 默认是debug
+     *   填d, w, e分别代表debug, warn, error; 默认是debug
      */
     public static final void toastMessage(final Activity activity, final String message) {
         toastMessage(activity, message, null);
@@ -426,7 +428,9 @@ public class TencentUtil {
         // 显示网络上的图片
         Bitmap bitmap = null;
         try {
-            URL myFileUrl = new URL(imageUri);
+            URL myFileUrl = new URL(Util.picUrlFormat(imageUri));
+            Log.d("test","图片地址:"+Util.picUrlFormat(imageUri));
+
             HttpURLConnection conn = (HttpURLConnection) myFileUrl.openConnection();
             conn.setDoInput(true);
             conn.connect();

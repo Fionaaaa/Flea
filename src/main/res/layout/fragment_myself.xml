@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -35,7 +36,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true" />
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/imageView_myself"
             android:layout_width="60dp"
             android:layout_height="60dp"
@@ -43,7 +44,9 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/line_1"
             android:layout_margin="5dp"
-            android:background="@drawable/shape_head_portrait" />
+            android:background="@drawable/shape_head_portrait"
+            fresco:roundAsCircle="true"
+            fresco:roundedCornerRadius="180dp" />
 
         <TextView
             android:id="@+id/textView_myself_account_name"
@@ -65,7 +68,8 @@
             android:layout_alignLeft="@+id/textView_myself_account_name"
             android:layout_alignStart="@+id/textView_myself_account_name"
             android:layout_marginBottom="7dp"
-            android:text="zhongfuqiang@outlook.com" />
+            android:text="他很懒，什么也没留下"
+            android:textColor="@color/black_m" />
 
         <com.fiona.tiaozao.fragment.myself.Line
             android:id="@+id/view3"
@@ -74,6 +78,17 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/imageView_myself" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="点击登陆"
+            android:id="@+id/textView2_click_login"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="86dp"
+            android:layout_marginStart="86dp" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -172,7 +187,7 @@
             android:src="@drawable/mine_emption" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/textView2_myself_emption"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_alignTop="@+id/imageView11"
@@ -247,7 +262,7 @@
             android:src="@drawable/mine_collection" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/textView3_myself_collection"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_below="@+id/view8"
@@ -263,7 +278,7 @@
             android:layout_height="24dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/textView3"
+            android:layout_alignTop="@+id/textView3_myself_collection"
             android:layout_marginRight="5dp"
             android:layout_marginTop="3dp"
             android:src="@drawable/myself_next" />
@@ -318,6 +333,7 @@
             android:layout_toRightOf="@+id/imageView16"
             android:gravity="center"
             android:text="关于我们"
+            android:textColor="@color/black_xh"
             android:textSize="18sp" />
 
         <ImageView
@@ -381,6 +397,7 @@
             android:layout_toRightOf="@+id/imageView18"
             android:gravity="center"
             android:text="设置"
+            android:textColor="@color/black_xh"
             android:textSize="18sp" />
 
         <ImageView
@@ -438,14 +455,15 @@
 
     <RelativeLayout
         android:id="@+id/add"
-        android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/toolbar">
+        android:layout_below="@+id/toolbar"
+        android:visibility="invisible">
 
         <include layout="@layout/main_add" />
+
     </RelativeLayout>
 
 

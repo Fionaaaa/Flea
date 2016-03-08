@@ -15,6 +15,7 @@ import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.fiona.tiaozao.account.LoginAsQQActivity;
 import com.fiona.tiaozao.fragment.classify.ClassifyFragment;
@@ -59,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         new NetTask().execute();
-
 
         //片段实例化
         homeFragment = new HomeFragment();
@@ -113,11 +113,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * 点击：MyselfFragment的选项
-     *
-     * @param view
-     */
+    //选择（我的界面）
     public void onClick(final View view) {
 
         /*ArrayList<Integer> ids = new ArrayList<>();
@@ -132,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
 
         switch (view.getId()) {
             case R.id.relativeLayout_myself_1:
-                choiceLoginMethod();
+                choiceLoginMethod(view);
                 break;
             case R.id.relativeLayout_myself_2:
                 startActivity(new Intent(this, MyStallActivity.class));
@@ -162,14 +158,21 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * 选择登陆方式
+     * @param v
      */
-    private void choiceLoginMethod() {
+    private void choiceLoginMethod(View v) {
 
-        View view = LayoutInflater.from(this).inflate(R.layout.item_login_method, null);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this).setView(view);
+        if (getSharedPreferences("user", MODE_PRIVATE).getBoolean("isLoad", false)) {
+            //已登陆
 
-        builder.create();
-        dialog = builder.show();
+        } else {
+            //未登录
+            View view = LayoutInflater.from(this).inflate(R.layout.item_login_method, null);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this).setView(view);
+
+            builder.create();
+            dialog = builder.show();
+        }
     }
 
     /**
@@ -179,9 +182,14 @@ public class MainActivity extends AppCompatActivity {
      */
     private void login(int id) {
         dialog.cancel();    //  对话框取消
+        if (id == R.id.relativeLayout_login_qq) {
+            //qq
+            Intent intent = new Intent(this, LoginAsQQActivity.class);
+            startActivity(intent);
+        } else {
+            //weibo
 
-        Intent intent = new Intent(this, LoginAsQQActivity.class);
-        startActivity(intent);
+        }
     }
 
     /**
@@ -260,10 +268,14 @@ public class MainActivity extends AppCompatActivity {
      * @param view
      */
     public void clickAddSelect(View view) {
-        if (view.getId() == R.id.textView_add_sale) {
-            startActivity(new Intent(this, SaleActivity.class));
+        if (getSharedPreferences("user", MODE_PRIVATE).getBoolean("isLoad", false)) {
+            if (view.getId() == R.id.textView_add_sale) {
+                startActivity(new Intent(this, SaleActivity.class));
+            } else {
+                startActivity(new Intent(this, PurchaseActivity.class));
+            }
         } else {
-            startActivity(new Intent(this, PurchaseActivity.class));
+            Toast.makeText(MainActivity.this, "请先登陆", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -284,7 +296,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     //开始所有的网络请求（异步任务）
-    private class NetTask extends AsyncTask<Void,Void,Void>{
+    private class NetTask extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected Void doInBackground(Void... params) {
