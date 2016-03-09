@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by fiona on 16-3-6.
@@ -163,10 +164,66 @@ public class Interactor {
     }
 
     //更新用户描述
-    public static void updateUserDescribe(Context context,String describe){
+    public static void updateUserDescribe(Context context, String describe) {
         //更新网络
-        UploadImpl.getInstance(context).updateUser(describe,getId(context));
+        UploadImpl.getInstance(context).updateUser(describe, getId(context));
         //更新本地
-        User.executeQuery("update user set describe =? where id=?",describe,getId(context));
+        User.executeQuery("update user set describe =? where id=?", describe, getId(context));
+    }
+
+    //用户是否收藏了此物品
+    public static boolean isCollected(Context context, String goods_id) {
+
+        Set<String> set = context.getSharedPreferences("user", Context.MODE_PRIVATE).getStringSet("collect_goods", null);
+        if (set != null && set.contains(goods_id)) {
+            Log.d("debug","goods_id:"+goods_id);
+            for(String s:set){
+                Log.d("debug","set:"+s);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    //删除一个收藏
+    public static void deletCollection(Context context, String obj_id, int flag) {
+        UploadImpl.getInstance(context).deleteCollection(getId(context), obj_id);
+        Set<String> set;
+        if (flag == 1) {
+            set = context.getSharedPreferences("user", Context.MODE_PRIVATE).getStringSet("collect_goods", null);
+            if (set != null) {
+                if (set.contains(obj_id)) {
+                    set.remove(obj_id);
+                    context.getSharedPreferences("user", Context.MODE_PRIVATE).edit().putStringSet("collect_goods", set).commit();
+                }
+            }
+        } else {
+            set = context.getSharedPreferences("user", Context.MODE_PRIVATE).getStringSet("collect_user", null);
+            if (set != null && set.contains(obj_id)) {
+                set.remove(obj_id);
+                context.getSharedPreferences("user", Context.MODE_PRIVATE).edit().putStringSet("cellect_user", set).commit();
+            }
+        }
+    }
+
+    //添加一个收藏(本地以及服务器)
+    public static void addCollection(Context context, String obj_id, int flag) {
+        UploadImpl.getInstance(context).addCollection(getId(context), obj_id, String.valueOf(flag));
+        Set<String> set;
+        if (flag == 1) {
+            set = context.getSharedPreferences("user", Context.MODE_PRIVATE).getStringSet("collect_goods", null);
+            if(set==null){
+                set=new HashSet<>();
+            }
+            set.add(obj_id);
+            context.getSharedPreferences("user", Context.MODE_PRIVATE).edit().putStringSet("collect_goods", set).commit();
+        } else {
+            set = context.getSharedPreferences("user", Context.MODE_PRIVATE).getStringSet("collect_user", null);
+            if(set==null){
+                set=new HashSet<>();
+            }
+            set.add(obj_id);
+            context.getSharedPreferences("user", Context.MODE_PRIVATE).edit().putStringSet("collect_user", set).commit();
+        }
     }
 }

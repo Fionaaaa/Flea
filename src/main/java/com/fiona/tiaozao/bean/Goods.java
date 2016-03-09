@@ -10,6 +10,8 @@ import java.io.Serializable;
  */
 public class Goods extends SugarRecord implements Serializable {
 
+    private String goods_id;    //自定义的物品id
+
     @Expose
     private String title;        //名字
     @Expose
@@ -183,6 +185,14 @@ public class Goods extends SugarRecord implements Serializable {
 
     public void setContact(String contact) {
         this.contact = contact;
+    }
+
+    public String getGoods_id() {
+        return goods_id;
+    }
+
+    public void setGoods_id(String goods_id) {
+        this.goods_id = goods_id;
     }
 
     @Override

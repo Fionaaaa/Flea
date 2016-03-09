@@ -32,7 +32,7 @@ public interface Upload {
      * 添加一个收藏
      * @param
      */
-    void addCollection(final String userID, final String user_goods_id);
+    void addCollection(final String userID, final String user_goods_id,String flag);
 
     /**
      * 删除一个收藏
@@ -48,7 +48,7 @@ public interface Upload {
 
     /**
      * 更新用户
-     * @param user
+     * @param
      */
     void updateUser(String desceibe,String user_id);
 }

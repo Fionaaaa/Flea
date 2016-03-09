@@ -63,7 +63,9 @@ public class MyStallActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        new SetDataSource().execute(userID);
+        if (userID != null) {
+            new SetDataSource().execute(userID);
+        }
     }
 
     /**
@@ -167,7 +169,10 @@ public class MyStallActivity extends AppCompatActivity {
         @Override
         protected ArrayList<Goods> doInBackground(String... params) {
             String userID = params[0];
-            ArrayList<Goods> goodsList = (ArrayList<Goods>) Goods.find(Goods.class, "user_id= ? and flag= ?", userID, "1");
+            ArrayList<Goods> goodsList=new ArrayList<>();
+            if (userID != null) {
+                goodsList = (ArrayList<Goods>) Goods.find(Goods.class, "user_id= ? and flag= ?", userID, "1");
+            }
             return goodsList;
         }
 

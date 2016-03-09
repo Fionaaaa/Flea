@@ -49,6 +49,19 @@
         android:layout_below="@+id/toolbar"
         android:background="@color/black_m" />
 
+    <ImageView
+        android:id="@+id/icon_add_collection"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignBottom="@+id/toolbar"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:onClick="doCollect"
+        android:src="@drawable/icon_remove_collecdtion" />
+
     <TextView
         android:id="@+id/textView20"
         android:layout_width="wrap_content"

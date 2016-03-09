@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.fiona.tiaozao.account.AccountActivity;
 import com.fiona.tiaozao.account.LoginAsQQActivity;
+import com.fiona.tiaozao.account.sinaWeibo.WeiboLoginActivity;
 import com.fiona.tiaozao.fragment.classify.ClassifyFragment;
 import com.fiona.tiaozao.fragment.discover.DiscoverFragment;
 import com.fiona.tiaozao.fragment.home.HomeFragment;
@@ -189,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         } else {
             //weibo
-
+            startActivity(new Intent(this, WeiboLoginActivity.class));
         }
     }
 

@@ -14,7 +14,6 @@ import com.android.volley.toolbox.Volley;
 import com.fiona.tiaozao.App;
 import com.fiona.tiaozao.bean.Goods;
 import com.fiona.tiaozao.bean.User;
-import com.fiona.tiaozao.interactor.Interactor;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -85,6 +84,7 @@ public class NetQueryImpl implements NetQuery {
                 for (int i = 0; i < jsonArray.size(); i++) {
                     element = jsonArray.get(i);
                     Goods goods = gson.fromJson(element, Goods.class);
+                    goods.setGoods_id(String.valueOf(goods.getId()));
                     data.add(goods);
                 }
 
@@ -122,6 +122,7 @@ public class NetQueryImpl implements NetQuery {
                 for (int i = 0; i < jsonArray.size(); i++) {
                     element = jsonArray.get(i);
                     Goods goods = gson.fromJson(element, Goods.class);
+                    goods.setGoods_id(String.valueOf(goods.getId()));
                     data.add(goods);
                 }
 
@@ -254,6 +255,7 @@ public class NetQueryImpl implements NetQuery {
                     element = jsonArray.get(i);
                     Goods goods = gson.fromJson(element, Goods.class);
                     listGoods.add(goods);
+
                     ids.add(String.valueOf(goods.getId()));
                 }
 

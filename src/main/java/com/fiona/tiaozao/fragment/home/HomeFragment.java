@@ -201,6 +201,7 @@ public class HomeFragment extends Fragment {
 
             Intent intent = new Intent(getActivity(), ProductActivity.class);
             intent.putExtra(App.ACTION_GOODS, data.get(v.getId()));
+            Log.d("debug","物品的id："+data.get(v.getId()).getId());
             startActivity(intent);
         }
 

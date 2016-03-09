@@ -100,7 +100,7 @@ public class UploadImpl implements Upload {
 
     //添加收藏
     @Override
-    public void addCollection(final String userID, final String user_goods_id) {
+    public void addCollection(final String userID, final String user_goods_id, final String flag) {
         StringRequest request = new StringRequest(StringRequest.Method.POST, App.URL + App.USER_OPERATE_SERVLET, new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
@@ -116,8 +116,9 @@ public class UploadImpl implements Upload {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> map = new HashMap();
                 map.put("type", "1");
-                map.put("user_id", String.valueOf(userID));
-                map.put("user_goods_id", String.valueOf(user_goods_id));
+                map.put("user_id", userID);
+                map.put("obj_id", user_goods_id);
+                map.put("flag",flag);
                 return map;
             }
         };
@@ -143,7 +144,7 @@ public class UploadImpl implements Upload {
                 Map<String, String> map = new HashMap();
                 map.put("type", "2");
                 map.put("user_id", String.valueOf(userID));
-                map.put("user_goods_id", String.valueOf(user_goods_id));
+                map.put("obj_id", String.valueOf(user_goods_id));
                 return map;
             }
         };

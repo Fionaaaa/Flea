@@ -132,7 +132,7 @@ public class MyCollectionActivity extends AppCompatActivity {
                 holderGoods = new HolderGoods(convertView);
                 holderGoods.imageView.setImageURI(Uri.parse(goodsList.get(position - userList.size() - 2).getPic_location()));
                 holderGoods.textViewTitle.setText(goodsList.get(position - userList.size() - 2).getTitle());
-                holderGoods.textViewPrice.setText((int) goodsList.get(position - userList.size() - 2).getPrice());
+                holderGoods.textViewPrice.setText(String.valueOf(goodsList.get(position - userList.size() - 2).getPrice()));
                 holderGoods.textViewDescribe.setText(goodsList.get(position - userList.size() - 2).getDescribe());
 
             }
