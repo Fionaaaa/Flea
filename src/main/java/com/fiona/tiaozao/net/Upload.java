@@ -50,5 +50,5 @@ public interface Upload {
      * 更新用户
      * @param user
      */
-    void updateUser(User user);
+    void updateUser(String desceibe,String user_id);
 }

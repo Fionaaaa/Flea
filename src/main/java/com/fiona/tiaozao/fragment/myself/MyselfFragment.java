@@ -71,9 +71,11 @@ public class MyselfFragment extends Fragment {
             //已经登陆
             String name = pf.getString("name", null);
             String icon = pf.getString("icon", null);
+            String describe=pf.getString("describe","这是"+name+"的摊位");
 
             draweeView.setImageURI(Uri.parse(icon));
             textViewName.setText(name);
+            textViewDescribe.setText(describe);
 
             textViewName.setVisibility(View.VISIBLE);
             textViewDescribe.setVisibility(View.VISIBLE);
@@ -90,6 +92,7 @@ public class MyselfFragment extends Fragment {
         } else {
             //未登录
             textViewName.setText("点击登陆");
+            draweeView.setImageURI(null);
             textViewName.setVisibility(View.INVISIBLE);
             textViewDescribe.setVisibility(View.INVISIBLE);
             textViewLogin.setVisibility(View.VISIBLE);

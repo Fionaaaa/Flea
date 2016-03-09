@@ -6,13 +6,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,9 +20,6 @@ import com.fiona.tiaozao.App;
 import com.fiona.tiaozao.MainActivity;
 import com.fiona.tiaozao.R;
 import com.fiona.tiaozao.bean.Goods;
-import com.fiona.tiaozao.bean.User;
-import com.fiona.tiaozao.net.NetQuery;
-import com.fiona.tiaozao.net.NetQueryImpl;
 
 import java.util.ArrayList;
 
@@ -47,9 +41,6 @@ public class DiscoverRightFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-/*        handler = new MyHandler();
-        NetQuery query = NetQueryImpl.getInstance(getActivity());
-        query.getEmptionGoods(handler);*/
 
         View view = inflater.inflate(R.layout.fragment_discover_right, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycle_discover_right);
@@ -143,7 +134,7 @@ public class DiscoverRightFragment extends Fragment {
             imageView = (SimpleDraweeView) v.findViewById(R.id.imageView_discover_right);
             textViewClassify = (TextView) v.findViewById(R.id.textView_purchase_classify);
             textViewDescription = (TextView) v.findViewById(R.id.textView_purchase_describe);
-            textViewAuthor = (TextView) v.findViewById(R.id.textView_purchase_author);
+            textViewAuthor = (TextView) v.findViewById(R.id.textView_purchase_author_discover);
 
 
             textViewTime = (TextView) v.findViewById(R.id.textView_purchase_time);

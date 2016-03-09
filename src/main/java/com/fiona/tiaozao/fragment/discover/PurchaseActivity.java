@@ -31,12 +31,12 @@ public class PurchaseActivity extends AppCompatActivity {
         Goods goods= (Goods) intent.getExtras().get(App.ACTION_GOODS);
 
         SimpleDraweeView imageView= (SimpleDraweeView) findViewById(R.id.imageView_discover_right);
-       imageView.setImageURI(Uri.parse(App.URL+goods.getPic_location()));
+       imageView.setImageURI(Uri.parse(App.URL + goods.getPic_location()));
 
         TextView tvClassify= (TextView) findViewById(R.id.textView_purchase_classify);
         tvClassify.setText("求购·"+goods.getClassify());
 
-        TextView tvAuthor= (TextView) findViewById(R.id.textView_purchase_author);
+        TextView tvAuthor= (TextView) findViewById(R.id.textView_purchase_author_discover2);
         tvAuthor.setText(goods.getUserName());
 
         TextView tvTime= (TextView) findViewById(R.id.textView_purchase_time);

@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.fiona.tiaozao.account.AccountActivity;
 import com.fiona.tiaozao.account.LoginAsQQActivity;
 import com.fiona.tiaozao.fragment.classify.ClassifyFragment;
 import com.fiona.tiaozao.fragment.discover.DiscoverFragment;
@@ -164,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (getSharedPreferences("user", MODE_PRIVATE).getBoolean("isLoad", false)) {
             //已登陆
-
+            startActivity(new Intent(this, AccountActivity.class));
         } else {
             //未登录
             View view = LayoutInflater.from(this).inflate(R.layout.item_login_method, null);

@@ -32,7 +32,7 @@ public class MyPurchaseActivity extends AppCompatActivity {
 
     private String userID;
 
-    ArrayList<Goods> data=new ArrayList<>();
+    ArrayList<Goods> data = new ArrayList<>();
 
     ArrayList<Goods> listEmption;
 
@@ -53,7 +53,7 @@ public class MyPurchaseActivity extends AppCompatActivity {
 
         listView = (ListView) findViewById(R.id.listView_my_purchase);
 
-        listView.setAdapter(new ListViewAdapter(this,data));
+        listView.setAdapter(new ListViewAdapter(this, data));
 
         listView.setOnItemClickListener(new ListViewListener());
     }
@@ -162,8 +162,8 @@ public class MyPurchaseActivity extends AppCompatActivity {
 
         @Override
         protected ArrayList<Goods> doInBackground(String... params) {
-            String userID=params[0];
-            ArrayList<Goods> goodsList = (ArrayList<Goods>) Goods.find(Goods.class,"user_id= ? and flag= ?",userID,"0");
+            String userID = params[0];
+            ArrayList<Goods> goodsList = (ArrayList<Goods>) Goods.find(Goods.class, "user_id= ? and flag= ?", userID, "0");
             return goodsList;
         }
 
@@ -174,8 +174,10 @@ public class MyPurchaseActivity extends AppCompatActivity {
     }
 
     private void setAdapter(ArrayList<Goods> data) {
-        this.data=data;
-        listView.setAdapter(new ListViewAdapter(this,data));
+        this.data = data;
+        if (data.size() > 0) {
+            listView.setAdapter(new ListViewAdapter(this, data));
+        }
     }
 
 }

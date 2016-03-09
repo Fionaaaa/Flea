@@ -67,7 +67,7 @@
         android:textColor="@color/blue_m" />
 
     <TextView
-        android:id="@+id/textView_purchase_author"
+        android:id="@+id/textView_purchase_author_discover2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/textView_purchase_classify"
@@ -95,7 +95,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/textView_purchase_author"
+        android:layout_alignTop="@+id/textView_purchase_author_discover2"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
         android:text="下午3:54"

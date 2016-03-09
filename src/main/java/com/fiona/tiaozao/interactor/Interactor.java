@@ -161,4 +161,12 @@ public class Interactor {
         userList.removeAll(list);
         return userList;
     }
+
+    //更新用户描述
+    public static void updateUserDescribe(Context context,String describe){
+        //更新网络
+        UploadImpl.getInstance(context).updateUser(describe,getId(context));
+        //更新本地
+        User.executeQuery("update user set describe =? where id=?",describe,getId(context));
+    }
 }

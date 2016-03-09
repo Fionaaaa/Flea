@@ -173,7 +173,9 @@ public class MyStallActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(ArrayList<Goods> data) {
-            setAdapter(data);
+            if (data.size() > 0) {
+                setAdapter(data);
+            }
         }
     }
 

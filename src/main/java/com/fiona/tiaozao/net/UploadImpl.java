@@ -9,8 +9,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.fiona.tiaozao.App;
-import com.fiona.tiaozao.util.ImageOprator;
 import com.fiona.tiaozao.bean.User;
+import com.fiona.tiaozao.util.ImageOprator;
 
 import java.io.File;
 import java.io.IOException;
@@ -83,8 +83,8 @@ public class UploadImpl implements Upload {
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> map=new HashMap();
-                map.put("type","delete");
+                Map<String, String> map = new HashMap();
+                map.put("type", "delete");
                 map.put("goods_id", String.valueOf(goodsID));
                 return map;
             }
@@ -114,8 +114,8 @@ public class UploadImpl implements Upload {
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> map=new HashMap();
-                map.put("type","1");
+                Map<String, String> map = new HashMap();
+                map.put("type", "1");
                 map.put("user_id", String.valueOf(userID));
                 map.put("user_goods_id", String.valueOf(user_goods_id));
                 return map;
@@ -140,8 +140,8 @@ public class UploadImpl implements Upload {
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> map=new HashMap();
-                map.put("type","2");
+                Map<String, String> map = new HashMap();
+                map.put("type", "2");
                 map.put("user_id", String.valueOf(userID));
                 map.put("user_goods_id", String.valueOf(user_goods_id));
                 return map;
@@ -153,25 +153,26 @@ public class UploadImpl implements Upload {
     //添加用户
     @Override
     public void insertUser(final User user) {
-        StringRequest request=new StringRequest(StringRequest.Method.POST,App.URL+App.USER_OPERATE_SERVLET, new com.android.volley.Response.Listener<String>() {
+        StringRequest request = new StringRequest(StringRequest.Method.POST, App.URL + App.USER_OPERATE_SERVLET, new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-                Log.d("debug","添加用户成功");
+                Log.d("debug", "添加用户成功");
             }
         }, new com.android.volley.Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.d("debug","添加用户失败");
+                Log.d("debug", "添加用户失败");
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> map=new HashMap<>();
-                map.put("type","3");
-                map.put("icon",user.getIcon());
-                map.put("name",user.getName());
-                map.put("account",user.getAccount());
+                Map<String, String> map = new HashMap<>();
+                map.put("type", "3");
+                map.put("icon", user.getIcon());
+                map.put("name", user.getName());
+                map.put("account", user.getAccount());
                 map.put("flag", String.valueOf(user.getFlag()));
+                map.put("describe",user.getDescribe());
 
                 return map;
             }
@@ -181,8 +182,29 @@ public class UploadImpl implements Upload {
 
     //更新用户
     @Override
-    public void updateUser(User user) {
+    public void updateUser(final String desceibe, final String user_id) {
+        StringRequest request = new StringRequest(StringRequest.Method.POST, App.URL + App.USER_OPERATE_SERVLET, new com.android.volley.Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                Log.d("debug", "更新用户成功");
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.d("debug", "更新用户失败");
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> map = new HashMap<>();
+                map.put("type", "4");
+                map.put("describe", desceibe);
+                map.put("user_id", user_id);
 
+                return map;
+            }
+        };
+        queue.add(request);
     }
 
     /**
@@ -205,7 +227,7 @@ public class UploadImpl implements Upload {
         for (String key : map.keySet()) {
             builder.addFormDataPart(key, map.get(key));
         }
-        builder.addFormDataPart("type","insert");
+        builder.addFormDataPart("type", "insert");
         RequestBody body = builder.build();
 
         //post请求
@@ -219,14 +241,14 @@ public class UploadImpl implements Upload {
             @Override
             public void onFailure(Call call, IOException e) {
                 //请求失败
-                Log.d("debug", "添加物品失败:"+e.toString());
+                Log.d("debug", "添加物品失败:" + e.toString());
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 //请求成功
-                String code=response.toString();
-                Log.d("debug",code);
+                String code = response.toString();
+                Log.d("debug", code);
             }
         });
     }

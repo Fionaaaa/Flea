@@ -1,8 +1,6 @@
 package com.fiona.tiaozao.account;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -11,7 +9,6 @@ import android.widget.Toast;
 import com.fiona.tiaozao.R;
 import com.fiona.tiaozao.bean.User;
 import com.fiona.tiaozao.interactor.Interactor;
-import com.fiona.tiaozao.util.ImageOprator;
 import com.fiona.tiaozao.util.Util;
 import com.tencent.connect.UserInfo;
 import com.tencent.connect.auth.QQAuth;
@@ -23,13 +20,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.IOException;
 
 public class LoginAsQQActivity extends AppCompatActivity {
 
     Tencent mTencent;
     QQAuth mQQqAuth;
-    String AppId = "222222";
+    static String AppId = "222222";
 
     String userName;
     String picURL;
@@ -125,16 +121,18 @@ public class LoginAsQQActivity extends AppCompatActivity {
         getSharedPreferences("user", MODE_PRIVATE).edit().putString("icon", Util.picUrlFormat(picURL)).commit();
         getSharedPreferences("user", MODE_PRIVATE).edit().putString("name", userName).commit();
         getSharedPreferences("user", MODE_PRIVATE).edit().putString("account", openId).commit();
-        getSharedPreferences("user",MODE_PRIVATE).edit().putString("flag", "1").commit();
+        getSharedPreferences("user", MODE_PRIVATE).edit().putString("flag", "1").commit();
 
         Log.d("debug77", String.valueOf(getPreferences(MODE_PRIVATE).getBoolean("isLoad", false)));
 
         //保存到网络
         User user = new User(Util.picUrlFormat(picURL), userName, openId, 1);
+        user.setDescribe("这是" + userName + "的摊位");
 
         Interactor.insertUser(this, user);
 
         Toast.makeText(LoginAsQQActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
         finish();   //结束活动
     }
+
 }
