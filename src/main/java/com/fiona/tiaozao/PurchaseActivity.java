@@ -70,6 +70,9 @@ public class PurchaseActivity extends AppCompatActivity {
             map.put("describe", describe);
             map.put("user_id", userID);
             UploadImpl.getInstance(this).addGoods(null, map, false);
+
+            Toast.makeText(this, "提交成功", Toast.LENGTH_SHORT).show();
+            finish();
         } else {
             Toast.makeText(PurchaseActivity.this, "不能为空", Toast.LENGTH_SHORT).show();
         }

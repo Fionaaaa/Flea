@@ -4,7 +4,7 @@
     android:padding="8dp"
     android:layout_height="match_parent">
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/imageView_home"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -12,7 +12,6 @@
         android:scaleType="fitXY"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="@color/blue_m"
         />
 
     <TextView
@@ -22,6 +21,7 @@
         android:layout_marginLeft="12dp"
         android:layout_marginStart="12dp"
         android:text="19.8￥"
+        android:textColor="@color/green_m"
         android:layout_marginBottom="9dp"
         android:layout_alignBottom="@+id/imageView_home"
         android:layout_toRightOf="@+id/imageView_home"
@@ -33,6 +33,9 @@
         android:layout_height="wrap_content"
         android:text="电风扇"
         android:layout_marginTop="7dp"
+        android:textColor="@color/black_h"
+        android:maxLength="5"
+        android:ellipsize="none"
         android:layout_alignTop="@+id/imageView_home"
         android:layout_toRightOf="@+id/imageView_home"
         android:layout_toEndOf="@+id/imageView_home"

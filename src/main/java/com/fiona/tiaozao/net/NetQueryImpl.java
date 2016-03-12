@@ -14,6 +14,7 @@ import com.android.volley.toolbox.Volley;
 import com.fiona.tiaozao.App;
 import com.fiona.tiaozao.bean.Goods;
 import com.fiona.tiaozao.bean.User;
+import com.fiona.tiaozao.interactor.Interactor;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -160,6 +161,7 @@ public class NetQueryImpl implements NetQuery {
                 for (int i = 0; i < jsonArray.size(); i++) {
                     element = jsonArray.get(i);
                     User user = gson.fromJson(element, User.class);
+                    user.setUser_id(String.valueOf(user.getId()));
                     data.add(user);
                 }
 
@@ -255,12 +257,13 @@ public class NetQueryImpl implements NetQuery {
                     element = jsonArray.get(i);
                     Goods goods = gson.fromJson(element, Goods.class);
                     listGoods.add(goods);
-
-                    ids.add(String.valueOf(goods.getId()));
+                    if (goods != null) {
+                        ids.add(String.valueOf(goods.getId()));
+                    }
                 }
 
                 //将收藏记录写到本地
-                mContext.getSharedPreferences("user", Context.MODE_PRIVATE).edit().putStringSet("collect_goods",ids).commit();
+                mContext.getSharedPreferences("user", Context.MODE_PRIVATE).edit().putStringSet("collect_goods", ids).commit();
             }
         }, null) {
             @Override
@@ -292,10 +295,11 @@ public class NetQueryImpl implements NetQuery {
                     User user = gson.fromJson(element, User.class);
                     listUser.add(user);
                     ids.add(String.valueOf(user.getId()));
+
                 }
 
                 //将收藏记录写到本地
-                mContext.getSharedPreferences("user", Context.MODE_PRIVATE).edit().putStringSet("collect_user",ids).commit();
+                mContext.getSharedPreferences("user", Context.MODE_PRIVATE).edit().putStringSet("collect_user", ids).commit();
             }
         }, null) {
             @Override
@@ -303,6 +307,41 @@ public class NetQueryImpl implements NetQuery {
                 Map map = new HashMap();
                 map.put("type", "user");
                 map.put("id", userID);
+                return map;
+            }
+        };
+        queue.add(request);
+    }
+
+    //获得本人收藏的摊位以及物品通知
+    @Override
+    public void getNotify(final String user_id, final Context context) {
+        final ArrayList<Goods> listGoods = new ArrayList<>();
+        StringRequest request = new StringRequest(StringRequest.Method.POST, App.URL + App.USER_SERVLET, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                Log.d("debug", "s:" + s);
+                if (s.length() > 0) {
+                    Gson gson = new Gson();
+                    JsonParser parser = new JsonParser();
+                    JsonElement element = parser.parse(s);
+                    JsonArray jsonArray = element.getAsJsonArray();
+                    for (int i = 0; i < jsonArray.size(); i++) {
+                        element = jsonArray.get(i);
+                        Goods goods = gson.fromJson(element, Goods.class);
+                        listGoods.add(goods);
+                    }
+
+                    //发送通知
+                    Interactor.sendNotify(listGoods, context);
+                }
+            }
+        }, null) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map map = new HashMap();
+                map.put("type", "notify");
+                map.put("user_id", user_id);
                 return map;
             }
         };

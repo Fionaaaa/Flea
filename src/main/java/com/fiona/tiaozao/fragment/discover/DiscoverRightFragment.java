@@ -20,6 +20,7 @@ import com.fiona.tiaozao.App;
 import com.fiona.tiaozao.MainActivity;
 import com.fiona.tiaozao.R;
 import com.fiona.tiaozao.bean.Goods;
+import com.fiona.tiaozao.interactor.Interactor;
 
 import java.util.ArrayList;
 
@@ -45,12 +46,18 @@ public class DiscoverRightFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_discover_right, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycle_discover_right);
 
+        initView();
+
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
+
+    }
+
+    void initView() {
 
         new SetDataSource().execute();
 
@@ -83,11 +90,18 @@ public class DiscoverRightFragment extends Fragment {
             holder.view.setOnClickListener(this);
 
             /**
-             * 加载网络（缓存）数据
+             * 加载网（缓存）数据
              */
             Goods goods = data.get(position);
-            Uri uri=Uri.parse(App.URL+goods.getPic_location());
-            holder.imageView.setImageURI(uri);
+            //用户头像
+            String icon = Interactor.getIcon(goods.getGoods_id());
+            if (icon != null) {
+                if (!Interactor.onlyWifi(getActivity())) {
+                    holder.imageView.setImageURI(Uri.parse(icon));
+                }else{
+                    holder.imageView.setImageURI(Uri.parse(App.DEFAULT_PIC));
+                }
+            }
 
             holder.textViewAuthor.setText(goods.getUserName());
 
@@ -131,10 +145,10 @@ public class DiscoverRightFragment extends Fragment {
             super(v);
             this.view = v;
 
-            imageView = (SimpleDraweeView) v.findViewById(R.id.imageView_discover_right);
-            textViewClassify = (TextView) v.findViewById(R.id.textView_purchase_classify);
-            textViewDescription = (TextView) v.findViewById(R.id.textView_purchase_describe);
-            textViewAuthor = (TextView) v.findViewById(R.id.textView_purchase_author_discover);
+            imageView = (SimpleDraweeView) v.findViewById(R.id.dis_right_sd);
+            textViewClassify = (TextView) v.findViewById(R.id.dis_right_classify);
+            textViewDescription = (TextView) v.findViewById(R.id.dis_right_describe);
+            textViewAuthor = (TextView) v.findViewById(R.id.dis_right_author);
 
 
             textViewTime = (TextView) v.findViewById(R.id.textView_purchase_time);
@@ -148,7 +162,7 @@ public class DiscoverRightFragment extends Fragment {
 
         @Override
         protected ArrayList<Goods> doInBackground(Void... params) {
-            ArrayList<Goods> goodsList = (ArrayList<Goods>) Goods.find(Goods.class,"flag = ?","0");
+            ArrayList<Goods> goodsList = (ArrayList<Goods>) Goods.find(Goods.class, "flag = ?", "0");
 
             return goodsList;
         }
@@ -161,6 +175,6 @@ public class DiscoverRightFragment extends Fragment {
 
     //设置适配器
     private void setAdapter(ArrayList<Goods> data) {
-        recyclerView.setAdapter(new Rvadapter(getActivity(),data));
+        recyclerView.setAdapter(new Rvadapter(getActivity(), data));
     }
 }

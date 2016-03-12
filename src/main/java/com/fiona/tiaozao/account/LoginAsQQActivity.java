@@ -132,6 +132,13 @@ public class LoginAsQQActivity extends AppCompatActivity {
         Interactor.insertUser(this, user);
 
         Toast.makeText(LoginAsQQActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
+
+        //开始所有的网络请求
+        Interactor.startAllNetTask(LoginAsQQActivity.this);
+
+        //清空本地设置
+        Interactor.clearSetting(LoginAsQQActivity.this);
+
         finish();   //结束活动
     }
 

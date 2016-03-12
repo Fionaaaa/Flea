@@ -39,10 +39,10 @@
         android:textColor="@color/white"
         android:textSize="19sp" />
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/imageView_product_picture"
         android:layout_width="match_parent"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
         android:layout_height="250dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -163,5 +163,16 @@
         android:layout_toRightOf="@+id/textView28"
         android:autoLink="all"
         android:textColor="@color/black_h" />
+
+    <EditText
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/editText2"
+        android:visibility="invisible"
+        android:layout_alignTop="@+id/textView23_product_price"
+        android:layout_alignLeft="@+id/textView23_product_price"
+        android:layout_alignStart="@+id/textView23_product_price" />
 
 </RelativeLayout>

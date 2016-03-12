@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.fiona.tiaozao.App;
 import com.fiona.tiaozao.MainActivity;
 import com.fiona.tiaozao.R;
-import com.fiona.tiaozao.bean.Goods;
 import com.fiona.tiaozao.bean.User;
 import com.fiona.tiaozao.interactor.Interactor;
 
@@ -45,9 +43,7 @@ public class DiscoverLeftFragment extends Fragment {
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycle_discover_left);
 
-/*        Handler handler=new MyHandler();
-        NetQuery query=NetQueryImpl.getInstance(getActivity());
-        query.getUsers(handler);*/
+        initView();
 
         return view;
     }
@@ -56,8 +52,10 @@ public class DiscoverLeftFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
+    }
+
+    void initView() {
         new SetDataSource().execute();  //读取本地数据
-        Log.d("test", "本地去数据");
 
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, GridLayoutManager.VERTICAL));
         recyclerView.setAdapter(new RvAdapter(getActivity(), data));
@@ -97,15 +95,16 @@ public class DiscoverLeftFragment extends Fragment {
             holder.view.setId(position);
 
             /**
-             * 从网络（缓存）取数据显示
+             * 从（缓存）取数据显示
              */
             User user = data.get(position);
 
-            Uri uri = Uri.parse(App.URL + user.getIcon());
-            holder.imageView.setImageURI(uri);
-
+            if (!Interactor.onlyWifi(getActivity())) {
+                holder.imageView.setImageURI(Uri.parse(user.getIcon()));
+            }else{
+                holder.imageView.setImageURI(Uri.parse(App.DEFAULT_PIC));
+            }
             holder.textViewSale.setText(user.getName());
-
             holder.textViewDescription.setText("描述:" + user.getDescribe());
         }
 
@@ -146,6 +145,7 @@ public class DiscoverLeftFragment extends Fragment {
                 this.view = view;
 
                 imageView = (SimpleDraweeView) view.findViewById(R.id.imageView_discover_left);
+
                 textViewSale = (TextView) view.findViewById(R.id.textView_discover_left_author);
                 textViewDescription = (TextView) view.findViewById(R.id.textView_discover_left_description);
                 textViewTime = (TextView) view.findViewById(R.id.textView_discover_left_time);

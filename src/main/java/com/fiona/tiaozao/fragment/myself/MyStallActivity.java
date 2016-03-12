@@ -2,28 +2,33 @@ package com.fiona.tiaozao.fragment.myself;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Handler;
-import android.os.Message;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.fiona.tiaozao.App;
 import com.fiona.tiaozao.ProductActivity;
 import com.fiona.tiaozao.R;
 import com.fiona.tiaozao.bean.Goods;
 import com.fiona.tiaozao.bean.User;
-import com.fiona.tiaozao.net.NetQuery;
-import com.fiona.tiaozao.net.NetQueryImpl;
-import com.squareup.picasso.Picasso;
+import com.fiona.tiaozao.fragment.myself.edit.DeleteView;
+import com.fiona.tiaozao.fragment.myself.edit.SureCircleView;
+import com.fiona.tiaozao.interactor.Interactor;
+import com.fiona.tiaozao.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,15 +41,21 @@ public class MyStallActivity extends AppCompatActivity {
     private String userID;
 
     ArrayList<Goods> data = new ArrayList<>();
+    DeleteView deleteView;
+    float y;
+    boolean isSelectMode = false;
+    TextView editText;
+
+    int[] listSelectec;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_stall);
-
-/*        Handler handler = new MyHandler();
-        NetQuery query = NetQueryImpl.getInstance(this);
-        query.getUser(userID,handler);*/
+        deleteView = (DeleteView) findViewById(R.id.deleteView_product);
+        editText = (TextView) findViewById(R.id.text_my_stall);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar2);
 
         String account = getSharedPreferences("user", MODE_PRIVATE).getString("account", "000");
         List<User> userList = User.find(User.class, "account=?", account);
@@ -58,14 +69,8 @@ public class MyStallActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new ListViewListener());
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (userID != null) {
-            new SetDataSource().execute(userID);
-        }
+        new SetDataSource().execute(userID);
     }
 
     /**
@@ -113,7 +118,7 @@ public class MyStallActivity extends AppCompatActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             Holder holder;
             if (convertView == null) {
-                convertView = inflater.inflate(R.layout.list_listview_product, parent, false);
+                convertView = inflater.inflate(R.layout.list_my_collection_product, parent, false);
                 holder = new Holder(convertView);
                 convertView.setTag(holder);
             } else {
@@ -121,9 +126,24 @@ public class MyStallActivity extends AppCompatActivity {
             }
 
             Goods goods = data.get(position);
-            Picasso.with(context).load(App.URL + goods.getPic_location()).into(holder.imageView);
+            if (!Interactor.onlyWifi(MyStallActivity.this)) {
+                holder.imageView.setImageURI(Uri.parse(App.URL + goods.getPic_location()));
+            }
             holder.tvTitle.setText(goods.getTitle());
             holder.tvPrice.setText(String.valueOf(goods.getPrice()) + "￥");
+            holder.tvDescribe.setText(goods.getDescribe());
+
+            if (isSelectMode) {
+                holder.circleView.setVisibility(View.VISIBLE);  //可见
+                if (listSelectec[position] == 1) {
+                    holder.circleView.setStyle(SureCircleView.FILL);
+                } else {
+                    holder.circleView.setStyle(SureCircleView.STROKE);
+                }
+            } else {
+                holder.circleView.setVisibility(View.INVISIBLE);
+            }
+
             return convertView;
         }
 
@@ -131,16 +151,18 @@ public class MyStallActivity extends AppCompatActivity {
          * Holder类
          */
         class Holder {
-            ImageView imageView;
+            SimpleDraweeView imageView;
             TextView tvTitle;
             TextView tvPrice;
             TextView tvDescribe;
+            SureCircleView circleView;
 
             Holder(View view) {
-                imageView = (ImageView) view.findViewById(R.id.imageView8_classify_product_pic);
-                tvTitle = (TextView) view.findViewById(R.id.textView22_classify_product_title);
-                tvPrice = (TextView) view.findViewById(R.id.textView30_classify_product_price);
-                tvDescribe = (TextView) view.findViewById(R.id.textView22_classify_product_title);
+                imageView = (SimpleDraweeView) view.findViewById(R.id.list_my_collection_product_picture);
+                tvTitle = (TextView) view.findViewById(R.id.list_my_collection_product_title);
+                tvPrice = (TextView) view.findViewById(R.id.list_my_collection_product_price);
+                tvDescribe = (TextView) view.findViewById(R.id.list_my_collection_product_describe);
+                circleView = (SureCircleView) view.findViewById(R.id.sureCirleView_product);
             }
         }
     }
@@ -153,10 +175,19 @@ public class MyStallActivity extends AppCompatActivity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-            Intent intent = new Intent(MyStallActivity.this, ProductActivity.class);
-            intent.putExtra(App.ACTION_GOODS, data.get(position));
-            startActivity(intent);
-
+            if (!isSelectMode) {
+                Intent intent = new Intent(MyStallActivity.this, ProductActivity.class);
+                intent.putExtra(App.ACTION_GOODS, data.get(position));
+                intent.putExtra("fromFionaaaa",true);
+                startActivity(intent);
+            } else {
+                if (listSelectec[position] != 0) {
+                    listSelectec[position] = 0;
+                } else {
+                    listSelectec[position] = 1;
+                }
+                adapter.notifyDataSetChanged(); // 数据集改变
+            }
         }
     }
 
@@ -169,7 +200,7 @@ public class MyStallActivity extends AppCompatActivity {
         @Override
         protected ArrayList<Goods> doInBackground(String... params) {
             String userID = params[0];
-            ArrayList<Goods> goodsList=new ArrayList<>();
+            ArrayList<Goods> goodsList = new ArrayList<>();
             if (userID != null) {
                 goodsList = (ArrayList<Goods>) Goods.find(Goods.class, "user_id= ? and flag= ?", userID, "1");
             }
@@ -177,15 +208,168 @@ public class MyStallActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(ArrayList<Goods> data) {
-            if (data.size() > 0) {
-                setAdapter(data);
+        protected void onPostExecute(ArrayList<Goods> list) {
+            data.addAll(list);
+            listSelectec = new int[data.size()];  //初始化选择记录
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+
+    //点击编辑（取消）
+    public void clickEdit(View view) {
+        if (isSelectMode) {
+            //点击取消
+            editText.setText("编辑");
+            clearSelect();              // 清空选择记录
+            removeDelete();
+        } else {
+            editText.setText("取消");
+            initDelete();
+        }
+
+        isSelectMode = !isSelectMode;
+        adapter.notifyDataSetChanged();
+    }
+
+
+    //删除按钮出现
+    private void initDelete() {
+        y = deleteView.getY();
+
+        deleteView.setY(deleteView.getHeight() + y);
+        deleteView.setVisibility(View.VISIBLE);
+
+        new Thread() {
+            @Override
+            public void run() {
+                while (deleteView.getY() > y) {
+                    deleteView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            deleteView.setY(deleteView.getY() - 20);
+                        }
+                    });
+                    try {
+                        Thread.sleep(20);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (deleteView.getY() < y) {
+                    deleteView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            deleteView.setY(y);
+                        }
+                    });
+                }
+            }
+        }.start();
+    }
+
+    //删除按钮消失
+    private void removeDelete() {
+        new Thread() {
+            @Override
+            public void run() {
+                while (deleteView.getY() <= y + deleteView.getHeight()) {
+                    deleteView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            deleteView.setY(deleteView.getY() + 20);
+                        }
+                    });
+                    try {
+                        Thread.sleep(20);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                deleteView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        deleteView.setVisibility(View.INVISIBLE);//删除按钮不可见
+                        deleteView.setY(y);
+                    }
+                });
+            }
+        }.start();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (isSelectMode) {
+                clickEdit(null);
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    //删除
+    public void doDelete(View view) {
+        removeDelete();
+
+        List<Goods> list = new ArrayList();
+
+        for (int i = 0; i < data.size(); i++) {
+            if (listSelectec[i] == 1) {
+                list.add(data.get(i));
+            }
+        }
+
+        if (list.size() > 0) {
+            progressBar.setVisibility(View.VISIBLE);
+
+            //删除内存
+            deleteMemery();
+
+            new AsyncTask<List, Void, Void>() {
+
+                @Override
+                protected Void doInBackground(List... params) {
+                    List list = params[0];
+                    //删除本地
+                    Goods.deleteInTx(list);
+
+                    //删除服务器
+                    Interactor.deleteGoods(MyStallActivity.this, list);
+
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    return null;
+                }
+
+                @Override
+                protected void onPostExecute(Void aVoid) {
+                    //删除完成
+                    progressBar.setVisibility(View.INVISIBLE);  //  进度条不可见
+                }
+            }.execute(list);
+        }
+        clickEdit(null);
+    }
+
+    //删除内存
+    private void deleteMemery() {
+        for (int i = data.size() - 1; i >= 0; i--) {
+            if (listSelectec[i] == 1) {
+                data.remove(i);
             }
         }
     }
 
-    private void setAdapter(ArrayList<Goods> data) {
-        this.data = data;
-        listView.setAdapter(new ListViewAdapter(this, data));
+    //清空选择记录
+    private void clearSelect() {
+        for (int i = 0; i < listSelectec.length; i++) {
+            listSelectec[i] = 0;
+        }
     }
+
 }

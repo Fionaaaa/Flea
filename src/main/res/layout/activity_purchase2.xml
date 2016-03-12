@@ -90,17 +90,16 @@
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/textView_purchase_time"
+        android:id="@+id/textView_purchase_time2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/textView_purchase_author_discover2"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
         android:text="下午3:54"
         android:textColor="@color/black_xh"
-        android:textSize="10sp" />
+        android:textSize="10sp"
+        android:layout_marginRight="5dp"
+        android:layout_below="@+id/imageView_discover_right"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <com.fiona.tiaozao.fragment.myself.Line
         android:id="@+id/view2"

@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/textView30_classify_product_picture"
+        android:id="@+id/lci_sd"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_alignParentLeft="true"
@@ -15,41 +15,42 @@
         android:scaleType="fitXY" />
 
     <TextView
-        android:id="@+id/textView30_classify_product_title"
+        android:id="@+id/lci_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView30_classify_product_picture"
+        android:layout_alignTop="@+id/lci_sd"
         android:layout_marginLeft="11dp"
         android:layout_marginStart="11dp"
         android:layout_marginTop="5dp"
         android:maxLength="7"
         android:ellipsize="none"
-        android:layout_toEndOf="@+id/textView30_classify_product_picture"
-        android:layout_toRightOf="@+id/textView30_classify_product_picture"
+        android:layout_toEndOf="@+id/lci_sd"
+        android:layout_toRightOf="@+id/lci_sd"
         android:text="商品名称" />
 
     <TextView
-        android:id="@+id/textView30_classify_product_price"
+        android:id="@+id/lci_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView30_classify_product_title"
+        android:layout_alignTop="@+id/lci_name"
         android:layout_marginLeft="19dp"
         android:layout_marginStart="19dp"
-        android:layout_toEndOf="@+id/textView30_classify_product_title"
+        android:layout_toEndOf="@+id/lci_name"
         android:textColor="@color/green_m"
-        android:layout_toRightOf="@+id/textView30_classify_product_title"
+        android:layout_toRightOf="@+id/lci_name"
         android:text="19.80￥" />
 
     <TextView
-        android:id="@+id/textView31_classify_product_describe"
+        android:id="@+id/lci_describe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxLength="15"
         android:ellipsize="end"
-        android:layout_alignBottom="@+id/textView30_classify_product_picture"
-        android:layout_alignLeft="@+id/textView30_classify_product_title"
-        android:layout_alignStart="@+id/textView30_classify_product_title"
+        android:layout_alignBottom="@+id/lci_sd"
+        android:layout_alignLeft="@+id/lci_name"
+        android:layout_alignStart="@+id/lci_name"
         android:layout_marginBottom="4dp"
         android:text="描述" />
+
 
 </RelativeLayout>

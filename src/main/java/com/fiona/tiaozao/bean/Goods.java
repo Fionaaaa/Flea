@@ -10,6 +10,7 @@ import java.io.Serializable;
  */
 public class Goods extends SugarRecord implements Serializable {
 
+    @Expose
     private String goods_id;    //自定义的物品id
 
     @Expose

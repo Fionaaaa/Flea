@@ -103,6 +103,9 @@ public class SaleActivity extends AppCompatActivity {
 
             UploadImpl.getInstance(this).addGoods(file, map, true);
 
+            Toast.makeText(SaleActivity.this, "提交成功", Toast.LENGTH_SHORT).show();
+            finish();
+
         } else {
             Toast.makeText(SaleActivity.this, "不能为空", Toast.LENGTH_SHORT).show();
         }

@@ -1,5 +1,6 @@
 package com.fiona.tiaozao.account;
 
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +14,8 @@ import com.fiona.tiaozao.R;
 import com.fiona.tiaozao.bean.User;
 import com.fiona.tiaozao.interactor.Interactor;
 import com.tencent.tauth.Tencent;
+
+import java.util.List;
 
 public class AccountActivity extends AppCompatActivity {
     SimpleDraweeView draweeView;
@@ -32,7 +35,17 @@ public class AccountActivity extends AppCompatActivity {
         draweeView.setImageURI(Uri.parse(getSharedPreferences("user", MODE_PRIVATE).getString("icon", "000")));
         textViewName.setText(getSharedPreferences("user", MODE_PRIVATE).getString("name", "000"));
 
-        describe = getSharedPreferences("user", MODE_PRIVATE).getString("describe", "这是"+getSharedPreferences("user", MODE_PRIVATE).getString("name", "000")+"的摊位");
+        SharedPreferences pf = getSharedPreferences("user", MODE_PRIVATE);
+        String account = pf.getString("account", null);
+        String name = pf.getString("name", null);
+        if (account != null) {
+            List<User> listMine = User.find(User.class, "account=?", account);
+            if (listMine.size() > 0) {
+                describe = listMine.get(0).getDescribe();
+            } else {
+                describe = "这是" + name + "的摊位";
+            }
+        }
         editText.setText(describe);
     }
 
@@ -80,7 +93,7 @@ public class AccountActivity extends AppCompatActivity {
     }
 
     //注销
-    void loginOut(){
+    void loginOut() {
         Tencent.createInstance(LoginAsQQActivity.AppId, getApplicationContext()).logout(this);
     }
 }

@@ -25,6 +25,8 @@
         android:layout_marginLeft="5dp"
         android:layout_toEndOf="@+id/textView32_my_emption_classify"
         android:layout_toRightOf="@+id/textView32_my_emption_classify"
+        android:ellipsize="end"
+        android:maxLength="10"
         android:text="跪求一台电风扇"
         android:textSize="16sp" />
 
@@ -39,4 +41,14 @@
         android:text="下午1:07"
         android:textColor="@color/black_h"
         android:textSize="10dp" />
+
+    <com.fiona.tiaozao.fragment.myself.edit.SureCircleView
+        android:id="@+id/sureCirleView_emption"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignBottom="@+id/textView33_my_emption_describe"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:visibility="invisible"
+        android:layout_marginRight="10dp" />
 </RelativeLayout>

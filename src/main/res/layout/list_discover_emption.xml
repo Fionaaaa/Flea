@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/imageView_discover_right"
+        android:id="@+id/dis_right_sd"
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_alignParentLeft="true"
@@ -17,38 +17,40 @@
         android:background="@drawable/shape_head_portrait" />
 
     <TextView
-        android:id="@+id/textView_purchase_classify"
+        android:id="@+id/dis_right_classify"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/imageView_discover_right"
+        android:layout_alignTop="@+id/dis_right_sd"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:layout_toEndOf="@+id/imageView_discover_right"
-        android:layout_toRightOf="@+id/imageView_discover_right"
+        android:layout_toEndOf="@+id/dis_right_sd"
+        android:layout_toRightOf="@+id/dis_right_sd"
         android:text="[求购：书籍]"
         android:textColor="@color/blue_m" />
 
     <TextView
-        android:id="@+id/textView_purchase_author_discover"
+        android:id="@+id/dis_right_author"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView_purchase_classify"
+        android:layout_alignTop="@+id/dis_right_classify"
         android:layout_marginLeft="5dp"
-        android:layout_toEndOf="@+id/textView_purchase_classify"
-        android:layout_toRightOf="@+id/textView_purchase_classify"
+        android:layout_toEndOf="@+id/dis_right_classify"
+        android:layout_toRightOf="@+id/dis_right_classify"
         android:text="西方求败"
         android:textColor="@color/black_h" />
 
     <TextView
-        android:id="@+id/textView_purchase_describe"
+        android:id="@+id/dis_right_describe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/imageView_discover_right"
+        android:layout_below="@+id/dis_right_sd"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
+        android:maxLength="20"
+        android:ellipsize="end"
         android:text="我想淘一本《失控》"
         android:textSize="16sp" />
 
@@ -56,14 +58,13 @@
         android:id="@+id/textView_purchase_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/textView_purchase_author_discover2"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
         android:text="下午3:54"
         android:textColor="@color/black_xh"
-        android:textSize="10sp" />
+        android:textSize="10sp"
+        android:layout_alignBottom="@+id/dis_right_sd"
+        android:layout_marginRight="5dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <com.fiona.tiaozao.fragment.myself.Line
         android:id="@+id/view2"
@@ -71,7 +72,7 @@
         android:layout_height="1dp"
         android:layout_alignEnd="@+id/textView_purchase_time"
         android:layout_alignRight="@+id/textView_purchase_time"
-        android:layout_below="@+id/textView_purchase_describe"
+        android:layout_below="@+id/dis_right_describe"
         android:layout_marginTop="10dp" />
 
 </RelativeLayout>

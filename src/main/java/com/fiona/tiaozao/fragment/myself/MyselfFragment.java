@@ -17,6 +17,9 @@ import android.widget.TextView;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.fiona.tiaozao.R;
+import com.fiona.tiaozao.bean.User;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -71,7 +74,16 @@ public class MyselfFragment extends Fragment {
             //已经登陆
             String name = pf.getString("name", null);
             String icon = pf.getString("icon", null);
-            String describe=pf.getString("describe","这是"+name+"的摊位");
+            String account=pf.getString("account",null);
+            String describe=null;
+            if(account!=null){
+                List<User> listMine= User.find(User.class,"account=?",account);
+                if(listMine.size()>0){
+                    describe=listMine.get(0).getDescribe();
+                }else{
+                    describe="这是"+name+"的摊位";
+                }
+            }
 
             draweeView.setImageURI(Uri.parse(icon));
             textViewName.setText(name);

@@ -126,7 +126,9 @@ public class WeiboLoginActivity extends AppCompatActivity implements OnClickList
                 user.setFlag(0);
                 user.setIcon(avatarHd);
                 user.setName(name);
-                user.setId(Long.parseLong(idStr));
+                user.setAccount(idStr);
+
+                user.setDescribe("这是" + name + "的摊位");
 
                 //保存用户信息
                 saveUserData(user);
@@ -152,12 +154,19 @@ public class WeiboLoginActivity extends AppCompatActivity implements OnClickList
         getSharedPreferences("user", MODE_PRIVATE).edit().putString("name", user.getName()).commit();
         getSharedPreferences("user", MODE_PRIVATE).edit().putString("account", user.getAccount()).commit();
         getSharedPreferences("user", MODE_PRIVATE).edit().putString("flag", "0").commit();
-        //本地数据库
-        user.save();
+        getSharedPreferences("user", MODE_PRIVATE).edit().putString("describe", user.getDescribe()).commit();
+
         //服务器
         Interactor.insertUser(this,user);
 
         Toast.makeText(WeiboLoginActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
+
+        //开始所有的网络请求
+        Interactor.startAllNetTask(WeiboLoginActivity.this);
+
+        //清空本地设置
+        Interactor.clearSetting(WeiboLoginActivity.this);
+
         finish();
     }
 

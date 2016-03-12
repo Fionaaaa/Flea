@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/textView30_classify_product_picture"
+        android:id="@+id/list_my_collection_product_picture"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_alignParentLeft="true"
@@ -15,41 +15,50 @@
         android:scaleType="fitXY" />
 
     <TextView
-        android:id="@+id/textView30_classify_product_title"
+        android:id="@+id/list_my_collection_product_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView30_classify_product_picture"
+        android:layout_alignTop="@+id/list_my_collection_product_picture"
         android:layout_marginLeft="11dp"
         android:layout_marginStart="11dp"
         android:layout_marginTop="5dp"
         android:maxLength="7"
         android:ellipsize="none"
-        android:layout_toEndOf="@+id/textView30_classify_product_picture"
-        android:layout_toRightOf="@+id/textView30_classify_product_picture"
+        android:layout_toEndOf="@+id/list_my_collection_product_picture"
+        android:layout_toRightOf="@+id/list_my_collection_product_picture"
         android:text="商品名称" />
 
     <TextView
-        android:id="@+id/textView30_classify_product_price"
+        android:id="@+id/list_my_collection_product_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView30_classify_product_title"
+        android:layout_alignTop="@+id/list_my_collection_product_title"
         android:layout_marginLeft="19dp"
         android:layout_marginStart="19dp"
-        android:layout_toEndOf="@+id/textView30_classify_product_title"
+        android:layout_toEndOf="@+id/list_my_collection_product_title"
         android:textColor="@color/green_m"
-        android:layout_toRightOf="@+id/textView30_classify_product_title"
+        android:layout_toRightOf="@+id/list_my_collection_product_title"
         android:text="19.80￥" />
 
     <TextView
-        android:id="@+id/textView31_classify_product_describe"
+        android:id="@+id/list_my_collection_product_describe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxLength="15"
         android:ellipsize="end"
-        android:layout_alignBottom="@+id/textView30_classify_product_picture"
-        android:layout_alignLeft="@+id/textView30_classify_product_title"
-        android:layout_alignStart="@+id/textView30_classify_product_title"
+        android:layout_alignBottom="@+id/list_my_collection_product_picture"
+        android:layout_alignLeft="@+id/list_my_collection_product_title"
+        android:layout_alignStart="@+id/list_my_collection_product_title"
         android:layout_marginBottom="4dp"
         android:text="描述" />
 
+    <com.fiona.tiaozao.fragment.myself.edit.SureCircleView
+        android:id="@+id/sureCirleView_product"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:visibility="visible"
+        android:layout_above="@+id/list_my_collection_product_describe"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

@@ -12,6 +12,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.fiona.tiaozao.App;
 import com.fiona.tiaozao.R;
 import com.fiona.tiaozao.bean.Goods;
+import com.fiona.tiaozao.interactor.Interactor;
 
 public class PurchaseActivity extends AppCompatActivity {
 
@@ -27,22 +28,29 @@ public class PurchaseActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        Intent intent=getIntent();
-        Goods goods= (Goods) intent.getExtras().get(App.ACTION_GOODS);
+        Intent intent = getIntent();
+        Goods goods = (Goods) intent.getExtras().get(App.ACTION_GOODS);
 
-        SimpleDraweeView imageView= (SimpleDraweeView) findViewById(R.id.imageView_discover_right);
-       imageView.setImageURI(Uri.parse(App.URL + goods.getPic_location()));
+        SimpleDraweeView imageView = (SimpleDraweeView) findViewById(R.id.imageView_discover_right);
+        String icon = Interactor.getIcon(goods.getGoods_id());
+        if (icon != null) {
+            if (!Interactor.onlyWifi(this)) {
+                imageView.setImageURI(Uri.parse(icon));
+            }else{
+                imageView.setImageURI(Uri.parse(App.DEFAULT_PIC));
+            }
+        }
 
-        TextView tvClassify= (TextView) findViewById(R.id.textView_purchase_classify);
-        tvClassify.setText("求购·"+goods.getClassify());
+        TextView tvClassify = (TextView) findViewById(R.id.textView_purchase_classify);
+        tvClassify.setText("求购·" + goods.getClassify());
 
-        TextView tvAuthor= (TextView) findViewById(R.id.textView_purchase_author_discover2);
+        TextView tvAuthor = (TextView) findViewById(R.id.textView_purchase_author_discover2);
         tvAuthor.setText(goods.getUserName());
 
-        TextView tvTime= (TextView) findViewById(R.id.textView_purchase_time);
+        TextView tvTime = (TextView) findViewById(R.id.textView_purchase_time2);
         tvTime.setText(String.valueOf(goods.getTime()));
 
-        TextView tvDescribe= (TextView) findViewById(R.id.textView_purchase_describe);
+        TextView tvDescribe = (TextView) findViewById(R.id.textView_purchase_describe);
         tvDescribe.setText(goods.getDescribe());
     }
 

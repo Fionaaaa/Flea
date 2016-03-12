@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.fiona.tiaozao.account.AccountActivity;
 import com.fiona.tiaozao.account.LoginAsQQActivity;
 import com.fiona.tiaozao.account.sinaWeibo.WeiboLoginActivity;
@@ -60,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Fresco.initialize(this);
 
         new NetTask().execute();
 

@@ -1,6 +1,7 @@
 package com.fiona.tiaozao.net;
 
 
+import android.content.Context;
 import android.os.Handler;
 
 /**
@@ -14,21 +15,21 @@ public interface NetQuery {
      *
      * @return
      */
-     void getSaleGoods();
+    void getSaleGoods();
 
     /**
      * 获得所有求购物品
      *
      * @return
      */
-     void getEmptionGoods();
+    void getEmptionGoods();
 
     /**
      * 获得所有用户
      *
      * @return
      */
-     void getUsers();
+    void getUsers();
 
     /**
      * 获得单个用户
@@ -36,7 +37,7 @@ public interface NetQuery {
      * @param userID
      * @return
      */
-     void getUser(String userID, Handler handler);
+    void getUser(String userID, Handler handler);
 
     /**
      * 获得用户的求购
@@ -44,7 +45,7 @@ public interface NetQuery {
      * @param userID
      * @return
      */
-     void getUserEmption(String userID, Handler handler);
+    void getUserEmption(String userID, Handler handler);
 
     /**
      * 获得用户的物品收藏
@@ -52,7 +53,7 @@ public interface NetQuery {
      * @param userID
      * @return
      */
-     void getCollectGoods(String userID);
+    void getCollectGoods(String userID);
 
     /**
      * 获得用户的关注收藏
@@ -60,6 +61,9 @@ public interface NetQuery {
      * @param userID
      * @return
      */
-     void getCollectUser(String userID);
+    void getCollectUser(String userID);
+
+    //获取物品通知
+    void getNotify(String user_id, Context context);
 
 }

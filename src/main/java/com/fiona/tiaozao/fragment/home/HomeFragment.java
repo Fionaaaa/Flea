@@ -3,6 +3,7 @@ package com.fiona.tiaozao.fragment.home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,11 +19,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.fiona.tiaozao.App;
 import com.fiona.tiaozao.MainActivity;
 import com.fiona.tiaozao.ProductActivity;
 import com.fiona.tiaozao.R;
 import com.fiona.tiaozao.bean.Goods;
+import com.fiona.tiaozao.interactor.Interactor;
 import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
@@ -56,18 +60,17 @@ public class HomeFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        EventBus.getDefault().register(this);
     }
 
     //订阅网络加载
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void loadNetSource(ArrayList<Goods> list) {
-        if (list.get(0) instanceof Goods) {
-            adapter.notifyItemRangeChanged(0, adapter.data.size());
-            adapter.data = list;
-            adapter.notifyItemRangeInserted(0, list.size());
-        }
-    }
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void loadNetSource(ArrayList<Goods> list) {
+//        if (list.get(0) instanceof Goods) {
+//            adapter.notifyItemRangeChanged(0, adapter.data.size());
+//            adapter.data = list;
+//            adapter.notifyItemRangeInserted(0, list.size());
+//        }
+//    }
 
     //本地加载
     private void loadLocalSource() {
@@ -134,7 +137,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
     /**
@@ -174,10 +176,12 @@ public class HomeFragment extends Fragment {
         @Override
         public void onBindViewHolder(Holder holder, int position) {
 
-            Picasso.with(context).load(App.URL + data.get(position).getPic_location()).into(holder.imageView);
+            if (!Interactor.onlyWifi(getActivity())) {
+                holder.imageView.setImageURI(Uri.parse(App.URL + data.get(position).getPic_location()));
+            }
 
             holder.textViewName.setText(data.get(position).getTitle());
-            holder.textViewPrice.setText(String.valueOf(data.get(position).getPrice()));
+            holder.textViewPrice.setText(String.valueOf(data.get(position).getPrice()) + "￥");
 
             holder.view.setId(position);
             holder.view.setOnClickListener(this);
@@ -201,7 +205,7 @@ public class HomeFragment extends Fragment {
 
             Intent intent = new Intent(getActivity(), ProductActivity.class);
             intent.putExtra(App.ACTION_GOODS, data.get(v.getId()));
-            Log.d("debug","物品的id："+data.get(v.getId()).getId());
+            Log.d("debug", "物品的id：" + data.get(v.getId()).getId());
             startActivity(intent);
         }
 
@@ -210,7 +214,7 @@ public class HomeFragment extends Fragment {
          */
         public class Holder extends RecyclerView.ViewHolder {
 
-            public ImageView imageView;
+            public SimpleDraweeView imageView;
             public TextView textViewName;
             public TextView textViewPrice;
             View view;
@@ -218,7 +222,7 @@ public class HomeFragment extends Fragment {
             public Holder(View view) {
                 super(view);
                 this.view = view;
-                imageView = (ImageView) view.findViewById(R.id.imageView_home);
+                imageView = (SimpleDraweeView) view.findViewById(R.id.imageView_home);
                 textViewName = (TextView) view.findViewById(R.id.textView_name);
                 textViewPrice = (TextView) view.findViewById(R.id.textView_price);
             }

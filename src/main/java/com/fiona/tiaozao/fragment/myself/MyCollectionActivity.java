@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -31,6 +30,8 @@ public class MyCollectionActivity extends AppCompatActivity {
     ArrayList<User> userList;
     ArrayList<Goods> goodsList;
 
+    MyAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,11 +45,16 @@ public class MyCollectionActivity extends AppCompatActivity {
         userId = Interactor.getId(this);
 
         // TODO: 16-3-8 获得收藏的用户和物品
+        initView();
+
+    }
+
+    private void initView() {
         userList = Interactor.getCollectUser(this);
         goodsList = Interactor.getCollectGoods(this);
 
-        listView.setAdapter(new MyAdapter(this, userList, goodsList));
-
+        adapter = new MyAdapter(this, userList, goodsList);
+        listView.setAdapter(adapter);
     }
 
     /**
@@ -94,8 +100,8 @@ public class MyCollectionActivity extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            HolderUser holderUser;
             HolderGoods holderGoods;
+            HolderUser holderUser;
             if (position == 0) {
                 convertView = inflater.inflate(R.layout.item_my_collection, parent, false);
                 TextView textView = (TextView) convertView.findViewById(R.id.textView_my_collection_01);
@@ -111,9 +117,13 @@ public class MyCollectionActivity extends AppCompatActivity {
                 convertView = inflater.inflate(R.layout.list_discover_sale, parent, false);
                 convertView.findViewById(R.id.view_line).setVisibility(View.INVISIBLE);
                 convertView.findViewById(R.id.textView_discover_left_time).setVisibility(View.INVISIBLE);
-
                 holderUser = new HolderUser(convertView);
-                holderUser.imageView.setImageURI(Uri.parse(userList.get(position - 1).getIcon()));
+
+                if (!Interactor.onlyWifi(MyCollectionActivity.this)) {
+                    holderUser.imageView.setImageURI(Uri.parse(userList.get(position - 1).getIcon()));
+                }else{
+                    holderUser.imageView.setImageURI(Uri.parse(App.DEFAULT_PIC));
+                }
                 holderUser.textViewSale.setText(userList.get(position - 1).getName());
                 holderUser.textViewDescription.setText(userList.get(position - 1).getDescribe());
 
@@ -130,7 +140,10 @@ public class MyCollectionActivity extends AppCompatActivity {
 
                 convertView = inflater.inflate(R.layout.list_listview_product, parent, false);
                 holderGoods = new HolderGoods(convertView);
-                holderGoods.imageView.setImageURI(Uri.parse(goodsList.get(position - userList.size() - 2).getPic_location()));
+
+                if (!Interactor.onlyWifi(MyCollectionActivity.this)) {
+                    holderGoods.imageView.setImageURI(Uri.parse(App.URL + goodsList.get(position - userList.size() - 2).getPic_location()));
+                }
                 holderGoods.textViewTitle.setText(goodsList.get(position - userList.size() - 2).getTitle());
                 holderGoods.textViewPrice.setText(String.valueOf(goodsList.get(position - userList.size() - 2).getPrice()));
                 holderGoods.textViewDescribe.setText(goodsList.get(position - userList.size() - 2).getDescribe());
@@ -143,14 +156,14 @@ public class MyCollectionActivity extends AppCompatActivity {
          * Holder:GOODS
          */
         class HolderGoods {
-            ImageView imageView;
+            SimpleDraweeView imageView;
             TextView textViewTitle;
             TextView textViewPrice;
             TextView textViewDescribe;
 
             HolderGoods(View view) {
-                imageView = (ImageView) view.findViewById(R.id.imageView8_classify_product_pic);
-                textViewTitle = (TextView) view.findViewById(R.id.textView22_classify_product_title);
+                imageView = (SimpleDraweeView) view.findViewById(R.id.textView30_classify_product_picture);
+                textViewTitle = (TextView) view.findViewById(R.id.textView30_classify_product_title);
                 textViewPrice = (TextView) view.findViewById(R.id.textView30_classify_product_price);
                 textViewDescribe = (TextView) view.findViewById(R.id.textView31_classify_product_describe);
             }
@@ -185,13 +198,21 @@ public class MyCollectionActivity extends AppCompatActivity {
                 userList = Interactor.getGoodsToUser(userList);
                 Intent intent = new Intent(MyCollectionActivity.this, StallActivity.class);
                 intent.putExtra(App.ACTION_USER, userList.get(position - 1));
-                startActivity(intent);
+                startActivityForResult(intent, 8080);
             }
             if (position > userList.size() + 1) {
                 Intent intent = new Intent(MyCollectionActivity.this, ProductActivity.class);
                 intent.putExtra(App.ACTION_GOODS, goodsList.get(position - userList.size() - 2));
-                startActivity(intent);
+                startActivityForResult(intent, 8080);
             }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 8080) {
+            initView();
         }
     }
 }

@@ -80,7 +80,6 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name=".account.AccountActivity" />
-        <activity android:name=".account.LoginAsWeiboActivity"></activity>
         <activity android:name=".account.sinaWeibo.WeiboLoginActivity" />
 
         <!-- 新浪微博登陆 -->

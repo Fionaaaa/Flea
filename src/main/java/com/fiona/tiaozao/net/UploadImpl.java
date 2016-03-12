@@ -69,7 +69,7 @@ public class UploadImpl implements Upload {
 
     //删除物品
     @Override
-    public void deleteGoods(final int goodsID) {
+    public void deleteGoods(final String goodsID) {
         StringRequest request = new StringRequest(StringRequest.Method.POST, App.URL + App.GOODS_OPERATE_SERVLET, new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
@@ -85,7 +85,7 @@ public class UploadImpl implements Upload {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> map = new HashMap();
                 map.put("type", "delete");
-                map.put("goods_id", String.valueOf(goodsID));
+                map.put("goods_id",goodsID);
                 return map;
             }
         };
@@ -94,8 +94,28 @@ public class UploadImpl implements Upload {
 
     //更新物品
     @Override
-    public void updateGoods(int goodsID) {
-
+    public void updateGoods(final int goodsID, final int price) {
+        StringRequest request = new StringRequest(StringRequest.Method.POST, App.URL + App.GOODS_OPERATE_SERVLET, new com.android.volley.Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                Log.d("debug", "物品更新成功");
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.d("debug", "物品更新失败");
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> map = new HashMap<>();
+                map.put("type","update");
+                map.put("price", String.valueOf(price));
+                map.put("goods_id", String.valueOf(goodsID));
+                return map;
+            }
+        };
+        queue.add(request);
     }
 
     //添加收藏
@@ -226,6 +246,7 @@ public class UploadImpl implements Upload {
         MultipartBody.Builder builder = new MultipartBody.Builder();
         builder.addFormDataPart("file", file.getName(), bodyFile);
         for (String key : map.keySet()) {
+            Log.d("key-values:",key+":"+map.get(key));
             builder.addFormDataPart(key, map.get(key));
         }
         builder.addFormDataPart("type", "insert");

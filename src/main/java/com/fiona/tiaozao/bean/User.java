@@ -12,6 +12,7 @@ import java.util.ArrayList;
  */
 public class User extends SugarRecord implements Serializable {
 
+    private String user_id;//用户id
     @Expose
     private String icon;    //头像
     @Expose
@@ -133,6 +134,14 @@ public class User extends SugarRecord implements Serializable {
 
     public void setDescribe(String describe) {
         this.describe = describe;
+    }
+
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 
     @Override

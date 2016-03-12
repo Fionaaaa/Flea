@@ -25,8 +25,14 @@ public class App extends Application {
     public final static String ACTION_GOODS = "goods";   //意图携带的数据
     public final static String ACTION_USER = "user";
 
-    public final static int REQUEST_PICK_PICTURE=0x118;  //本地选择图片
-    public final static int REQUEST_CAPTURE=0x119;       //拍照
+    public final static int REQUEST_PICK_PICTURE = 0x118;  //本地选择图片
+    public final static int REQUEST_CAPTURE = 0x119;       //拍照
+
+    public final static String SETTING_WIFI = "setting_wifi";    //wifi设置
+    public final static String SETTING_STALL = "setting_stall";   //摊位改变设置
+    public final static String SETTING_GOODS = "setting_goods";   //物品降价通知设置
+
+    public final static String DEFAULT_PIC="http://tp4.sinaimg.cn/5827544395/180/0/1";   //默认头像
 
 
     @Override

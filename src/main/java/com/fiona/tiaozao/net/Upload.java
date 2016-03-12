@@ -20,13 +20,13 @@ public interface Upload {
      * 删除一件物品
      * @param goodsID
      */
-    void deleteGoods(int goodsID);
+    void deleteGoods(String goodsID);
 
     /**
      * 更新一件物品
      * @param goodsID
      */
-    void updateGoods(int goodsID);
+    void updateGoods(int goodsID,int price);
 
     /**
      * 添加一个收藏

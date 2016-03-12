@@ -1,14 +1,20 @@
 package com.fiona.tiaozao.interactor;
 
+import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.NotificationManagerCompat;
+import android.support.v7.app.NotificationCompat;
+import android.text.Editable;
 import android.util.Log;
 
 import com.fiona.tiaozao.App;
+import com.fiona.tiaozao.R;
 import com.fiona.tiaozao.SaleActivity;
 import com.fiona.tiaozao.bean.Goods;
 import com.fiona.tiaozao.bean.User;
@@ -25,6 +31,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * 中间人：（只有一个代理类，干了所有的事。。。累死你。）
  * Created by fiona on 16-3-6.
  */
 public class Interactor {
@@ -84,6 +91,8 @@ public class Interactor {
 
         query.getCollectGoods(getId(context));//请求本人收藏的物品
 
+        getNotify(query, context);           //请求通知
+
     }
 
     //添加一个用户
@@ -128,9 +137,10 @@ public class Interactor {
     public static ArrayList<User> getCollectUser(Context context) {
         ArrayList<User> list = new ArrayList<>();
         HashSet<String> set = (HashSet<String>) context.getSharedPreferences("user", context.MODE_PRIVATE).getStringSet("collect_user", null);
+
         if (set != null && set.size() > 0) {
             for (String s : set) {
-                list.add(User.findById(User.class, Long.parseLong(s)));
+                list.add(User.findById(User.class, Long.valueOf(s)));
             }
         }
         return list;
@@ -142,7 +152,7 @@ public class Interactor {
         HashSet<String> set = (HashSet<String>) context.getSharedPreferences("user", context.MODE_PRIVATE).getStringSet("collect_goods", null);
         if (set != null && set.size() > 0) {
             for (String s : set) {
-                list.add(Goods.findById(Goods.class, Long.parseLong(s)));
+                list.add(Goods.findById(Goods.class, Long.valueOf(s)));
             }
         }
         return list;
@@ -172,22 +182,22 @@ public class Interactor {
     }
 
     //用户是否收藏了此物品
-    public static boolean isCollected(Context context, String goods_id) {
+    public static boolean isCollected(Context context, String id, int flag) {
 
-        Set<String> set = context.getSharedPreferences("user", Context.MODE_PRIVATE).getStringSet("collect_goods", null);
-        if (set != null && set.contains(goods_id)) {
-            Log.d("debug","goods_id:"+goods_id);
-            for(String s:set){
-                Log.d("debug","set:"+s);
-            }
+        Set<String> set;
+        if (flag == 1) {
+            set = context.getSharedPreferences("user", Context.MODE_PRIVATE).getStringSet("collect_goods", null);
+        } else {
+            set = context.getSharedPreferences("user", Context.MODE_PRIVATE).getStringSet("collect_user", null);
+        }
+        if (set != null && set.contains(id)) {
             return true;
         }
         return false;
     }
 
-    //删除一个收藏
+    //删除一个收藏(本地及服务器)
     public static void deletCollection(Context context, String obj_id, int flag) {
-        UploadImpl.getInstance(context).deleteCollection(getId(context), obj_id);
         Set<String> set;
         if (flag == 1) {
             set = context.getSharedPreferences("user", Context.MODE_PRIVATE).getStringSet("collect_goods", null);
@@ -201,29 +211,105 @@ public class Interactor {
             set = context.getSharedPreferences("user", Context.MODE_PRIVATE).getStringSet("collect_user", null);
             if (set != null && set.contains(obj_id)) {
                 set.remove(obj_id);
-                context.getSharedPreferences("user", Context.MODE_PRIVATE).edit().putStringSet("cellect_user", set).commit();
+                context.getSharedPreferences("user", Context.MODE_PRIVATE).edit().putStringSet("collect_user", set).commit();
             }
         }
+
+        UploadImpl.getInstance(context).deleteCollection(getId(context), obj_id);
     }
 
     //添加一个收藏(本地以及服务器)
     public static void addCollection(Context context, String obj_id, int flag) {
-        UploadImpl.getInstance(context).addCollection(getId(context), obj_id, String.valueOf(flag));
         Set<String> set;
         if (flag == 1) {
             set = context.getSharedPreferences("user", Context.MODE_PRIVATE).getStringSet("collect_goods", null);
-            if(set==null){
-                set=new HashSet<>();
+            if (set == null) {
+                set = new HashSet<>();
             }
             set.add(obj_id);
             context.getSharedPreferences("user", Context.MODE_PRIVATE).edit().putStringSet("collect_goods", set).commit();
         } else {
             set = context.getSharedPreferences("user", Context.MODE_PRIVATE).getStringSet("collect_user", null);
-            if(set==null){
-                set=new HashSet<>();
+            if (set == null) {
+                set = new HashSet<>();
             }
             set.add(obj_id);
             context.getSharedPreferences("user", Context.MODE_PRIVATE).edit().putStringSet("collect_user", set).commit();
+        }
+
+        UploadImpl.getInstance(context).addCollection(getId(context), obj_id, String.valueOf(flag));
+    }
+
+    //更具物品id获得用户的头像
+    public static String getIcon(String goods_id) {
+        List<Goods> listGoods = Goods.find(Goods.class, "goodsid=?", goods_id);
+        if (listGoods.size() > 0) {
+            String user_id = listGoods.get(0).getUserId();
+            List<User> listUser = User.find(User.class, "userid=?", user_id);
+            if (listUser.size() > 0) {
+                return listUser.get(0).getIcon();
+            }
+        }
+        return null;
+    }
+
+    //删除物品
+    public static void deleteGoods(Context context, List<Goods> list) {
+        for (Goods goods : list) {
+            UploadImpl.getInstance(context).deleteGoods(goods.getGoods_id());
+        }
+    }
+
+    //获得wifi设置
+    public static boolean onlyWifi(Context context) {
+        return context.getSharedPreferences("user", Context.MODE_PRIVATE).getBoolean(App.SETTING_WIFI, false);
+    }
+
+    //清空本地设置
+    public static void clearSetting(Context context) {
+        SharedPreferences pf = context.getSharedPreferences("user", Context.MODE_PRIVATE);
+        pf.edit().remove(App.SETTING_WIFI).commit();
+        pf.edit().remove(App.SETTING_STALL).commit();
+        pf.edit().remove(App.SETTING_GOODS).commit();
+    }
+
+    //请求通知
+    private static void getNotify(NetQuery query, Context context) {
+        String account = context.getSharedPreferences("user", Context.MODE_PRIVATE).getString("account", null);
+        if (account != null) {
+            ArrayList<User> list = (ArrayList<User>) User.find(User.class, "account=?", account);
+            if (list.size() > 0) {
+                User user = list.get(0);
+                String user_id = user.getUser_id();
+                query.getNotify(user_id, context);
+            }
+        }
+    }
+
+    //发价格改变通知
+    public static void sendNotify(ArrayList<Goods> list, Context context) {
+        if (list.size() > 0) {
+            String title = list.get(0).getTitle();
+            String msg;
+            if (list.size() == 1) {
+                msg = "您收藏的[" + title + "]价格有变化";
+            } else {
+                msg = "您收藏的[" + title + "]等" + list.size() + "个物品价格有变化";
+            }
+            Notification not = new NotificationCompat.Builder(context)
+                    .setContentTitle("价格变化通知")
+                    .setSmallIcon(R.drawable.classify_shuji)
+                    .setContentText(msg)
+                    .build();
+            NotificationManagerCompat.from(context).notify(1, not);
+        }
+    }
+
+    //更新物品价格
+    public static void updateGoods(Context context, Editable text, String goods_id) {
+        if (text.length() > 0) {
+            String price = String.valueOf(text);
+            UploadImpl.getInstance(context).updateGoods(Integer.parseInt(goods_id), Integer.parseInt(price));
         }
     }
 }

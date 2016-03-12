@@ -2,9 +2,9 @@ package com.fiona.tiaozao.fragment.discover;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +13,15 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.fiona.tiaozao.App;
 import com.fiona.tiaozao.ProductActivity;
 import com.fiona.tiaozao.R;
 import com.fiona.tiaozao.bean.Goods;
 import com.fiona.tiaozao.bean.User;
-import com.squareup.picasso.Picasso;
+import com.fiona.tiaozao.interactor.Interactor;
 
 import java.util.ArrayList;
 
@@ -27,6 +29,8 @@ public class StallActivity extends AppCompatActivity {
     ListView listView;
 
     ArrayList<Goods> data = new ArrayList<>();
+    User user;
+    ImageView icon;
 
     ListViewAdapter adapter;
 
@@ -35,19 +39,48 @@ public class StallActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stall);
 
-        User user = (User) getIntent().getExtras().get(App.ACTION_USER);
+        icon = (ImageView) findViewById(R.id.icon_stall_collect);
+
+        user = (User) getIntent().getExtras().get(App.ACTION_USER);
+
         data = user.getListSale();
 
         listView = (ListView) findViewById(R.id.listView_discover_stall_activity);
 
-        adapter=new ListViewAdapter(this,data);
+        adapter = new ListViewAdapter(this, data);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new ListViewListener());
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //判断是否已收藏此摊位
+        if (Interactor.isCollected(this, user.getUser_id(), 0)) {
+            icon.setImageResource(R.drawable.icon_add_collection);
+        }
+    }
+
     public void clickBackStallActivity(View view) {
         finish();
+    }
+
+    //收藏操作
+    public void doCollect(View view) {
+        if (getSharedPreferences("user", MODE_PRIVATE).getBoolean("isLoad", false)) {
+            if (Interactor.isCollected(this, user.getUser_id(), 0)) {
+                icon.setImageResource(R.drawable.icon_remove_collecdtion);
+                Interactor.deletCollection(this, user.getUser_id(), 0);
+
+                setResult(8080);    //如果从收藏表删除
+            } else {
+                icon.setImageResource(R.drawable.icon_add_collection);
+                Interactor.addCollection(this, user.getUser_id(), 0);
+            }
+        } else {
+            Toast.makeText(StallActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -94,7 +127,9 @@ public class StallActivity extends AppCompatActivity {
             }
 
             Goods goods = data.get(position);
-            Picasso.with(context).load(App.URL + goods.getPic_location()).into(holder.imageView);
+            if (!Interactor.onlyWifi(StallActivity.this)) {
+                holder.imageView.setImageURI(Uri.parse(App.URL + goods.getPic_location()));
+            }
             holder.tvTitle.setText(goods.getTitle());
             holder.tvPrice.setText(String.valueOf(goods.getPrice()) + "￥");
             holder.tvDescribe.setText(goods.getDescribe());
@@ -106,14 +141,14 @@ public class StallActivity extends AppCompatActivity {
          * Holder类
          */
         class Holder {
-            ImageView imageView;
+            SimpleDraweeView imageView;
             TextView tvTitle;
             TextView tvPrice;
             TextView tvDescribe;
 
             Holder(View view) {
-                imageView = (ImageView) view.findViewById(R.id.imageView8_classify_product_pic);
-                tvTitle = (TextView) view.findViewById(R.id.textView22_classify_product_title);
+                imageView = (SimpleDraweeView) view.findViewById(R.id.textView30_classify_product_picture);
+                tvTitle = (TextView) view.findViewById(R.id.textView30_classify_product_title);
                 tvPrice = (TextView) view.findViewById(R.id.textView30_classify_product_price);
                 tvDescribe = (TextView) view.findViewById(R.id.textView31_classify_product_describe);
             }
