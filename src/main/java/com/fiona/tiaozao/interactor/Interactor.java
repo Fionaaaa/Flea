@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.preference.Preference;
 import android.provider.MediaStore;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.NotificationCompat;
@@ -14,6 +15,7 @@ import android.text.Editable;
 import android.util.Log;
 
 import com.fiona.tiaozao.App;
+import com.fiona.tiaozao.Product2Activity;
 import com.fiona.tiaozao.R;
 import com.fiona.tiaozao.SaleActivity;
 import com.fiona.tiaozao.bean.Goods;
@@ -92,6 +94,28 @@ public class Interactor {
         query.getCollectGoods(getId(context));//请求本人收藏的物品
 
         getNotify(query, context);           //请求通知
+
+    }
+
+    //请求出售的物品
+    public static void getSales(Context context) {
+        NetQuery query = NetQueryImpl.getInstance(context);
+        query.getSaleGoods();
+    }
+
+    //请求求购的物品
+    public static void getEmption(Context context){
+        NetQueryImpl query=NetQueryImpl.getInstance(context);
+        query.getEmptionGoods();
+    }
+
+    //请求用户列表
+    public static void getUsers(Context context){
+        NetQueryImpl.getInstance(context).getUsers();
+    }
+
+    //请求一个用户出售的物品
+    public static void getUserGoods(Context context,String user_id){
 
     }
 
@@ -275,31 +299,60 @@ public class Interactor {
 
     //请求通知
     private static void getNotify(NetQuery query, Context context) {
+        boolean setting_goods = context.getSharedPreferences("user", Context.MODE_PRIVATE).getBoolean(App.SETTING_GOODS, false);
+        boolean setting_stall = context.getSharedPreferences("user", Context.MODE_PRIVATE).getBoolean(App.SETTING_STALL, false);
         String account = context.getSharedPreferences("user", Context.MODE_PRIVATE).getString("account", null);
+
         if (account != null) {
             ArrayList<User> list = (ArrayList<User>) User.find(User.class, "account=?", account);
             if (list.size() > 0) {
                 User user = list.get(0);
                 String user_id = user.getUser_id();
-                query.getNotify(user_id, context);
+                if (setting_goods) {
+                    query.getNotifyGoods(user_id, context);    //请求通知   物品
+                }
+                if (setting_stall) {
+                    query.getNotifyStall(user_id, context);      //请求通知  摊位
+                }
             }
         }
     }
 
-    //发价格改变通知
-    public static void sendNotify(ArrayList<Goods> list, Context context) {
+    //价格改变通知
+    public static void sendNotifyGoods(ArrayList<Goods> list, Context context) {
         if (list.size() > 0) {
             String title = list.get(0).getTitle();
             String msg;
             if (list.size() == 1) {
-                msg = "您收藏的[" + title + "]价格有变化";
+                msg = "您收藏的[" + title + "]物品价格有变化";
             } else {
                 msg = "您收藏的[" + title + "]等" + list.size() + "个物品价格有变化";
             }
             Notification not = new NotificationCompat.Builder(context)
-                    .setContentTitle("价格变化通知")
-                    .setSmallIcon(R.drawable.classify_shuji)
+                    .setContentTitle("校园集市")
+                    .setSmallIcon(R.drawable.icon_notify_goods)
                     .setContentText(msg)
+                    .setDefaults(Notification.DEFAULT_SOUND)
+                    .build();
+            NotificationManagerCompat.from(context).notify(1, not);
+        }
+    }
+
+    //摊位改变通知
+    public static void sendNotifyStall(ArrayList<User> list, Context context) {
+        if (list.size() > 0) {
+            String name = list.get(0).getName();
+            String msg;
+            if (list.size() == 1) {
+                msg = "您收藏的[" + name + "]摊位有物品更新";
+            } else {
+                msg = "您收藏的[" + name + "]等" + list.size() + "个摊位有物品更新";
+            }
+            Notification not = new NotificationCompat.Builder(context)
+                    .setContentTitle("校园集市")
+                    .setSmallIcon(R.drawable.icon_notify_stall)
+                    .setContentText(msg)
+                    .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_LIGHTS)
                     .build();
             NotificationManagerCompat.from(context).notify(1, not);
         }
@@ -312,4 +365,5 @@ public class Interactor {
             UploadImpl.getInstance(context).updateGoods(Integer.parseInt(goods_id), Integer.parseInt(price));
         }
     }
+
 }

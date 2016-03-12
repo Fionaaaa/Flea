@@ -63,7 +63,8 @@
         android:id="@+id/listView_my_purchase"
         android:layout_below="@+id/toolbar"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/deleteView_emption" />
 
     <com.fiona.tiaozao.fragment.myself.edit.DeleteView
         android:id="@+id/deleteView_emption"
@@ -83,5 +84,13 @@
         android:visibility="invisible"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
+
+    <com.fiona.tiaozao.fragment.myself.edit.AddEmptionView
+        android:id="@+id/newNoteView_emption"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

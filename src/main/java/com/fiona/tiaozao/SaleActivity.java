@@ -35,7 +35,7 @@ public class SaleActivity extends AppCompatActivity {
     String contact;              //  联系方式
     String describe;             //  描述
     String classify;             //  分类 （暂时为电器）
-    String userID ;        //  用户id (暂时为1)
+    String userID ;           //  用户id (暂时为1)
 
     public File file;                //  物品图片
 

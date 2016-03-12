@@ -4,10 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +15,6 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.fiona.tiaozao.App;
@@ -26,9 +23,9 @@ import com.fiona.tiaozao.R;
 import com.fiona.tiaozao.bean.Goods;
 import com.fiona.tiaozao.bean.User;
 import com.fiona.tiaozao.fragment.myself.edit.DeleteView;
+import com.fiona.tiaozao.fragment.myself.edit.AddProductView;
 import com.fiona.tiaozao.fragment.myself.edit.SureCircleView;
 import com.fiona.tiaozao.interactor.Interactor;
-import com.fiona.tiaozao.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +46,8 @@ public class MyStallActivity extends AppCompatActivity {
     int[] listSelectec;
     ProgressBar progressBar;
 
+    AddProductView addProductView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +55,7 @@ public class MyStallActivity extends AppCompatActivity {
         deleteView = (DeleteView) findViewById(R.id.deleteView_product);
         editText = (TextView) findViewById(R.id.text_my_stall);
         progressBar = (ProgressBar) findViewById(R.id.progressBar2);
+        addProductView = (AddProductView) findViewById(R.id.newNoteView_stall);
 
         String account = getSharedPreferences("user", MODE_PRIVATE).getString("account", "000");
         List<User> userList = User.find(User.class, "account=?", account);
@@ -223,9 +223,11 @@ public class MyStallActivity extends AppCompatActivity {
             editText.setText("编辑");
             clearSelect();              // 清空选择记录
             removeDelete();
+            addProductView.setVisibility(View.VISIBLE);
         } else {
             editText.setText("取消");
             initDelete();
+            addProductView.setVisibility(View.INVISIBLE);
         }
 
         isSelectMode = !isSelectMode;

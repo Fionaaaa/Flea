@@ -94,7 +94,7 @@ public class NetQueryImpl implements NetQuery {
                 Goods.saveInTx(data);
 
                 //发送通知到总线
-                EventBus.getDefault().post(data);
+                EventBus.getDefault().post(App.QUERY_SALE);
 
             }
         }, new Response.ErrorListener() {
@@ -132,7 +132,7 @@ public class NetQueryImpl implements NetQuery {
                 Goods.saveInTx(data);
 
                 //发通知到总线
-
+                EventBus.getDefault().post(App.QUERY_EMPTION);
 
             }
         }, new Response.ErrorListener() {
@@ -169,12 +169,48 @@ public class NetQueryImpl implements NetQuery {
                 User.deleteAll(User.class);
                 User.saveInTx(data);
                 //发送通知（总线）
-                EventBus.getDefault().post(data);
+                EventBus.getDefault().post(App.QUERY_USER);
             }
         }, null);
         queue.add(request);
     }
 
+    //获得单个用户出售的物品
+    @Override
+    public void getUserGoods(String user_id){
+        StringRequest request = new StringRequest(App.URL + App.GOODS_SERVLET + "?type=emption", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                ArrayList<Goods> data = new ArrayList<>();
+
+                Gson gson = new Gson();
+                JsonParser parser = new JsonParser();
+                JsonElement element = parser.parse(s);
+                JsonArray jsonArray = element.getAsJsonArray();
+                for (int i = 0; i < jsonArray.size(); i++) {
+                    element = jsonArray.get(i);
+                    Goods goods = gson.fromJson(element, Goods.class);
+                    goods.setGoods_id(String.valueOf(goods.getId()));
+                    data.add(goods);
+                }
+
+                //本地缓存
+                Goods.deleteAll(Goods.class, "flag=?", "0");
+                Goods.saveInTx(data);
+
+                //发通知到总线
+                EventBus.getDefault().post(App.QUERY_EMPTION);
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.d("debug", "error");
+            }
+        });
+
+        queue.add(request);
+    }
 
     //获得单个用户
     @Override
@@ -208,7 +244,7 @@ public class NetQueryImpl implements NetQuery {
     }
 
 
-    //获得用户求购的物品
+    //获得单个用户求购的物品
     @Override
     public void getUserEmption(final String userID, final Handler handler) {
         final ArrayList<Goods> listGoods = new ArrayList<>();
@@ -278,7 +314,7 @@ public class NetQueryImpl implements NetQuery {
     }
 
 
-    //获得收藏用户    5
+    //获得收藏的用户    5
     @Override
     public void getCollectUser(final String userID) {
         final ArrayList<User> listUser = new ArrayList<>();
@@ -313,9 +349,9 @@ public class NetQueryImpl implements NetQuery {
         queue.add(request);
     }
 
-    //获得本人收藏的摊位以及物品通知
+    //获得物品通知
     @Override
-    public void getNotify(final String user_id, final Context context) {
+    public void getNotifyGoods(final String user_id, final Context context) {
         final ArrayList<Goods> listGoods = new ArrayList<>();
         StringRequest request = new StringRequest(StringRequest.Method.POST, App.URL + App.USER_SERVLET, new Response.Listener<String>() {
             @Override
@@ -333,7 +369,7 @@ public class NetQueryImpl implements NetQuery {
                     }
 
                     //发送通知
-                    Interactor.sendNotify(listGoods, context);
+                    Interactor.sendNotifyGoods(listGoods, context);
                 }
             }
         }, null) {
@@ -341,6 +377,41 @@ public class NetQueryImpl implements NetQuery {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map map = new HashMap();
                 map.put("type", "notify");
+                map.put("user_id", user_id);
+                return map;
+            }
+        };
+        queue.add(request);
+    }
+
+    //获得摊位通知
+    @Override
+    public void getNotifyStall(final String user_id, final Context context) {
+        final ArrayList<User> listUser = new ArrayList<>();
+        StringRequest request = new StringRequest(StringRequest.Method.POST, App.URL + App.USER_SERVLET, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                Log.d("debug", "s:" + s);
+                if (s.length() > 0) {
+                    Gson gson = new Gson();
+                    JsonParser parser = new JsonParser();
+                    JsonElement element = parser.parse(s);
+                    JsonArray jsonArray = element.getAsJsonArray();
+                    for (int i = 0; i < jsonArray.size(); i++) {
+                        element = jsonArray.get(i);
+                        User user = gson.fromJson(element, User.class);
+                        listUser.add(user);
+                    }
+
+                    //发送通知
+                    Interactor.sendNotifyStall(listUser, context);
+                }
+            }
+        }, null) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map map = new HashMap();
+                map.put("type", "stall");
                 map.put("user_id", user_id);
                 return map;
             }

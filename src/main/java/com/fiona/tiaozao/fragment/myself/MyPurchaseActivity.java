@@ -23,6 +23,7 @@ import com.fiona.tiaozao.R;
 import com.fiona.tiaozao.bean.User;
 import com.fiona.tiaozao.fragment.discover.PurchaseActivity;
 import com.fiona.tiaozao.bean.Goods;
+import com.fiona.tiaozao.fragment.myself.edit.AddEmptionView;
 import com.fiona.tiaozao.fragment.myself.edit.DeleteView;
 import com.fiona.tiaozao.fragment.myself.edit.SureCircleView;
 import com.fiona.tiaozao.interactor.Interactor;
@@ -49,7 +50,7 @@ public class MyPurchaseActivity extends AppCompatActivity {
 
     int[] listSelectec;
     ProgressBar progressBar;
-
+    AddEmptionView addEmptionView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,7 @@ public class MyPurchaseActivity extends AppCompatActivity {
         textViewEdit = (TextView) findViewById(R.id.my_collection_emption_edit);
         deleteView = (DeleteView) findViewById(R.id.deleteView_emption);
         progressBar = (ProgressBar) findViewById(R.id.progressBar3);
+        addEmptionView= (AddEmptionView) findViewById(R.id.newNoteView_emption);
 
         userID = Interactor.getId(this);
 
@@ -216,9 +218,11 @@ public class MyPurchaseActivity extends AppCompatActivity {
             textViewEdit.setText("编辑");
             clearSelect();                  //清空选择
             removeDelete();
+            addEmptionView.setVisibility(View.VISIBLE);
         } else {
             textViewEdit.setText("取消");
             initDelete();
+            addEmptionView.setVisibility(View.INVISIBLE);
         }
         isSelectMode = !isSelectMode;
         adapter.notifyDataSetChanged();
@@ -328,7 +332,7 @@ public class MyPurchaseActivity extends AppCompatActivity {
                     Goods.deleteInTx(list);
 
                     //删除服务器
-                    Interactor.deleteGoods(MyPurchaseActivity.this,list);
+                    Interactor.deleteGoods(MyPurchaseActivity.this, list);
 
                     try {
                         Thread.sleep(1000);

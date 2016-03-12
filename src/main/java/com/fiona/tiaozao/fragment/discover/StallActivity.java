@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,20 +18,24 @@ import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.fiona.tiaozao.App;
+import com.fiona.tiaozao.Product2Activity;
 import com.fiona.tiaozao.ProductActivity;
 import com.fiona.tiaozao.R;
 import com.fiona.tiaozao.bean.Goods;
 import com.fiona.tiaozao.bean.User;
 import com.fiona.tiaozao.interactor.Interactor;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 
-public class StallActivity extends AppCompatActivity {
+public class StallActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
     ListView listView;
 
     ArrayList<Goods> data = new ArrayList<>();
     User user;
     ImageView icon;
+    SwipeRefreshLayout mSwipeLayout;
 
     ListViewAdapter adapter;
 
@@ -39,8 +44,12 @@ public class StallActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stall);
 
-        icon = (ImageView) findViewById(R.id.icon_stall_collect);
+        EventBus.getDefault().register(this);
+        mSwipeLayout= (SwipeRefreshLayout) findViewById(R.id.srl_dis_stall);
+        mSwipeLayout.setOnRefreshListener(this);
+        mSwipeLayout.setColorSchemeResources(R.color.colorAccent, R.color.green_m, R.color.red_m);
 
+        icon = (ImageView) findViewById(R.id.icon_stall_collect);
         user = (User) getIntent().getExtras().get(App.ACTION_USER);
 
         data = user.getListSale();
@@ -81,6 +90,12 @@ public class StallActivity extends AppCompatActivity {
         } else {
             Toast.makeText(StallActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        //开始网络请求
+        Interactor.getUserGoods(this,user.getUser_id());
     }
 
     /**
@@ -163,8 +178,10 @@ public class StallActivity extends AppCompatActivity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-            Intent intent = new Intent(StallActivity.this, ProductActivity.class);
-            intent.putExtra(App.ACTION_GOODS, data.get(position));
+            Intent intent = new Intent(StallActivity.this, Product2Activity.class);
+            intent.putExtra(App.ACTION_GOODS, data);
+            intent.putExtra("position", position);
+            intent.putExtra("where", "stall");
             startActivity(intent);
         }
     }

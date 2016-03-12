@@ -137,7 +137,7 @@ public class LoginAsQQActivity extends AppCompatActivity {
         Interactor.startAllNetTask(LoginAsQQActivity.this);
 
         //清空本地设置
-        Interactor.clearSetting(LoginAsQQActivity.this);
+//        Interactor.clearSetting(LoginAsQQActivity.this);
 
         finish();   //结束活动
     }

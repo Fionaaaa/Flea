@@ -1,10 +1,11 @@
 package com.fiona.tiaozao.fragment.classify;
 
+import android.app.usage.UsageEvents;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,19 +17,24 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.fiona.tiaozao.App;
-import com.fiona.tiaozao.ProductActivity;
+import com.fiona.tiaozao.Product2Activity;
 import com.fiona.tiaozao.R;
 import com.fiona.tiaozao.bean.Goods;
 import com.fiona.tiaozao.interactor.Interactor;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 
-public class ClassifyActivity extends AppCompatActivity {
+public class ClassifyActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     ListView listView;
     String classify;
 
     ListViewAdapter adapter;
+    SwipeRefreshLayout mSwipeLayout;
 
     ArrayList<Goods> data = new ArrayList<>();
 
@@ -36,6 +42,7 @@ public class ClassifyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_classify);
+        EventBus.getDefault().register(this);   //总线注册
 
         classify = getIntent().getStringExtra("classify");
 
@@ -44,7 +51,20 @@ public class ClassifyActivity extends AppCompatActivity {
 
         listView = (ListView) findViewById(R.id.listView_classify_activity);
 
-        new SetDataTask().execute();    //从本地取数据
+        adapter = new ListViewAdapter(this, data);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new ListViewListener());
+
+        getData();    //从本地取数据
+
+        initRefresh();
+    }
+
+    private void initRefresh() {
+        mSwipeLayout = (SwipeRefreshLayout) findViewById(R.id.srl_classify);
+
+        mSwipeLayout.setOnRefreshListener(this);
+        mSwipeLayout.setColorSchemeResources(R.color.colorAccent, R.color.green_m, R.color.red_m);
     }
 
     /**
@@ -54,6 +74,27 @@ public class ClassifyActivity extends AppCompatActivity {
      */
     public void clickBackClassifyActivity(View view) {
         finish();
+    }
+
+    //刷新
+    @Override
+    public void onRefresh() {
+        Interactor.getSales(this);  //请求网络
+    }
+
+    //接受总线通知
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void netTaskCompleted(String msg){
+        if(msg.equals(App.QUERY_SALE)){
+            getData();                          //获得本地数据
+            mSwipeLayout.setRefreshing(false);  //取消刷新状态
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     /**
@@ -133,42 +174,26 @@ public class ClassifyActivity extends AppCompatActivity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-            Intent intent = new Intent(ClassifyActivity.this, ProductActivity.class);
-            intent.putExtra(App.ACTION_GOODS, data.get(position));
+            Intent intent = new Intent(ClassifyActivity.this, Product2Activity.class);
+            intent.putExtra(App.ACTION_GOODS, data);
+            intent.putExtra("position", position);
+            intent.putExtra("where", "classify");
             startActivity(intent);
 
         }
     }
 
     /**
-     * 网络加载结束
-     */
-//    class MyHandler extends Handler {
-//        @Override
-//        public void handleMessage(Message msg) {
-//            data = (ArrayList<Goods>) msg.obj;
-//            adapter=new ListViewAdapter(ClassifyActivity.this,data);
-//            listView.setAdapter(adapter);
-//        }
-//    }
-
-    /**
      * 从本地取数据,设置listView
      */
-    class SetDataTask extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            data = (ArrayList<Goods>) Goods.find(Goods.class, "classify = ? and flag=?", classify, "1");
-            return null;
+    private void getData() {
+        ArrayList<Goods> list = (ArrayList<Goods>) Goods.find(Goods.class, "classify = ? and flag=?", classify, "1");
+        data.clear();
+        if (list.size() > 0) {
+            for (Goods goods : list) {
+                data.add(goods);
+            }
         }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            adapter = new ListViewAdapter(ClassifyActivity.this, data);
-            listView.setAdapter(adapter);
-
-            listView.setOnItemClickListener(new ListViewListener());
-        }
+        adapter.notifyDataSetChanged();
     }
 }

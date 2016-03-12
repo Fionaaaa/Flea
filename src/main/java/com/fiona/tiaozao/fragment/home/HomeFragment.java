@@ -12,26 +12,19 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.fiona.tiaozao.App;
 import com.fiona.tiaozao.MainActivity;
-import com.fiona.tiaozao.ProductActivity;
+import com.fiona.tiaozao.Product2Activity;
 import com.fiona.tiaozao.R;
 import com.fiona.tiaozao.bean.Goods;
 import com.fiona.tiaozao.interactor.Interactor;
-import com.squareup.picasso.Picasso;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
@@ -203,9 +196,10 @@ public class HomeFragment extends Fragment {
 
             ((MainActivity) getActivity()).clickChangeBackgroundColor(v);
 
-            Intent intent = new Intent(getActivity(), ProductActivity.class);
-            intent.putExtra(App.ACTION_GOODS, data.get(v.getId()));
-            Log.d("debug", "物品的id：" + data.get(v.getId()).getId());
+            Intent intent = new Intent(getActivity(), Product2Activity.class);
+            intent.putExtra(App.ACTION_GOODS, data);
+            intent.putExtra("position", v.getId());
+            intent.putExtra("where","home");
             startActivity(intent);
         }
 

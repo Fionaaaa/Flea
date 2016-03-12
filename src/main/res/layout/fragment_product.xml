@@ -1,0 +1,116 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.fiona.tiaozao.fragment.ProductFragment">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/p2_image"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@color/black_m"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/textView91"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/p2_image"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
+        android:text="商品名称："
+        android:textColor="@color/black_h"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/p2_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView91"
+        android:layout_marginTop="1dp"
+        android:layout_toEndOf="@+id/textView91"
+        android:layout_toRightOf="@+id/textView91"
+        android:textColor="@color/black_h" />
+
+    <TextView
+        android:id="@+id/p2_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView91"
+        android:layout_alignStart="@+id/textView91"
+        android:layout_below="@+id/textView91"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/green_m"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView91"
+        android:layout_alignStart="@+id/textView91"
+        android:layout_below="@+id/p2_price"
+        android:layout_marginTop="20dp"
+        android:text="描述："
+        android:textColor="@color/black_h"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/p2_describe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView24"
+        android:layout_marginTop="1dp"
+        android:layout_toEndOf="@+id/textView24"
+        android:layout_toRightOf="@+id/textView24"
+        android:textColor="@color/black_h" />
+
+    <TextView
+        android:id="@+id/textView26"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView24"
+        android:layout_alignStart="@+id/textView24"
+        android:layout_below="@+id/p2_describe"
+        android:layout_marginTop="25dp"
+        android:text="摊主："
+        android:textColor="@color/black_h"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/p2_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView26"
+        android:layout_marginTop="1dp"
+        android:layout_toEndOf="@+id/textView26"
+        android:layout_toRightOf="@+id/textView26"
+        android:textColor="@color/black_h" />
+
+    <TextView
+        android:id="@+id/textView28"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView26"
+        android:layout_alignStart="@+id/textView26"
+        android:layout_below="@+id/textView26"
+        android:layout_marginTop="15dp"
+        android:text="联系方式："
+        android:textColor="@color/black_h"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/p2_contact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView28"
+        android:layout_marginTop="1dp"
+        android:layout_toEndOf="@+id/textView28"
+        android:layout_toRightOf="@+id/textView28"
+        android:autoLink="all"
+        android:textColor="@color/black_h" />
+
+</RelativeLayout>

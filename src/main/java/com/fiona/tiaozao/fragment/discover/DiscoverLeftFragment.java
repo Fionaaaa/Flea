@@ -3,9 +3,9 @@ package com.fiona.tiaozao.fragment.discover;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -28,10 +28,11 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
-public class DiscoverLeftFragment extends Fragment {
+public class DiscoverLeftFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     RecyclerView recyclerView;
-
+    SwipeRefreshLayout mSwipeLayout;
     ArrayList<User> data = new ArrayList<>();
+    RvAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,6 +42,9 @@ public class DiscoverLeftFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_discover_left, container, false);
 
+        mSwipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.srl_dis_left);
+        mSwipeLayout.setOnRefreshListener(this);
+        mSwipeLayout.setColorSchemeResources(R.color.colorAccent, R.color.green_m, R.color.red_m);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycle_discover_left);
 
         initView();
@@ -48,23 +52,24 @@ public class DiscoverLeftFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-    }
-
     void initView() {
-        new SetDataSource().execute();  //读取本地数据
+        data = getData();
+        adapter = new RvAdapter(getActivity(), data);
 
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, GridLayoutManager.VERTICAL));
-        recyclerView.setAdapter(new RvAdapter(getActivity(), data));
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onRefresh() {
+        //开始网络请求
+        Interactor.getUsers(getActivity());
     }
 
     /**
@@ -101,7 +106,7 @@ public class DiscoverLeftFragment extends Fragment {
 
             if (!Interactor.onlyWifi(getActivity())) {
                 holder.imageView.setImageURI(Uri.parse(user.getIcon()));
-            }else{
+            } else {
                 holder.imageView.setImageURI(Uri.parse(App.DEFAULT_PIC));
             }
             holder.textViewSale.setText(user.getName());
@@ -154,32 +159,18 @@ public class DiscoverLeftFragment extends Fragment {
     }
 
     //从本地取得数据
-    private class SetDataSource extends AsyncTask<Void, Void, ArrayList<User>> {
-
-        @Override
-        protected ArrayList<User> doInBackground(Void... params) {
-            ArrayList<User> userList = (ArrayList<User>) User.listAll(User.class);
-            return Interactor.getGoodsToUser(userList);
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<User> data) {
-            setAdapter(data);
-        }
-    }
-
-    /**
-     * recycleView设置适配器
-     *
-     * @param data
-     */
-    private void setAdapter(ArrayList<User> data) {
-        recyclerView.setAdapter(new RvAdapter(getActivity(), data));
+    private ArrayList<User> getData() {
+        ArrayList<User> userList = (ArrayList<User>) User.listAll(User.class);
+        return Interactor.getGoodsToUser(userList);
     }
 
     //收到网络加载完毕通知
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void loadNetSource(ArrayList<User> data) {
-        // TODO: 16-3-7
+    public void loadNetSource(String msg) {
+        if (msg.equals(App.QUERY_USER)) {
+            data = getData();      //加载本地数据
+            adapter.notifyItemRangeChanged(0, data.size());//刷新列表
+            mSwipeLayout.setRefreshing(false);  //取消刷新状态
+        }
     }
 }

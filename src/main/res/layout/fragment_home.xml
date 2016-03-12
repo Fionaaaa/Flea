@@ -18,7 +18,7 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/viewPager_home"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="200dp"
             android:layout_below="@+id/toolbar"
             android:background="@color/green_m"
             app:layout_scrollFlags="scroll|enterAlways"></android.support.v4.view.ViewPager>

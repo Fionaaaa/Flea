@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.fiona.tiaozao.ProductActivity">
+    tools:context="com.fiona.tiaozao.Product2Activity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -25,7 +25,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="5dp"
-        android:onClick="clickBackStallActivity"
+        android:onClick="clickBackActivity"
         android:src="@drawable/activity_return_2" />
 
     <TextView
@@ -35,12 +35,12 @@
         android:layout_alignBottom="@+id/imageView6"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="2dp"
-        android:text="摊位详情"
+        android:text="商品详情"
         android:textColor="@color/white"
         android:textSize="19sp" />
 
     <ImageView
-        android:id="@+id/icon_stall_collect"
+        android:id="@+id/icon_add_collection2"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_alignBottom="@+id/toolbar"
@@ -52,18 +52,33 @@
         android:onClick="doCollect"
         android:src="@drawable/icon_remove_collecdtion" />
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/srl_dis_stall"
+    <android.support.v4.view.ViewPager
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar">
+        android:layout_height="wrap_content"
+        android:id="@+id/view15"
+        android:layout_below="@+id/toolbar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
-        <ListView
-            android:id="@+id/listView_discover_stall_activity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/toolbar" />
-    </android.support.v4.widget.SwipeRefreshLayout>
+    <ImageView
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:id="@+id/imageView_to_left"
+        android:src="@drawable/ic_to_left"
+        android:visibility="invisible"
+        android:layout_alignBottom="@+id/view15"
+        android:layout_toRightOf="@+id/imageView6"
+        android:layout_toEndOf="@+id/imageView6"
+        android:layout_marginBottom="108dp" />
+
+    <ImageView
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:id="@+id/imageView_to_right"
+        android:layout_alignTop="@+id/imageView_to_left"
+        android:src="@drawable/ic_to_right"
+        android:visibility="invisible"
+        android:layout_toLeftOf="@+id/icon_add_collection2"
+        android:layout_toStartOf="@+id/icon_add_collection2" />
+
 </RelativeLayout>

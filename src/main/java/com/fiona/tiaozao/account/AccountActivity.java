@@ -94,6 +94,8 @@ public class AccountActivity extends AppCompatActivity {
 
     //注销
     void loginOut() {
-        Tencent.createInstance(LoginAsQQActivity.AppId, getApplicationContext()).logout(this);
+//        Tencent.createInstance(LoginAsQQActivity.AppId, getApplicationContext()).logout(this);
+        getSharedPreferences("user",MODE_PRIVATE).edit().putBoolean("isLoad",false).commit();
+        finish();
     }
 }

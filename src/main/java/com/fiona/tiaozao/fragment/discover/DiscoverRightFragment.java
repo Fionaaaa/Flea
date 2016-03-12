@@ -4,9 +4,9 @@ package com.fiona.tiaozao.fragment.discover;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -22,16 +22,22 @@ import com.fiona.tiaozao.R;
 import com.fiona.tiaozao.bean.Goods;
 import com.fiona.tiaozao.interactor.Interactor;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DiscoverRightFragment extends Fragment {
+public class DiscoverRightFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     ArrayList<Goods> data = new ArrayList<>();
 
     RecyclerView recyclerView;
+    SwipeRefreshLayout mSwipeLayout;
+    Rvadapter adapter;
 
 //    Handler handler;
 
@@ -42,27 +48,37 @@ public class DiscoverRightFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        EventBus.getDefault().register(this);
 
         View view = inflater.inflate(R.layout.fragment_discover_right, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycle_discover_right);
+
+        mSwipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.srl_dis_right);
+        mSwipeLayout.setOnRefreshListener(this);
+        mSwipeLayout.setColorSchemeResources(R.color.colorAccent, R.color.green_m, R.color.red_m);
 
         initView();
 
         return view;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
+    void initView() {
+        data = getData();
+        adapter=new Rvadapter(getActivity(), data);
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, GridLayoutManager.VERTICAL));
+        recyclerView.setAdapter(adapter);
     }
 
-    void initView() {
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 
-        new SetDataSource().execute();
-
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, GridLayoutManager.VERTICAL));
-        recyclerView.setAdapter(new Rvadapter(getActivity(), data));
+    @Override
+    public void onRefresh() {
+        //开启网络请求
+        Interactor.getEmption(getActivity());
     }
 
     /**
@@ -98,7 +114,7 @@ public class DiscoverRightFragment extends Fragment {
             if (icon != null) {
                 if (!Interactor.onlyWifi(getActivity())) {
                     holder.imageView.setImageURI(Uri.parse(icon));
-                }else{
+                } else {
                     holder.imageView.setImageURI(Uri.parse(App.DEFAULT_PIC));
                 }
             }
@@ -158,23 +174,17 @@ public class DiscoverRightFragment extends Fragment {
     /**
      * 本地缓存取数据
      */
-    private class SetDataSource extends AsyncTask<Void, Void, ArrayList<Goods>> {
-
-        @Override
-        protected ArrayList<Goods> doInBackground(Void... params) {
-            ArrayList<Goods> goodsList = (ArrayList<Goods>) Goods.find(Goods.class, "flag = ?", "0");
-
-            return goodsList;
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<Goods> data) {
-            setAdapter(data);
-        }
+    private ArrayList<Goods> getData() {
+        return (ArrayList<Goods>) Goods.find(Goods.class, "flag = ?", "0");
     }
 
-    //设置适配器
-    private void setAdapter(ArrayList<Goods> data) {
-        recyclerView.setAdapter(new Rvadapter(getActivity(), data));
+    //网络请求结束
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void NetTaskCompleted(String msg) {
+        if (msg.equals(App.QUERY_EMPTION)) {
+            data=getData();
+            adapter.notifyItemRangeChanged(0,data.size());
+            mSwipeLayout.setRefreshing(false);
+        }
     }
 }

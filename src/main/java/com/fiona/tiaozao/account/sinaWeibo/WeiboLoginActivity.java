@@ -165,7 +165,7 @@ public class WeiboLoginActivity extends AppCompatActivity implements OnClickList
         Interactor.startAllNetTask(WeiboLoginActivity.this);
 
         //清空本地设置
-        Interactor.clearSetting(WeiboLoginActivity.this);
+//        Interactor.clearSetting(WeiboLoginActivity.this);
 
         finish();
     }

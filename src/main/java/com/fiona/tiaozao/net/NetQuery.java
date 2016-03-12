@@ -63,7 +63,13 @@ public interface NetQuery {
      */
     void getCollectUser(String userID);
 
+    //获得单个用户出售的物品
+    void getUserGoods(String user_id);
+
     //获取物品通知
-    void getNotify(String user_id, Context context);
+    void getNotifyGoods(String user_id, Context context);
+
+    //获取摊位通知
+    void getNotifyStall(String user_id, Context context);
 
 }

@@ -63,7 +63,8 @@
         android:id="@+id/listView_my_stall_activity"
         android:layout_below="@+id/toolbar"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/deleteView_product" />
 
     <com.fiona.tiaozao.fragment.myself.edit.DeleteView
         android:id="@+id/deleteView_product"
@@ -84,5 +85,13 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:indeterminate="false" />
+
+    <com.fiona.tiaozao.fragment.myself.edit.AddProductView
+        android:id="@+id/newNoteView_stall"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
