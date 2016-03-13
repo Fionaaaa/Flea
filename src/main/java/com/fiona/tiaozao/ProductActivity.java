@@ -23,6 +23,7 @@ public class ProductActivity extends AppCompatActivity {
 
     boolean flag;
     EditText editText;
+    TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,7 @@ public class ProductActivity extends AppCompatActivity {
         flag = getIntent().getBooleanExtra("fromFionaaaa", false);
 
         editText = (EditText) findViewById(R.id.editText2);
+        textView= (TextView) findViewById(R.id.textView13);
 
         imageViewAddColelct = (ImageView) findViewById(R.id.icon_add_collection);
 
@@ -59,6 +61,7 @@ public class ProductActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.textView29_product_contact)).setText(goods.getContact());
 
         if (flag) {
+            textView.setText("我的物品");
             editText.setVisibility(View.VISIBLE);
             editText.setHint(String.valueOf(goods.getPrice()));
             findViewById(R.id.textView23_product_price).setVisibility(View.INVISIBLE);

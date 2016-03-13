@@ -179,6 +179,7 @@ public class MyPurchaseActivity extends AppCompatActivity {
             if (!isSelectMode) {
                 Intent intent = new Intent(MyPurchaseActivity.this, PurchaseActivity.class);
                 intent.putExtra(App.ACTION_GOODS, data.get(position));
+                intent.putExtra("from","mine");
                 startActivity(intent);
             } else {
                 if (listSelectec[position] == 1) {

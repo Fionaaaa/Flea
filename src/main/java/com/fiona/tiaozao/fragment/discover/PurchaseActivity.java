@@ -23,6 +23,11 @@ public class PurchaseActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_purchase2);
 
+        String mine=getIntent().getStringExtra("from");
+        if(mine!=null){
+            ((TextView)findViewById(R.id.textView13)).setText("我的求购");
+        }
+
         initView();
 
     }

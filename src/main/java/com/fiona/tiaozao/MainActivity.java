@@ -24,6 +24,7 @@ import com.fiona.tiaozao.account.sinaWeibo.WeiboLoginActivity;
 import com.fiona.tiaozao.fragment.classify.ClassifyFragment;
 import com.fiona.tiaozao.fragment.discover.DiscoverFragment;
 import com.fiona.tiaozao.fragment.home.HomeFragment;
+import com.fiona.tiaozao.fragment.home.SearchActivity;
 import com.fiona.tiaozao.fragment.myself.AboutActivity;
 import com.fiona.tiaozao.fragment.myself.MyCollectionActivity;
 import com.fiona.tiaozao.fragment.myself.MyPurchaseActivity;

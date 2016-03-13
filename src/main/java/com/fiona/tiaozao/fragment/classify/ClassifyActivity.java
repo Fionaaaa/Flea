@@ -1,6 +1,5 @@
 package com.fiona.tiaozao.fragment.classify;
 
-import android.app.usage.UsageEvents;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -17,7 +16,7 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.fiona.tiaozao.App;
-import com.fiona.tiaozao.Product2Activity;
+import com.fiona.tiaozao.ProductPagerActivity;
 import com.fiona.tiaozao.R;
 import com.fiona.tiaozao.bean.Goods;
 import com.fiona.tiaozao.interactor.Interactor;
@@ -174,10 +173,11 @@ public class ClassifyActivity extends AppCompatActivity implements SwipeRefreshL
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-            Intent intent = new Intent(ClassifyActivity.this, Product2Activity.class);
+            Intent intent = new Intent(ClassifyActivity.this, ProductPagerActivity.class);
             intent.putExtra(App.ACTION_GOODS, data);
             intent.putExtra("position", position);
             intent.putExtra("where", "classify");
+            intent.putExtra("msg",classify);
             startActivity(intent);
 
         }

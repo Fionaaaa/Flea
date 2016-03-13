@@ -3,119 +3,119 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimary"
+        android:popupTheme="@style/Theme.AppCompat.Light"
+        android:titleTextColor="@color/white"
+        app:layout_scrollFlags="scroll|enterAlways" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager_home"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@+id/toolbar"
+        android:background="@color/green_m"
+        app:layout_scrollFlags="scroll|enterAlways"></android.support.v4.view.ViewPager>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_alignBottom="@+id/viewPager_home"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <View
+            android:id="@+id/dot_1"
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:layout_alignTop="@+id/dot_2"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/dot_2"
+            android:layout_toStartOf="@+id/dot_2"
+            android:background="@drawable/dot_focused" />
+
+        <View
+            android:id="@+id/dot_2"
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/dot_normal" />
+
+        <View
+            android:id="@+id/dot_3"
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:layout_alignTop="@+id/dot_2"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/dot_2"
+            android:layout_toRightOf="@+id/dot_2"
+            android:background="@drawable/dot_normal" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/viewPager_home"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        app:layout_scrollFlags="scroll|enterAlways">
+
+        <TextView
+            android:id="@+id/textView_commend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="推荐" />
+
+        <TextView
+            android:id="@+id/textView_commend_1"
+            android:layout_width="wrap_content"
+            android:layout_height="1px"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:background="@color/colorPrimary"
-            android:popupTheme="@style/Theme.AppCompat.Light"
-            android:titleTextColor="@color/white"
-            app:layout_scrollFlags="scroll|enterAlways" />
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/textView_commend"
+            android:layout_toStartOf="@+id/textView_commend"
+            android:background="@color/black_h" />
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/viewPager_home"
+        <TextView
+            android:id="@+id/textView_commend_2"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_below="@+id/toolbar"
-            android:background="@color/green_m"
-            app:layout_scrollFlags="scroll|enterAlways"></android.support.v4.view.ViewPager>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_alignBottom="@+id/viewPager_home"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
-
-            <View
-                android:id="@+id/dot_1"
-                android:layout_width="5dp"
-                android:layout_height="5dp"
-                android:layout_alignTop="@+id/dot_2"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_toLeftOf="@+id/dot_2"
-                android:layout_toStartOf="@+id/dot_2"
-                android:background="@drawable/dot_focused" />
-
-            <View
-                android:id="@+id/dot_2"
-                android:layout_width="5dp"
-                android:layout_height="5dp"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/dot_normal" />
-
-            <View
-                android:id="@+id/dot_3"
-                android:layout_width="5dp"
-                android:layout_height="5dp"
-                android:layout_alignTop="@+id/dot_2"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_toEndOf="@+id/dot_2"
-                android:layout_toRightOf="@+id/dot_2"
-                android:background="@drawable/dot_normal" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/relativeLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            app:layout_scrollFlags="scroll|enterAlways"
-            android:layout_below="@+id/viewPager_home"
-            android:paddingBottom="8dp"
-            android:paddingTop="8dp">
-
-            <TextView
-                android:id="@+id/textView_commend"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:text="推荐" />
-
-            <TextView
-                android:id="@+id/textView_commend_1"
-                android:layout_width="wrap_content"
-                android:layout_height="1px"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"
-                android:layout_toLeftOf="@+id/textView_commend"
-                android:layout_toStartOf="@+id/textView_commend"
-                android:background="@color/black_h" />
-
-            <TextView
-                android:id="@+id/textView_commend_2"
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:layout_toEndOf="@+id/textView_commend"
-                android:layout_toRightOf="@+id/textView_commend"
-                android:background="@color/black_h" />
-
-        </RelativeLayout>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView_home"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_height="1px"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/relativeLayout"
-            android:background="@color/white" />
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toEndOf="@+id/textView_commend"
+            android:layout_toRightOf="@+id/textView_commend"
+            android:background="@color/black_h" />
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/relativeLayout"
+        android:background="@color/white" />
 
         <ImageView
             android:id="@+id/imageView"
@@ -129,41 +129,41 @@
             android:onClick="clickSearch"
             android:src="@drawable/ic_search_white" />
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignBottom="@+id/toolbar"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="10dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginRight="15dp"
-            android:onClick="clickAdd"
-            android:src="@drawable/ic_add_white" />
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignBottom="@+id/toolbar"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:onClick="clickAdd"
+        android:src="@drawable/ic_add_white" />
 
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/toolbar"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="10dp"
-            android:text="首 页"
-            android:textColor="@color/white"
-            android:textSize="19sp" />
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/toolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:text="首 页"
+        android:textColor="@color/white"
+        android:textSize="19sp" />
 
-        <RelativeLayout
-            android:id="@+id/add"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/toolbar"
-            android:visibility="invisible">
+    <RelativeLayout
+        android:id="@+id/add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/toolbar"
+        android:visibility="invisible">
 
-            <include layout="@layout/main_add" />
+        <include layout="@layout/main_add" />
 
-        </RelativeLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -1,13 +1,13 @@
 package com.fiona.tiaozao.interactor;
 
 import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.preference.Preference;
 import android.provider.MediaStore;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.NotificationCompat;
@@ -15,11 +15,11 @@ import android.text.Editable;
 import android.util.Log;
 
 import com.fiona.tiaozao.App;
-import com.fiona.tiaozao.Product2Activity;
 import com.fiona.tiaozao.R;
 import com.fiona.tiaozao.SaleActivity;
 import com.fiona.tiaozao.bean.Goods;
 import com.fiona.tiaozao.bean.User;
+import com.fiona.tiaozao.fragment.myself.MyCollectionActivity;
 import com.fiona.tiaozao.net.NetQuery;
 import com.fiona.tiaozao.net.NetQueryImpl;
 import com.fiona.tiaozao.net.UploadImpl;
@@ -104,19 +104,19 @@ public class Interactor {
     }
 
     //请求求购的物品
-    public static void getEmption(Context context){
-        NetQueryImpl query=NetQueryImpl.getInstance(context);
+    public static void getEmption(Context context) {
+        NetQueryImpl query = NetQueryImpl.getInstance(context);
         query.getEmptionGoods();
     }
 
     //请求用户列表
-    public static void getUsers(Context context){
+    public static void getUsers(Context context) {
         NetQueryImpl.getInstance(context).getUsers();
     }
 
     //请求一个用户出售的物品
-    public static void getUserGoods(Context context,String user_id){
-
+    public static void getUserGoods(Context context, String user_id) {
+        NetQueryImpl.getInstance(context).getUserGoods(user_id);
     }
 
     //添加一个用户
@@ -184,16 +184,10 @@ public class Interactor {
 
     //给用户集添加出售商品集
     public static ArrayList<User> getGoodsToUser(ArrayList<User> userList) {
-        ArrayList<User> list = new ArrayList<>();
         for (int i = 0; i < userList.size(); i++) {
             ArrayList<Goods> goodsList = (ArrayList<Goods>) Goods.find(Goods.class, "user_id=? and flag=?", String.valueOf(userList.get(i).getId()), "1");
-            if (goodsList.size() == 0) {
-                list.add(userList.get(i));         //用户没有物品则不显示
-            } else {
-                userList.get(i).setListSale(goodsList);
-            }
+            userList.get(i).setListSale(goodsList);
         }
-        userList.removeAll(list);
         return userList;
     }
 
@@ -298,7 +292,7 @@ public class Interactor {
     }
 
     //请求通知
-    private static void getNotify(NetQuery query, Context context) {
+    public static void getNotify(NetQuery query, Context context) {
         boolean setting_goods = context.getSharedPreferences("user", Context.MODE_PRIVATE).getBoolean(App.SETTING_GOODS, false);
         boolean setting_stall = context.getSharedPreferences("user", Context.MODE_PRIVATE).getBoolean(App.SETTING_STALL, false);
         String account = context.getSharedPreferences("user", Context.MODE_PRIVATE).getString("account", null);
@@ -332,8 +326,13 @@ public class Interactor {
                     .setContentTitle("校园集市")
                     .setSmallIcon(R.drawable.icon_notify_goods)
                     .setContentText(msg)
-                    .setDefaults(Notification.DEFAULT_SOUND)
+                    .setDefaults(Notification.DEFAULT_ALL)
                     .build();
+            not.flags = Notification.FLAG_NO_CLEAR;  //点击删除
+            Intent intent = new Intent(context, MyCollectionActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            not.contentIntent = pendingIntent;
+
             NotificationManagerCompat.from(context).notify(1, not);
         }
     }
@@ -352,8 +351,12 @@ public class Interactor {
                     .setContentTitle("校园集市")
                     .setSmallIcon(R.drawable.icon_notify_stall)
                     .setContentText(msg)
-                    .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_LIGHTS)
+                    .setDefaults(Notification.DEFAULT_ALL)  //默认声音，震动等效果
                     .build();
+            not.flags = Notification.FLAG_NO_CLEAR;  //点击自动删除
+            Intent intent = new Intent(context, MyCollectionActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            not.contentIntent = pendingIntent;
             NotificationManagerCompat.from(context).notify(1, not);
         }
     }

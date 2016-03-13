@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.fiona.tiaozao.App;
 import com.fiona.tiaozao.R;
+import com.fiona.tiaozao.interactor.Interactor;
+import com.fiona.tiaozao.net.NetQueryImpl;
 
 public class SettingActivity extends AppCompatActivity {
 
@@ -91,6 +93,7 @@ public class SettingActivity extends AppCompatActivity {
                 case 2:
                     if (isChecked) {
                         pf.edit().putBoolean(App.SETTING_STALL, true).commit();
+                        Interactor.getNotify(NetQueryImpl.getInstance(SettingActivity.this),SettingActivity.this);
                     } else {
                         pf.edit().putBoolean(App.SETTING_STALL, false).commit();
                     }
@@ -98,6 +101,7 @@ public class SettingActivity extends AppCompatActivity {
                 case 3:
                     if (isChecked) {
                         pf.edit().putBoolean(App.SETTING_GOODS, true).commit();
+                        Interactor.getNotify(NetQueryImpl.getInstance(SettingActivity.this), SettingActivity.this);
                     } else {
                         pf.edit().putBoolean(App.SETTING_GOODS, false).commit();
                     }

@@ -239,12 +239,26 @@ public class UploadImpl implements Upload {
             e.printStackTrace();
         }
 
-        //文件
-        RequestBody bodyFile = RequestBody.create(MediaType.parse("application/octet-stream"), file);
+        //文件(先进行压缩)
+        RequestBody bodyFile = null;
+        try {
+            bodyFile = RequestBody.create(MediaType.parse("application/octet-stream"), ImageOprator.saveFile(ImageOprator.getimage(file.getPath()), file));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        RequestBody bodySmallFile=null;
+        try {
+            bodySmallFile = RequestBody.create(MediaType.parse("application/octet-stream"), ImageOprator.saveFile(ImageOprator.getimage(file.getPath(),"small"), file));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         //表单（包含文件）
         MultipartBody.Builder builder = new MultipartBody.Builder();
+
         builder.addFormDataPart("file", file.getName(), bodyFile);
+        builder.addFormDataPart("small", file.getName(), bodySmallFile);
+
         for (String key : map.keySet()) {
             Log.d("key-values:",key+":"+map.get(key));
             builder.addFormDataPart(key, map.get(key));

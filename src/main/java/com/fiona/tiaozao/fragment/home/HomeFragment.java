@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.fiona.tiaozao.App;
 import com.fiona.tiaozao.MainActivity;
-import com.fiona.tiaozao.Product2Activity;
+import com.fiona.tiaozao.ProductPagerActivity;
 import com.fiona.tiaozao.R;
 import com.fiona.tiaozao.bean.Goods;
 import com.fiona.tiaozao.interactor.Interactor;
@@ -54,16 +55,6 @@ public class HomeFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
     }
-
-    //订阅网络加载
-//    @Subscribe(threadMode = ThreadMode.MAIN)
-//    public void loadNetSource(ArrayList<Goods> list) {
-//        if (list.get(0) instanceof Goods) {
-//            adapter.notifyItemRangeChanged(0, adapter.data.size());
-//            adapter.data = list;
-//            adapter.notifyItemRangeInserted(0, list.size());
-//        }
-//    }
 
     //本地加载
     private void loadLocalSource() {
@@ -170,7 +161,7 @@ public class HomeFragment extends Fragment {
         public void onBindViewHolder(Holder holder, int position) {
 
             if (!Interactor.onlyWifi(getActivity())) {
-                holder.imageView.setImageURI(Uri.parse(App.URL + data.get(position).getPic_location()));
+                holder.imageView.setImageURI(Uri.parse(App.URL + data.get(position).getPic_location()+"small"));
             }
 
             holder.textViewName.setText(data.get(position).getTitle());
@@ -196,7 +187,7 @@ public class HomeFragment extends Fragment {
 
             ((MainActivity) getActivity()).clickChangeBackgroundColor(v);
 
-            Intent intent = new Intent(getActivity(), Product2Activity.class);
+            Intent intent = new Intent(getActivity(), ProductPagerActivity.class);
             intent.putExtra(App.ACTION_GOODS, data);
             intent.putExtra("position", v.getId());
             intent.putExtra("where","home");

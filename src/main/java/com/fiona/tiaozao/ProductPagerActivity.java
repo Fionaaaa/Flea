@@ -17,12 +17,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fiona.tiaozao.bean.Goods;
-import com.fiona.tiaozao.fragment.ProductFragment;
 import com.fiona.tiaozao.interactor.Interactor;
 
 import java.util.ArrayList;
 
-public class Product2Activity extends AppCompatActivity {
+public class ProductPagerActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
     ImageView imageViewCollect;
@@ -77,13 +76,13 @@ public class Product2Activity extends AppCompatActivity {
         String title = getIntent().getStringExtra("where");
         switch (title) {
             case "home":
-                textView.setText("推荐详情");
+                textView.setText("推 荐");
                 break;
             case "classify":
-                textView.setText("分类详情");
+                textView.setText(getIntent().getStringExtra("msg"));
                 break;
             case "stall":
-                textView.setText("摊位详情");
+                textView.setText(getIntent().getStringExtra("msg"));
                 break;
         }
     }
@@ -102,7 +101,7 @@ public class Product2Activity extends AppCompatActivity {
 
         @Override
         public void onPageSelected(int position) {
-            if (Interactor.isCollected(Product2Activity.this, goodsList.get(viewPager.getCurrentItem()).getGoods_id(), 1)) {
+            if (Interactor.isCollected(ProductPagerActivity.this, goodsList.get(viewPager.getCurrentItem()).getGoods_id(), 1)) {
                 imageViewCollect.setImageResource(R.drawable.icon_add_collection);
                 Log.d("debug", "用户已收藏");
             } else {
@@ -188,7 +187,7 @@ public class Product2Activity extends AppCompatActivity {
 
             }
         } else {
-            Toast.makeText(Product2Activity.this, "请先登录", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ProductPagerActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -18,24 +18,26 @@ import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.fiona.tiaozao.App;
-import com.fiona.tiaozao.Product2Activity;
-import com.fiona.tiaozao.ProductActivity;
+import com.fiona.tiaozao.ProductPagerActivity;
 import com.fiona.tiaozao.R;
 import com.fiona.tiaozao.bean.Goods;
 import com.fiona.tiaozao.bean.User;
 import com.fiona.tiaozao.interactor.Interactor;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
-public class StallActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
+public class StallActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
     ListView listView;
 
     ArrayList<Goods> data = new ArrayList<>();
     User user;
     ImageView icon;
     SwipeRefreshLayout mSwipeLayout;
+    TextView textViewWho;
 
     ListViewAdapter adapter;
 
@@ -45,7 +47,7 @@ public class StallActivity extends AppCompatActivity implements SwipeRefreshLayo
         setContentView(R.layout.activity_stall);
 
         EventBus.getDefault().register(this);
-        mSwipeLayout= (SwipeRefreshLayout) findViewById(R.id.srl_dis_stall);
+        mSwipeLayout = (SwipeRefreshLayout) findViewById(R.id.srl_dis_stall);
         mSwipeLayout.setOnRefreshListener(this);
         mSwipeLayout.setColorSchemeResources(R.color.colorAccent, R.color.green_m, R.color.red_m);
 
@@ -55,6 +57,8 @@ public class StallActivity extends AppCompatActivity implements SwipeRefreshLayo
         data = user.getListSale();
 
         listView = (ListView) findViewById(R.id.listView_discover_stall_activity);
+        textViewWho= (TextView) findViewById(R.id.who_stall);
+        textViewWho.setText(user.getName()+"的摊位");
 
         adapter = new ListViewAdapter(this, data);
         listView.setAdapter(adapter);
@@ -69,6 +73,12 @@ public class StallActivity extends AppCompatActivity implements SwipeRefreshLayo
         if (Interactor.isCollected(this, user.getUser_id(), 0)) {
             icon.setImageResource(R.drawable.icon_add_collection);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     public void clickBackStallActivity(View view) {
@@ -95,7 +105,7 @@ public class StallActivity extends AppCompatActivity implements SwipeRefreshLayo
     @Override
     public void onRefresh() {
         //开始网络请求
-        Interactor.getUserGoods(this,user.getUser_id());
+        Interactor.getUserGoods(this, user.getUser_id());
     }
 
     /**
@@ -178,11 +188,28 @@ public class StallActivity extends AppCompatActivity implements SwipeRefreshLayo
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-            Intent intent = new Intent(StallActivity.this, Product2Activity.class);
+            Intent intent = new Intent(StallActivity.this, ProductPagerActivity.class);
             intent.putExtra(App.ACTION_GOODS, data);
             intent.putExtra("position", position);
             intent.putExtra("where", "stall");
+            intent.putExtra("msg",user.getName());
             startActivity(intent);
+        }
+    }
+
+    //本地请求
+    private ArrayList<Goods> getData() {
+        ArrayList<Goods> list = (ArrayList<Goods>) Goods.find(Goods.class, "user_id=? and flag=?", user.getUser_id(), "1");
+        return list;
+    }
+
+    //网络请求完成
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void netTaskCompleted(String msg) {
+        if (msg.equals(App.QUERY_USER_GOODS)) {
+            data=getData();
+            adapter.notifyDataSetChanged();     //数据集改变
+            mSwipeLayout.setRefreshing(false);  //刷新状态取消
         }
     }
 }

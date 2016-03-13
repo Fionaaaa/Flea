@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -196,6 +197,7 @@ public class MyCollectionActivity extends AppCompatActivity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             if (position > 0 && position <= userList.size()) {
                 userList = Interactor.getGoodsToUser(userList);
+                Log.d("debug","userlist:"+userList.size());
                 Intent intent = new Intent(MyCollectionActivity.this, StallActivity.class);
                 intent.putExtra(App.ACTION_USER, userList.get(position - 1));
                 startActivityForResult(intent, 8080);

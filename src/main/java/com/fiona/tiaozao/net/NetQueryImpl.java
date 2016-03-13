@@ -6,6 +6,7 @@ import android.os.Message;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -177,8 +178,8 @@ public class NetQueryImpl implements NetQuery {
 
     //获得单个用户出售的物品
     @Override
-    public void getUserGoods(String user_id){
-        StringRequest request = new StringRequest(App.URL + App.GOODS_SERVLET + "?type=emption", new Response.Listener<String>() {
+    public void getUserGoods(final String user_id) {
+        StringRequest request = new StringRequest(StringRequest.Method.POST, App.URL + App.USER_SERVLET, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
                 ArrayList<Goods> data = new ArrayList<>();
@@ -195,11 +196,11 @@ public class NetQueryImpl implements NetQuery {
                 }
 
                 //本地缓存
-                Goods.deleteAll(Goods.class, "flag=?", "0");
+                Goods.deleteAll(Goods.class, "flag=? and user_id=?", "1", user_id);
                 Goods.saveInTx(data);
 
                 //发通知到总线
-                EventBus.getDefault().post(App.QUERY_EMPTION);
+                EventBus.getDefault().post(App.QUERY_USER_GOODS);
 
             }
         }, new Response.ErrorListener() {
@@ -207,8 +208,15 @@ public class NetQueryImpl implements NetQuery {
             public void onErrorResponse(VolleyError volleyError) {
                 Log.d("debug", "error");
             }
-        });
-
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map map = new HashMap();
+                map.put("id", user_id);
+                map.put("type", "my_stall");
+                return map;
+            }
+        };
         queue.add(request);
     }
 

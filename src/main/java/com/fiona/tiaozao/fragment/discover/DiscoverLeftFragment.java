@@ -161,7 +161,15 @@ public class DiscoverLeftFragment extends Fragment implements SwipeRefreshLayout
     //从本地取得数据
     private ArrayList<User> getData() {
         ArrayList<User> userList = (ArrayList<User>) User.listAll(User.class);
-        return Interactor.getGoodsToUser(userList);
+        userList=Interactor.getGoodsToUser(userList);
+        ArrayList<User>list=new ArrayList<>();
+        for (User user : userList) {
+            if (user.getListSale().size() == 0) {
+                list.add(user);
+            }
+        }
+        userList.removeAll(list);
+        return userList;
     }
 
     //收到网络加载完毕通知

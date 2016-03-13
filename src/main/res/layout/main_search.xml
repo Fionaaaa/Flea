@@ -23,7 +23,7 @@
             android:background="@null"
             android:textColor="@color/black_xh"
             android:textColorHint="@color/black_m"
-            android:hint="搜索"
+            android:hint="搜索物品"
             android:singleLine="true"
             android:id="@+id/editText_search"
             android:imeOptions="actionSearch"

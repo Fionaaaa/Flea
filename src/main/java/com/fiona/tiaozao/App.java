@@ -35,9 +35,10 @@ public class App extends Application {
 
     public final static String DEFAULT_PIC="http://tp4.sinaimg.cn/5827544395/180/0/1";   //默认头像
 
-    public final static String QUERY_SALE="sale_goods";          //  请求出售的物品
-    public final static String QUERY_EMPTION="emption_goods";    //  请求求购的物品
-    public final static String QUERY_USER="query_user";    //  请求求购的物品
+    public final static String QUERY_SALE="sale_goods";             //  请求出售的物品
+    public final static String QUERY_EMPTION="emption_goods";        //  请求求购的物品
+    public final static String QUERY_USER="query_user";             //  请求用户列表
+    public final static String QUERY_USER_GOODS="query_user_goods"; //  请求用户的出售物品
 
 
     @Override

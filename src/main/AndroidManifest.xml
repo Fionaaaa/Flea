@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
         android:name="com.orm.SugarApp"
@@ -23,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SearchActivity"
+            android:name=".fragment.home.SearchActivity"
             android:windowSoftInputMode="stateVisible" />
         <activity android:name=".SaleActivity" />
         <activity android:name=".PurchaseActivity" />
@@ -88,7 +89,7 @@
             android:configChanges="keyboardHidden|orientation"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".Product2Activity"></activity>
+        <activity android:name=".ProductPagerActivity"></activity>
     </application>
 
 </manifest>

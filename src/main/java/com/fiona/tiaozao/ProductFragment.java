@@ -1,18 +1,17 @@
-package com.fiona.tiaozao.fragment;
+package com.fiona.tiaozao;
 
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.fiona.tiaozao.App;
-import com.fiona.tiaozao.R;
 import com.fiona.tiaozao.bean.Goods;
 
 /**
@@ -57,6 +56,7 @@ public class ProductFragment extends Fragment {
 
         if(!getActivity().getSharedPreferences("user", Context.MODE_PRIVATE).getBoolean("wifi",false)){
             sdView.setImageURI(Uri.parse(App.URL+goods.getPic_location()));
+
         }
         tvTitle.setText(goods.getTitle());
         tvPrice.setText(String.valueOf(goods.getPrice())+"￥");
