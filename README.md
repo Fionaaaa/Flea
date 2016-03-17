@@ -8,8 +8,10 @@
 
 
 ##技术方案
-使用MVP模式进行视图与逻辑的解耦＜/br＞
-网络通信和数据解析使用Volley（okhttp）+gson＜/br＞
+使用MVP模式进行视图与逻辑的解耦  
+
+网络通信和数据解析使用Volley  
+
 图片加载和缓存使用Fresco以及Picasso＜/br＞
 图片进行质量和比例大小压缩＜/br＞
 本地数据存储使用Sugar ORM＜/br＞
