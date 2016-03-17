@@ -9,56 +9,62 @@
 
 ##部分截图
 
-* 首页
-![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/Screenshot_2016-03-14-12-56-57_com.fiona.tiaozao.png)
-
-
-* 分类
-![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/Screenshot_2016-03-14-12-57-23_com.fiona.tiaozao.png)
-
-
-* 发现
-![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/Screenshot_2016-03-14-12-57-52_com.fiona.tiaozao.png)
-
-
-* 我
-![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/Screenshot_2016-03-14-12-58-40_com.fiona.tiaozao.png)  
-
-
-
-![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/Screenshot_2016-03-14-12-57-46_com.fiona.tiaozao.png)  
-
-
-
-![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/Screenshot_2016-03-14-12-58-23_com.fiona.tiaozao.png)  
-
-
-
-![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/Screenshot_2016-03-14-12-57-57_com.fiona.tiaozao.png)  
-
-
-
-![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/Screenshot_2016-03-14-12-58-28_com.fiona.tiaozao.png)  
-
-
-
-![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/Screenshot_2016-03-14-12-58-16_com.fiona.tiaozao.png)  
-
-
-
-![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/Screenshot_2016-03-14-12-59-13_com.fiona.tiaozao.png) 
-
-
-
-![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/Screenshot_2016-03-14-13-00-01_com.fiona.tiaozao.png)  
-
-
-
-![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/Screenshot_2016-03-14-12-57-10_com.fiona.tiaozao.png)  
-
-
 
 ![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/001.JPG)  
+
+
+
+![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/002.JPG)
+
+
+
+![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/003.JPG)
+
+
+
+
+![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/004.JPG)
+
+
+
+
+![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/005.JPG)
+
+
+
+
+
+![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/006.JPG)
+
+
+
+
+
+![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/007.JPG)
+
+
+
+
+![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/008.JPG)
+
+
+
+
+![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/009.JPG)
+
+
+
+
+![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/010.JPG)
+
+
+
+
+
+![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/011.JPG)
+
+
+
 
 
 
