@@ -26,3 +26,35 @@
 
 
 
+![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/Screenshot_2016-03-14-12-57-46_com.fiona.tiaozao.png)  
+
+
+
+![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/Screenshot_2016-03-14-12-58-23_com.fiona.tiaozao.png)  
+
+
+
+![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/Screenshot_2016-03-14-12-57-57_com.fiona.tiaozao.png)  
+
+
+
+![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/Screenshot_2016-03-14-12-58-28_com.fiona.tiaozao.png)  
+
+
+
+![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/Screenshot_2016-03-14-12-58-16_com.fiona.tiaozao.png)  
+
+
+
+![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/Screenshot_2016-03-14-12-59-13_com.fiona.tiaozao.png)  
+
+
+
+![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/Screenshot_2016-03-14-13-00-01_com.fiona.tiaozao.png)  
+
+
+
+![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/Screenshot_2016-03-14-12-57-10_com.fiona.tiaozao.png)  
+
+
+
