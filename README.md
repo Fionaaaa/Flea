@@ -9,20 +9,20 @@
 
 ##部分截图
 
-*首页
+* 首页
 ![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/Screenshot_2016-03-14-12-56-57_com.fiona.tiaozao.png)
 
 
-*分类
+* 分类
 ![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/Screenshot_2016-03-14-12-57-23_com.fiona.tiaozao.png)
 
 
 ###
-*发现
+* 发现
 ![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/Screenshot_2016-03-14-12-57-52_com.fiona.tiaozao.png)
 
 
-*我
+* 我
 ###
 ![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/Screenshot_2016-03-14-12-58-40_com.fiona.tiaozao.png)  
 
