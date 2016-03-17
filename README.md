@@ -9,7 +9,7 @@
 
 ##部分截图
 
-### * 首页
+* ###首页
 ![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/Screenshot_2016-03-14-12-56-57_com.fiona.tiaozao.png)
 
 
