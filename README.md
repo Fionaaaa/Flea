@@ -46,7 +46,7 @@
 
 
 
-![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/Screenshot_2016-03-14-12-59-13_com.fiona.tiaozao.png)  
+![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/Screenshot_2016-03-14-12-59-13_com.fiona.tiaozao.png) 
 
 
 
@@ -55,6 +55,10 @@
 
 
 ![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/Screenshot_2016-03-14-12-57-10_com.fiona.tiaozao.png)  
+
+
+
+![image](https://github.com/Fionaaaa/Flea/blob/master/src/main/res/drawable/001.png)  
 
 
 
