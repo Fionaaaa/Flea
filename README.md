@@ -8,14 +8,14 @@
 
 
 ##技术方案
-使用MVP模式进行视图与逻辑的解耦。
-网络通信和数据解析使用Volley（okhttp）+gson。
-图片加载和缓存使用Fresco以及Picasso。
-图片进行质量和比例大小压缩。
-本地数据存储使用Sugar ORM。
-线程以及组件间通信使用EventBus。
-服务端使用Tomcat+Oracle。
-登录使用QQ和新浪微博第三方登录。
+使用MVP模式进行视图与逻辑的解耦＜/br＞
+网络通信和数据解析使用Volley（okhttp）+gson＜/br＞
+图片加载和缓存使用Fresco以及Picasso＜/br＞
+图片进行质量和比例大小压缩＜/br＞
+本地数据存储使用Sugar ORM＜/br＞
+线程以及组件间通信使用EventBus＜/br＞
+服务端使用Tomcat+Oracle＜/br＞
+登录使用QQ和新浪微博第三方登录＜/br＞
 
 
 ##部分截图
