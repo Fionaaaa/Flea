@@ -46,7 +46,7 @@ public class ProductPagerActivity extends AppCompatActivity {
         initTitle(textView);    //初始化标题
 
         if (getPreferences(MODE_PRIVATE).getBoolean("isFirst", true)) {
-            getPreferences(MODE_PRIVATE).edit().putBoolean("isFirst", true).commit();
+            getPreferences(MODE_PRIVATE).edit().putBoolean("isFirst", false).commit();
             toLeft = (ImageView) findViewById(R.id.imageView_to_left);
             toRight = (ImageView) findViewById(R.id.imageView_to_right);
             toLeft.setVisibility(View.VISIBLE);
@@ -66,7 +66,7 @@ public class ProductPagerActivity extends AppCompatActivity {
             viewPager.setCurrentItem(current);
             viewPager.addOnPageChangeListener(new Mylistener());
 
-            if (Interactor.isCollected(this, goodsList.get(current).getGoods_id(), 1)) {
+            if (new Interactor().isCollected(this, goodsList.get(current).getGoods_id(), 1)) {
                 imageViewCollect.setImageResource(R.drawable.icon_add_collection);
             }
         }
@@ -101,7 +101,7 @@ public class ProductPagerActivity extends AppCompatActivity {
 
         @Override
         public void onPageSelected(int position) {
-            if (Interactor.isCollected(ProductPagerActivity.this, goodsList.get(viewPager.getCurrentItem()).getGoods_id(), 1)) {
+            if (new Interactor().isCollected(ProductPagerActivity.this, goodsList.get(viewPager.getCurrentItem()).getGoods_id(), 1)) {
                 imageViewCollect.setImageResource(R.drawable.icon_add_collection);
                 Log.d("debug", "用户已收藏");
             } else {
@@ -173,17 +173,17 @@ public class ProductPagerActivity extends AppCompatActivity {
     public void doCollect(View view) {
         goods = goodsList.get(viewPager.getCurrentItem());
         if (getSharedPreferences("user", MODE_PRIVATE).getBoolean("isLoad", false)) {
-            if (Interactor.isCollected(this, goods.getGoods_id(), 1)) {
+            if (new Interactor().isCollected(this, goods.getGoods_id(), 1)) {
                 //已收藏
                 imageViewCollect.setImageResource(R.drawable.icon_remove_collecdtion);
                 //从本地以及服务器删除
-                Interactor.deletCollection(this, goods.getGoods_id(), 1);
+                new Interactor().deletCollection(this, goods.getGoods_id(), 1);
 
                 setResult(8080);    //如果从收藏表删除
             } else {
                 imageViewCollect.setImageResource(R.drawable.icon_add_collection);
                 //从本地以及服务器添加
-                Interactor.addCollection(this, goods.getGoods_id(), 1);
+                new Interactor().addCollection(this, goods.getGoods_id(), 1);
 
             }
         } else {

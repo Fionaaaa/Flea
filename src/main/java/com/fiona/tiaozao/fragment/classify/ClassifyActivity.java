@@ -78,7 +78,7 @@ public class ClassifyActivity extends AppCompatActivity implements SwipeRefreshL
     //刷新
     @Override
     public void onRefresh() {
-        Interactor.getSales(this);  //请求网络
+        new Interactor().getSales(this);  //请求网络
     }
 
     //接受总线通知
@@ -86,8 +86,8 @@ public class ClassifyActivity extends AppCompatActivity implements SwipeRefreshL
     public void netTaskCompleted(String msg){
         if(msg.equals(App.QUERY_SALE)){
             getData();                          //获得本地数据
-            mSwipeLayout.setRefreshing(false);  //取消刷新状态
         }
+        mSwipeLayout.setRefreshing(false);  //取消刷新状态
     }
 
     @Override
@@ -137,7 +137,7 @@ public class ClassifyActivity extends AppCompatActivity implements SwipeRefreshL
                 holder = (Holder) convertView.getTag();
             }
 
-            if (!Interactor.onlyWifi(ClassifyActivity.this)) {
+            if (!new Interactor().onlyWifi(ClassifyActivity.this)) {
                 holder.imageView.setImageURI(Uri.parse(App.URL + data.get(position).getPic_location()));
             }
             holder.textViewTitle.setText(data.get(position).getTitle());

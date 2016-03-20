@@ -13,9 +13,10 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.fiona.tiaozao.bean.Goods;
+import com.fiona.tiaozao.interactor.Interactor;
 
 /**
- * A simple {@link Fragment} subclass.
+ *  simple {@link Fragment} subclass.
  */
 public class ProductFragment extends Fragment {
 
@@ -54,7 +55,7 @@ public class ProductFragment extends Fragment {
         tvAuthor= (TextView) view.findViewById(R.id.p2_author);
         tvContact= (TextView) view.findViewById(R.id.p2_contact);
 
-        if(!getActivity().getSharedPreferences("user", Context.MODE_PRIVATE).getBoolean("wifi",false)){
+        if(!new Interactor().onlyWifi(getActivity())){
             sdView.setImageURI(Uri.parse(App.URL+goods.getPic_location()));
 
         }

@@ -157,12 +157,13 @@ public class WeiboLoginActivity extends AppCompatActivity implements OnClickList
         getSharedPreferences("user", MODE_PRIVATE).edit().putString("describe", user.getDescribe()).commit();
 
         //服务器
-        Interactor.insertUser(this,user);
+        Interactor interactor=new Interactor();
+        interactor.insertUser(this,user);
 
         Toast.makeText(WeiboLoginActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
 
         //开始所有的网络请求
-        Interactor.startAllNetTask(WeiboLoginActivity.this);
+        interactor.startAllNetTask(WeiboLoginActivity.this);
 
         //清空本地设置
 //        Interactor.clearSetting(WeiboLoginActivity.this);

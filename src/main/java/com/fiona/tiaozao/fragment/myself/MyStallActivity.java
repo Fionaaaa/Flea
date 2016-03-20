@@ -126,7 +126,7 @@ public class MyStallActivity extends AppCompatActivity {
             }
 
             Goods goods = data.get(position);
-            if (!Interactor.onlyWifi(MyStallActivity.this)) {
+            if (!new Interactor().onlyWifi(MyStallActivity.this)) {
                 holder.imageView.setImageURI(Uri.parse(App.URL + goods.getPic_location()));
             }
             holder.tvTitle.setText(goods.getTitle());
@@ -338,7 +338,7 @@ public class MyStallActivity extends AppCompatActivity {
                     Goods.deleteInTx(list);
 
                     //删除服务器
-                    Interactor.deleteGoods(MyStallActivity.this, list);
+                    new Interactor().deleteGoods(MyStallActivity.this, list);
 
                     try {
                         Thread.sleep(1000);

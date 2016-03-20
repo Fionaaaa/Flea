@@ -307,7 +307,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
 
-            Interactor.startAllNetTask(MainActivity.this);
+            new Interactor().startAllNetTask(MainActivity.this);
 
             return null;
         }

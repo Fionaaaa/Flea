@@ -40,11 +40,13 @@ public class StallActivity extends AppCompatActivity implements SwipeRefreshLayo
     TextView textViewWho;
 
     ListViewAdapter adapter;
+    Interactor interactor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stall);
+        interactor=new Interactor();
 
         EventBus.getDefault().register(this);
         mSwipeLayout = (SwipeRefreshLayout) findViewById(R.id.srl_dis_stall);
@@ -70,7 +72,7 @@ public class StallActivity extends AppCompatActivity implements SwipeRefreshLayo
     protected void onStart() {
         super.onStart();
         //判断是否已收藏此摊位
-        if (Interactor.isCollected(this, user.getUser_id(), 0)) {
+        if (interactor.isCollected(this, user.getUser_id(), 0)) {
             icon.setImageResource(R.drawable.icon_add_collection);
         }
     }
@@ -88,14 +90,14 @@ public class StallActivity extends AppCompatActivity implements SwipeRefreshLayo
     //收藏操作
     public void doCollect(View view) {
         if (getSharedPreferences("user", MODE_PRIVATE).getBoolean("isLoad", false)) {
-            if (Interactor.isCollected(this, user.getUser_id(), 0)) {
+            if (interactor.isCollected(this, user.getUser_id(), 0)) {
                 icon.setImageResource(R.drawable.icon_remove_collecdtion);
-                Interactor.deletCollection(this, user.getUser_id(), 0);
+                interactor.deletCollection(this, user.getUser_id(), 0);
 
                 setResult(8080);    //如果从收藏表删除
             } else {
                 icon.setImageResource(R.drawable.icon_add_collection);
-                Interactor.addCollection(this, user.getUser_id(), 0);
+                interactor.addCollection(this, user.getUser_id(), 0);
             }
         } else {
             Toast.makeText(StallActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
@@ -105,7 +107,7 @@ public class StallActivity extends AppCompatActivity implements SwipeRefreshLayo
     @Override
     public void onRefresh() {
         //开始网络请求
-        Interactor.getUserGoods(this, user.getUser_id());
+        interactor.getUserGoods(this, user.getUser_id());
     }
 
     /**
@@ -152,7 +154,7 @@ public class StallActivity extends AppCompatActivity implements SwipeRefreshLayo
             }
 
             Goods goods = data.get(position);
-            if (!Interactor.onlyWifi(StallActivity.this)) {
+            if (!interactor.onlyWifi(StallActivity.this)) {
                 holder.imageView.setImageURI(Uri.parse(App.URL + goods.getPic_location()));
             }
             holder.tvTitle.setText(goods.getTitle());

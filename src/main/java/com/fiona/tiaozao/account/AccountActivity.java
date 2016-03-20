@@ -88,7 +88,7 @@ public class AccountActivity extends AppCompatActivity {
             getSharedPreferences("user", MODE_PRIVATE).edit().putString("describe", text).commit();
 
             //更新
-            Interactor.updateUserDescribe(this, text);
+            new Interactor().updateUserDescribe(this, text);
         }
     }
 

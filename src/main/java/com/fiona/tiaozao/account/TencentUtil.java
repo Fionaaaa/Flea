@@ -428,8 +428,9 @@ public class TencentUtil {
         // 显示网络上的图片
         Bitmap bitmap = null;
         try {
-            URL myFileUrl = new URL(Util.picUrlFormat(imageUri));
-            Log.d("test","图片地址:"+Util.picUrlFormat(imageUri));
+            Util util=new Util();
+            URL myFileUrl = new URL(util.picUrlFormat(imageUri));
+            Log.d("test","图片地址:"+util.picUrlFormat(imageUri));
 
             HttpURLConnection conn = (HttpURLConnection) myFileUrl.openConnection();
             conn.setDoInput(true);

@@ -8,7 +8,7 @@ import android.app.Application;
 public class App extends Application {
 
     //172.19.201.79
-    public final static String URL = "http://172.19.138.55:8080/";    //请求地址
+    public final static String URL = "http://192.168.43.53:8080/";    //请求地址
 
     /**
      * 数据请求Servlet
@@ -33,12 +33,14 @@ public class App extends Application {
     public final static String SETTING_STALL = "setting_stall";   //摊位改变设置
     public final static String SETTING_GOODS = "setting_goods";   //物品降价通知设置
 
-    public final static String DEFAULT_PIC="http://tp4.sinaimg.cn/5827544395/180/0/1";   //默认头像
+    public final static String DEFAULT_PIC = "http://tp4.sinaimg.cn/5827544395/180/0/1";   //默认头像
 
-    public final static String QUERY_SALE="sale_goods";             //  请求出售的物品
-    public final static String QUERY_EMPTION="emption_goods";        //  请求求购的物品
-    public final static String QUERY_USER="query_user";             //  请求用户列表
-    public final static String QUERY_USER_GOODS="query_user_goods"; //  请求用户的出售物品
+    public final static String QUERY_SALE = "sale_goods";             //  请求出售的物品
+    public final static String QUERY_EMPTION = "emption_goods";        //  请求求购的物品
+    public final static String QUERY_USER = "query_user";             //  请求用户列表
+    public final static String QUERY_USER_GOODS = "query_user_goods"; //  请求用户的出售物品
+
+    public final static String QUERY_FAIL="query_fail";         //请求失败
 
 
     @Override

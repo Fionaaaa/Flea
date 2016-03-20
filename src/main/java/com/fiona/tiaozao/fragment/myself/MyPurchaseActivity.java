@@ -62,7 +62,7 @@ public class MyPurchaseActivity extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.progressBar3);
         addEmptionView= (AddEmptionView) findViewById(R.id.newNoteView_emption);
 
-        userID = Interactor.getId(this);
+        userID = new Interactor().getId(this);
 
         listView = (ListView) findViewById(R.id.listView_my_purchase);
 
@@ -333,7 +333,7 @@ public class MyPurchaseActivity extends AppCompatActivity {
                     Goods.deleteInTx(list);
 
                     //删除服务器
-                    Interactor.deleteGoods(MyPurchaseActivity.this, list);
+                    new Interactor().deleteGoods(MyPurchaseActivity.this, list);
 
                     try {
                         Thread.sleep(1000);

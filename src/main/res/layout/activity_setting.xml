@@ -55,7 +55,7 @@
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
-            android:text="仅在WIFI下加载图片"
+            android:text="无图模式"
             android:textSize="18sp"/>
 
         <Switch

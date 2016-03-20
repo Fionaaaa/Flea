@@ -36,10 +36,11 @@ public class PurchaseActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Goods goods = (Goods) intent.getExtras().get(App.ACTION_GOODS);
 
+        Interactor interactor=new Interactor();
         SimpleDraweeView imageView = (SimpleDraweeView) findViewById(R.id.imageView_discover_right);
-        String icon = Interactor.getIcon(goods.getGoods_id());
+        String icon = interactor.getIcon(goods.getGoods_id());
         if (icon != null) {
-            if (!Interactor.onlyWifi(this)) {
+            if (!interactor.onlyWifi(this)) {
                 imageView.setImageURI(Uri.parse(icon));
             }else{
                 imageView.setImageURI(Uri.parse(App.DEFAULT_PIC));

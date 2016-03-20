@@ -46,12 +46,12 @@ public class ProductActivity extends AppCompatActivity {
      * 初始化视图
      */
     private void initView() {
-        if (Interactor.isCollected(this, goods.getGoods_id(), 1)) {
+        if (new Interactor().isCollected(this, goods.getGoods_id(), 1)) {
             imageViewAddColelct.setImageResource(R.drawable.icon_add_collection);
             Log.d("debug", "用户已收藏");
         }
 
-        if (!Interactor.onlyWifi(this)) {
+        if (!new Interactor().onlyWifi(this)) {
             ((SimpleDraweeView) findViewById(R.id.imageView_product_picture)).setImageURI(Uri.parse(App.URL + goods.getPic_location()));
         }
         ((TextView) findViewById(R.id.textView21_product_title)).setText(goods.getTitle());
@@ -84,17 +84,17 @@ public class ProductActivity extends AppCompatActivity {
     //收藏物品（或取消）:本地+服务器
     public void doCollect(View view) {
         if (getSharedPreferences("user", MODE_PRIVATE).getBoolean("isLoad", false)) {
-            if (Interactor.isCollected(this, goods.getGoods_id(), 1)) {
+            if (new Interactor().isCollected(this, goods.getGoods_id(), 1)) {
                 //已收藏
                 imageViewAddColelct.setImageResource(R.drawable.icon_remove_collecdtion);
                 //从本地以及服务器删除
-                Interactor.deletCollection(this, goods.getGoods_id(), 1);
+                new Interactor().deletCollection(this, goods.getGoods_id(), 1);
 
                 setResult(8080);    //如果从收藏表删除
             } else {
                 imageViewAddColelct.setImageResource(R.drawable.icon_add_collection);
                 //从本地以及服务器添加
-                Interactor.addCollection(this, goods.getGoods_id(), 1);
+                new Interactor().addCollection(this, goods.getGoods_id(), 1);
 
             }
         } else {
@@ -115,6 +115,6 @@ public class ProductActivity extends AppCompatActivity {
 
     //网络请求
     private void sendNetTask() {
-        Interactor.updateGoods(this,editText.getText(),goods.getGoods_id());
+        new Interactor().updateGoods(this, editText.getText(), goods.getGoods_id());
     }
 }

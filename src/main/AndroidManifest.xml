@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:meta-dataandroid="http://schemas.android.com/apk/res-auto"
     package="com.fiona.tiaozao">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name="com.orm.SugarApp"
@@ -16,7 +15,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,21 +26,50 @@
         </activity>
         <activity
             android:name=".fragment.home.SearchActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible" />
-        <activity android:name=".SaleActivity" />
-        <activity android:name=".PurchaseActivity" />
-        <activity android:name=".ProductActivity" />
-        <activity android:name=".fragment.home.AfficheActivity" />
-        <activity android:name=".fragment.classify.ClassifyActivity" />
-        <activity android:name=".fragment.discover.StallActivity" />
-        <activity android:name=".fragment.discover.PurchaseActivity" />
-        <activity android:name=".fragment.myself.MyPurchaseActivity" />
-        <activity android:name=".fragment.myself.MyCollectionActivity" />
-        <activity android:name=".fragment.myself.AboutActivity" />
-        <activity android:name=".fragment.myself.SettingActivity" />
-        <activity android:name=".fragment.myself.MyStallActivity" />
-        <activity android:name=".fragment.myself.FeedbackActivity" />
-        <activity android:name=".account.LoginAsQQActivity" />
+        <activity
+            android:name=".SaleActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PurchaseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ProductActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragment.home.AfficheActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragment.classify.ClassifyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragment.discover.StallActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragment.discover.PurchaseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragment.myself.MyPurchaseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragment.myself.MyCollectionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragment.myself.AboutActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragment.myself.SettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragment.myself.MyStallActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragment.myself.FeedbackActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".account.LoginAsQQActivity"
+            android:screenOrientation="portrait" />
         <!--
              ATTENTION: This was auto-generated to add Google Play services to your project for
              App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.

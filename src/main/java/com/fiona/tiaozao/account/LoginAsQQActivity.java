@@ -118,7 +118,7 @@ public class LoginAsQQActivity extends AppCompatActivity {
 
         //设置登陆状态（写到选项文件）
         getSharedPreferences("user", MODE_PRIVATE).edit().putBoolean("isLoad", true).commit();
-        getSharedPreferences("user", MODE_PRIVATE).edit().putString("icon", Util.picUrlFormat(picURL)).commit();
+        getSharedPreferences("user", MODE_PRIVATE).edit().putString("icon", new Util().picUrlFormat(picURL)).commit();
         getSharedPreferences("user", MODE_PRIVATE).edit().putString("name", userName).commit();
         getSharedPreferences("user", MODE_PRIVATE).edit().putString("account", openId).commit();
         getSharedPreferences("user", MODE_PRIVATE).edit().putString("flag", "1").commit();
@@ -126,15 +126,16 @@ public class LoginAsQQActivity extends AppCompatActivity {
         Log.d("debug77", String.valueOf(getPreferences(MODE_PRIVATE).getBoolean("isLoad", false)));
 
         //保存到网络
-        User user = new User(Util.picUrlFormat(picURL), userName, openId, 1);
+        User user = new User(new Util().picUrlFormat(picURL), userName, openId, 1);
         user.setDescribe("这是" + userName + "的摊位");
 
-        Interactor.insertUser(this, user);
+        Interactor interactor=new Interactor();
+        interactor.insertUser(this, user);
 
         Toast.makeText(LoginAsQQActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
 
         //开始所有的网络请求
-        Interactor.startAllNetTask(LoginAsQQActivity.this);
+        interactor.startAllNetTask(LoginAsQQActivity.this);
 
         //清空本地设置
 //        Interactor.clearSetting(LoginAsQQActivity.this);

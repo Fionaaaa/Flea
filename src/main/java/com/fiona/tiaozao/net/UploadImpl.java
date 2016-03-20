@@ -2,6 +2,7 @@ package com.fiona.tiaozao.net;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
@@ -11,6 +12,7 @@ import com.android.volley.toolbox.Volley;
 import com.fiona.tiaozao.App;
 import com.fiona.tiaozao.bean.User;
 import com.fiona.tiaozao.util.ImageOprator;
+import com.fiona.tiaozao.util.Util;
 
 import java.io.File;
 import java.io.IOException;
@@ -85,7 +87,7 @@ public class UploadImpl implements Upload {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> map = new HashMap();
                 map.put("type", "delete");
-                map.put("goods_id",goodsID);
+                map.put("goods_id", goodsID);
                 return map;
             }
         };
@@ -109,7 +111,7 @@ public class UploadImpl implements Upload {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> map = new HashMap<>();
-                map.put("type","update");
+                map.put("type", "update");
                 map.put("price", String.valueOf(price));
                 map.put("goods_id", String.valueOf(goodsID));
                 return map;
@@ -138,7 +140,7 @@ public class UploadImpl implements Upload {
                 map.put("type", "1");
                 map.put("user_id", userID);
                 map.put("obj_id", user_goods_id);
-                map.put("flag",flag);
+                map.put("flag", flag);
                 return map;
             }
         };
@@ -193,7 +195,7 @@ public class UploadImpl implements Upload {
                 map.put("name", user.getName());
                 map.put("account", user.getAccount());
                 map.put("flag", String.valueOf(user.getFlag()));
-                map.put("describe",user.getDescribe());
+                map.put("describe", user.getDescribe());
 
                 return map;
             }
@@ -233,25 +235,23 @@ public class UploadImpl implements Upload {
      * @param map  需要上传的表单数据
      */
     private void postFile(File file, Map<String, String> map) {
+
+        File fileSmall = null;
+        File fileLarge=null;
+        //先进行压缩
         try {
-            ImageOprator.saveFile(ImageOprator.getimage(file.getPath()), file);
+            ImageOprator oprator=new ImageOprator();
+            Util util=new Util();
+            fileSmall = util.copyFile(file,true);
+            fileLarge=util.copyFile(file,false);
+            oprator.saveFile(oprator.getimage(file.getPath(), null), fileSmall);
+            oprator.saveFile(oprator.getimage(file.getPath()), fileLarge);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        //文件(先进行压缩)
-        RequestBody bodyFile = null;
-        try {
-            bodyFile = RequestBody.create(MediaType.parse("application/octet-stream"), ImageOprator.saveFile(ImageOprator.getimage(file.getPath()), file));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        RequestBody bodySmallFile=null;
-        try {
-            bodySmallFile = RequestBody.create(MediaType.parse("application/octet-stream"), ImageOprator.saveFile(ImageOprator.getimage(file.getPath(),"small"), file));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        RequestBody bodyFile = RequestBody.create(MediaType.parse("application/octet-stream"), fileLarge);
+        RequestBody bodySmallFile = RequestBody.create(MediaType.parse("application/octet-stream"), fileSmall);
 
         //表单（包含文件）
         MultipartBody.Builder builder = new MultipartBody.Builder();
@@ -260,7 +260,7 @@ public class UploadImpl implements Upload {
         builder.addFormDataPart("small", file.getName(), bodySmallFile);
 
         for (String key : map.keySet()) {
-            Log.d("key-values:",key+":"+map.get(key));
+            Log.d("key-values:", key + ":" + map.get(key));
             builder.addFormDataPart(key, map.get(key));
         }
         builder.addFormDataPart("type", "insert");
@@ -273,6 +273,8 @@ public class UploadImpl implements Upload {
                 .build();
 
         //加入请求队列
+        final File finalFileLarge = fileLarge;
+        final File finalFileSmall = fileSmall;
         new OkHttpClient().newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -285,6 +287,10 @@ public class UploadImpl implements Upload {
                 //请求成功
                 String code = response.toString();
                 Log.d("debug", code);
+
+                //把文件删了
+                finalFileLarge.delete();
+                finalFileSmall.delete();
             }
         });
     }
@@ -294,6 +300,7 @@ public class UploadImpl implements Upload {
      *
      * @param map
      */
+
     private void postEmption(final Map<String, String> map) {
 
         StringRequest request = new StringRequest(StringRequest.Method.POST, App.URL + App.GOODS_OPERATE_SERVLET, new com.android.volley.Response.Listener<String>() {

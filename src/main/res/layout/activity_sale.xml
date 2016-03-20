@@ -57,15 +57,15 @@
         android:textColor="@color/white"
         android:textSize="19sp" />
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/imageView7"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/toolbar"
-        android:background="@color/black_m"
         android:onClick="clickAddPicture"
+        android:elevation="2dp"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_add_white" />
 
@@ -188,5 +188,14 @@
         android:layout_toEndOf="@+id/textView21"
         android:layout_toRightOf="@+id/textView21"
         android:entries="@array/classify" />
+
+    <ImageView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@drawable/ic_add_goods"
+        android:id="@+id/imageView8"
+        android:layout_below="@+id/toolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="91dp" />
 
 </RelativeLayout>

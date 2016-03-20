@@ -27,7 +27,7 @@ public class ImageOprator {
      * @param image
      * @return
      */
-    private static Bitmap compressImage(Bitmap image) {
+    private  Bitmap compressImage(Bitmap image) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.JPEG, 100, baos);//质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
         int options = 100;
@@ -48,7 +48,7 @@ public class ImageOprator {
      * @param srcPath
      * @return
      */
-    public static Bitmap getimage(String srcPath) {
+    public  Bitmap getimage(String srcPath) {
         BitmapFactory.Options newOpts = new BitmapFactory.Options();
         //开始读入图片，此时把options.inJustDecodeBounds 设回true了
         newOpts.inJustDecodeBounds = true;
@@ -58,7 +58,7 @@ public class ImageOprator {
         int w = newOpts.outWidth;
         int h = newOpts.outHeight;
         //现在主流手机比较多是800*480分辨率，所以高和宽我们设置为
-        float hh = 800f;//这里设置高度为800f
+        float hh = 480f;//这里设置高度为800f
         float ww = 480f;//这里设置宽度为480f
         //缩放比。由于是固定比例缩放，只用高或者宽其中一个数据进行计算即可
         int be = 1;//be=1表示不缩放
@@ -74,7 +74,7 @@ public class ImageOprator {
         bitmap = BitmapFactory.decodeFile(srcPath, newOpts);
         return compressImage(bitmap);//压缩好比例大小后再进行质量压缩
     }
-    public static Bitmap getimage(String srcPath,String small) {
+    public  Bitmap getimage(String srcPath,String small) {
         BitmapFactory.Options newOpts = new BitmapFactory.Options();
         //开始读入图片，此时把options.inJustDecodeBounds 设回true了
         newOpts.inJustDecodeBounds = true;
@@ -107,7 +107,7 @@ public class ImageOprator {
      * @param image
      * @return
      */
-    public static Bitmap comp(Bitmap image) {
+    public  Bitmap comp(Bitmap image) {
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -142,7 +142,7 @@ public class ImageOprator {
         bitmap = BitmapFactory.decodeStream(isBm, null, newOpts);
         return compressImage(bitmap);//压缩好比例大小后再进行质量压缩
     }
-    public static Bitmap comp(Bitmap image,String small) {
+    public  Bitmap comp(Bitmap image,String small) {
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -181,7 +181,7 @@ public class ImageOprator {
     /**
      * 将bitmap转成file对象
      */
-    static public File saveFile(Bitmap bm, File file) throws IOException {
+     public File saveFile(Bitmap bm, File file) throws IOException {
 
         if (file != null) {
             file.delete();
@@ -203,7 +203,7 @@ public class ImageOprator {
      * @param context
      * @return
      */
-    static public File getFileFromUri(Uri uri, Context context) {
+     public File getFileFromUri(Uri uri, Context context) {
         String path = null;
         if ("file".equals(uri.getScheme())) {
             path = uri.getEncodedPath();

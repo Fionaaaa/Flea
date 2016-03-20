@@ -67,33 +67,43 @@
             android:textColor="@color/blue_m" />
 
         <TextView
+            android:id="@+id/textView14"
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:id="@+id/textView14"
-            android:layout_below="@+id/textView16"
-            android:background="@color/black_h"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="19dp" />
+            android:layout_below="@+id/textView16"
+            android:layout_marginTop="19dp"
+            android:background="@color/black_h" />
 
         <TextView
+            android:id="@+id/textView19"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="搜索历史："
-            android:id="@+id/textView19"
-            android:layout_below="@+id/textView14"
             android:layout_alignLeft="@+id/textView15"
             android:layout_alignStart="@+id/textView15"
-            android:layout_marginTop="14dp" />
+            android:layout_below="@+id/textView14"
+            android:layout_marginTop="14dp"
+            android:text="搜索历史：" />
 
         <ListView
+            android:id="@+id/listView_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/listView_search"
-            android:layout_below="@+id/include"
-            android:visibility="invisible"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/include"
+            android:visibility="invisible" />
+
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textView16"
+            android:padding="5dp"
+            android:layout_alignStart="@+id/textView16"
+            android:layout_below="@+id/textView19"
+            android:divider="@android:color/transparent" />
 
     </RelativeLayout>
 </RelativeLayout>

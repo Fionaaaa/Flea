@@ -32,6 +32,7 @@ public class MyCollectionActivity extends AppCompatActivity {
     ArrayList<Goods> goodsList;
 
     MyAdapter adapter;
+    Interactor interactor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +42,10 @@ public class MyCollectionActivity extends AppCompatActivity {
         listView = (MyListView) findViewById(R.id.myListView);
 
         listView.setOnItemClickListener(new MyListener());
+        interactor=new Interactor();
 
         //从本地取数据
-        userId = Interactor.getId(this);
+        userId = interactor.getId(this);
 
         // TODO: 16-3-8 获得收藏的用户和物品
         initView();
@@ -51,8 +53,8 @@ public class MyCollectionActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        userList = Interactor.getCollectUser(this);
-        goodsList = Interactor.getCollectGoods(this);
+        userList = interactor.getCollectUser(this);
+        goodsList = interactor.getCollectGoods(this);
 
         adapter = new MyAdapter(this, userList, goodsList);
         listView.setAdapter(adapter);
@@ -120,7 +122,7 @@ public class MyCollectionActivity extends AppCompatActivity {
                 convertView.findViewById(R.id.textView_discover_left_time).setVisibility(View.INVISIBLE);
                 holderUser = new HolderUser(convertView);
 
-                if (!Interactor.onlyWifi(MyCollectionActivity.this)) {
+                if (!interactor.onlyWifi(MyCollectionActivity.this)) {
                     holderUser.imageView.setImageURI(Uri.parse(userList.get(position - 1).getIcon()));
                 }else{
                     holderUser.imageView.setImageURI(Uri.parse(App.DEFAULT_PIC));
@@ -142,11 +144,11 @@ public class MyCollectionActivity extends AppCompatActivity {
                 convertView = inflater.inflate(R.layout.list_listview_product, parent, false);
                 holderGoods = new HolderGoods(convertView);
 
-                if (!Interactor.onlyWifi(MyCollectionActivity.this)) {
+                if (!interactor.onlyWifi(MyCollectionActivity.this)) {
                     holderGoods.imageView.setImageURI(Uri.parse(App.URL + goodsList.get(position - userList.size() - 2).getPic_location()));
                 }
                 holderGoods.textViewTitle.setText(goodsList.get(position - userList.size() - 2).getTitle());
-                holderGoods.textViewPrice.setText(String.valueOf(goodsList.get(position - userList.size() - 2).getPrice()));
+                holderGoods.textViewPrice.setText(String.valueOf(goodsList.get(position - userList.size() - 2).getPrice())+"￥");
                 holderGoods.textViewDescribe.setText(goodsList.get(position - userList.size() - 2).getDescribe());
 
             }
@@ -196,7 +198,7 @@ public class MyCollectionActivity extends AppCompatActivity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             if (position > 0 && position <= userList.size()) {
-                userList = Interactor.getGoodsToUser(userList);
+                userList = interactor.getGoodsToUser(userList);
                 Log.d("debug","userlist:"+userList.size());
                 Intent intent = new Intent(MyCollectionActivity.this, StallActivity.class);
                 intent.putExtra(App.ACTION_USER, userList.get(position - 1));

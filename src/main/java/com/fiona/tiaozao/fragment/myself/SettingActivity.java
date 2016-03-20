@@ -82,6 +82,7 @@ public class SettingActivity extends AppCompatActivity {
             } else {
                 textView.setText("关闭");
             }
+            Interactor interactor=new Interactor();
             switch (i) {
                 case 1:
                     if (isChecked) {
@@ -93,7 +94,7 @@ public class SettingActivity extends AppCompatActivity {
                 case 2:
                     if (isChecked) {
                         pf.edit().putBoolean(App.SETTING_STALL, true).commit();
-                        Interactor.getNotify(NetQueryImpl.getInstance(SettingActivity.this),SettingActivity.this);
+                        interactor.getNotify(NetQueryImpl.getInstance(SettingActivity.this),SettingActivity.this);
                     } else {
                         pf.edit().putBoolean(App.SETTING_STALL, false).commit();
                     }
@@ -101,7 +102,7 @@ public class SettingActivity extends AppCompatActivity {
                 case 3:
                     if (isChecked) {
                         pf.edit().putBoolean(App.SETTING_GOODS, true).commit();
-                        Interactor.getNotify(NetQueryImpl.getInstance(SettingActivity.this), SettingActivity.this);
+                        interactor.getNotify(NetQueryImpl.getInstance(SettingActivity.this), SettingActivity.this);
                     } else {
                         pf.edit().putBoolean(App.SETTING_GOODS, false).commit();
                     }

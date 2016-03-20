@@ -3,6 +3,7 @@ package com.fiona.tiaozao;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
@@ -16,8 +17,10 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.fiona.tiaozao.bean.User;
 import com.fiona.tiaozao.interactor.Interactor;
+import com.fiona.tiaozao.net.NetQueryImpl;
 import com.fiona.tiaozao.util.ImageOprator;
 import com.fiona.tiaozao.net.UploadImpl;
 
@@ -28,14 +31,14 @@ import java.util.List;
 
 public class SaleActivity extends AppCompatActivity {
 
-    ImageView imageView;
+    SimpleDraweeView imageView;
 
     String title;               //  物品名称
     String price;               //  价格
     String contact;              //  联系方式
     String describe;             //  描述
     String classify;             //  分类 （暂时为电器）
-    String userID ;           //  用户id (暂时为1)
+    String userID;           //  用户id (暂时为1)
 
     public File file;                //  物品图片
 
@@ -58,7 +61,7 @@ public class SaleActivity extends AppCompatActivity {
             userID = String.valueOf(list.get(0).getId());
         }
 
-        Log.d("debug","用户ID"+userID);
+        Log.d("debug", "用户ID" + userID);
 
         final String[] data = getResources().getStringArray(R.array.classify);
 
@@ -103,6 +106,9 @@ public class SaleActivity extends AppCompatActivity {
 
             UploadImpl.getInstance(this).addGoods(file, map, true);
 
+            //发网络请求(出售物品)
+            NetQueryImpl.getInstance(this).getSaleGoods();
+
             Toast.makeText(SaleActivity.this, "提交成功", Toast.LENGTH_SHORT).show();
             finish();
 
@@ -126,7 +132,7 @@ public class SaleActivity extends AppCompatActivity {
      * @param view
      */
     public void clickAddPicture(View view) {
-        imageView = (ImageView) view;
+        imageView = (SimpleDraweeView) view;
 
         new AlertDialog.Builder(this)
                 .setTitle("请选择图片")
@@ -151,18 +157,20 @@ public class SaleActivity extends AppCompatActivity {
             switch (requestCode) {
                 //选择图片
                 case App.REQUEST_PICK_PICTURE:
-                    try {
-                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), intent.getData());
-                        imageView.setImageBitmap(ImageOprator.comp(bitmap));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    file = ImageOprator.getFileFromUri(intent.getData(),this);
+                    imageView.setImageURI(intent.getData());
+                    file = new ImageOprator().getFileFromUri(intent.getData(), this);
                     break;
                 //拍照
                 case App.REQUEST_CAPTURE:
-                    Bitmap bitmap = ImageOprator.getimage(file.getAbsolutePath());
-                    imageView.setImageBitmap(bitmap);
+                    ImageOprator oprator = new ImageOprator();
+                    Bitmap bitmap = oprator.getimage(file.getPath());
+                    File nerFile = null;
+                    try {
+                        nerFile = oprator.saveFile(bitmap, file);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    imageView.setImageURI(Uri.fromFile(nerFile));
                     break;
             }
         }

@@ -19,6 +19,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.fiona.tiaozao.App;
 import com.fiona.tiaozao.MainActivity;
 import com.fiona.tiaozao.R;
+import com.fiona.tiaozao.bean.Goods;
 import com.fiona.tiaozao.bean.User;
 import com.fiona.tiaozao.interactor.Interactor;
 
@@ -27,6 +28,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DiscoverLeftFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     RecyclerView recyclerView;
@@ -69,7 +71,7 @@ public class DiscoverLeftFragment extends Fragment implements SwipeRefreshLayout
     @Override
     public void onRefresh() {
         //开始网络请求
-        Interactor.getUsers(getActivity());
+        new Interactor().getUsers(getActivity());
     }
 
     /**
@@ -104,13 +106,17 @@ public class DiscoverLeftFragment extends Fragment implements SwipeRefreshLayout
              */
             User user = data.get(position);
 
-            if (!Interactor.onlyWifi(getActivity())) {
+            if (!new Interactor().onlyWifi(getActivity())) {
                 holder.imageView.setImageURI(Uri.parse(user.getIcon()));
             } else {
                 holder.imageView.setImageURI(Uri.parse(App.DEFAULT_PIC));
             }
             holder.textViewSale.setText(user.getName());
             holder.textViewDescription.setText("描述:" + user.getDescribe());
+            List<Goods> goodsList = Goods.find(Goods.class, "user_id=?", user.getUser_id());
+            if (goodsList.size() > 0) {
+                holder.textViewTime.setText(goodsList.get(0).getTime());
+            }
         }
 
         @Override
@@ -161,8 +167,8 @@ public class DiscoverLeftFragment extends Fragment implements SwipeRefreshLayout
     //从本地取得数据
     private ArrayList<User> getData() {
         ArrayList<User> userList = (ArrayList<User>) User.listAll(User.class);
-        userList=Interactor.getGoodsToUser(userList);
-        ArrayList<User>list=new ArrayList<>();
+        userList = new Interactor().getGoodsToUser(userList);
+        ArrayList<User> list = new ArrayList<>();
         for (User user : userList) {
             if (user.getListSale().size() == 0) {
                 list.add(user);
@@ -178,7 +184,7 @@ public class DiscoverLeftFragment extends Fragment implements SwipeRefreshLayout
         if (msg.equals(App.QUERY_USER)) {
             data = getData();      //加载本地数据
             adapter.notifyItemRangeChanged(0, data.size());//刷新列表
-            mSwipeLayout.setRefreshing(false);  //取消刷新状态
         }
+        mSwipeLayout.setRefreshing(false);  //取消刷新状态
     }
 }

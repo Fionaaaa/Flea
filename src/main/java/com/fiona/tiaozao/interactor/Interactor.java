@@ -80,7 +80,7 @@ public class Interactor {
 
 
     //开始所有网络请求
-    public static void startAllNetTask(Context context) {
+    public  void startAllNetTask(Context context) {
         NetQuery query = NetQueryImpl.getInstance(context);
 
         query.getSaleGoods();                //请求出售的物品
@@ -98,29 +98,29 @@ public class Interactor {
     }
 
     //请求出售的物品
-    public static void getSales(Context context) {
+    public  void getSales(Context context) {
         NetQuery query = NetQueryImpl.getInstance(context);
         query.getSaleGoods();
     }
 
     //请求求购的物品
-    public static void getEmption(Context context) {
+    public  void getEmption(Context context) {
         NetQueryImpl query = NetQueryImpl.getInstance(context);
         query.getEmptionGoods();
     }
 
     //请求用户列表
-    public static void getUsers(Context context) {
+    public  void getUsers(Context context) {
         NetQueryImpl.getInstance(context).getUsers();
     }
 
     //请求一个用户出售的物品
-    public static void getUserGoods(Context context, String user_id) {
+    public  void getUserGoods(Context context, String user_id) {
         NetQueryImpl.getInstance(context).getUserGoods(user_id);
     }
 
     //添加一个用户
-    public static void insertUser(final Context context, final User user) {
+    public  void insertUser(final Context context, final User user) {
         //从本地数据判断是否存在此用户，不存在则上传服务器
         new AsyncTask<User, Void, Boolean>() {
 
@@ -148,7 +148,7 @@ public class Interactor {
     }
 
     //根据账户获得用户id
-    public static String getId(Context context) {
+    public  String getId(Context context) {
         String account = context.getSharedPreferences("user", context.MODE_PRIVATE).getString("account", "000");
         List<User> list = User.find(User.class, "account=?", account);
         if (list.size() > 0) {
@@ -158,7 +158,7 @@ public class Interactor {
     }
 
     //从本地获得收藏的摊位
-    public static ArrayList<User> getCollectUser(Context context) {
+    public  ArrayList<User> getCollectUser(Context context) {
         ArrayList<User> list = new ArrayList<>();
         HashSet<String> set = (HashSet<String>) context.getSharedPreferences("user", context.MODE_PRIVATE).getStringSet("collect_user", null);
 
@@ -171,7 +171,7 @@ public class Interactor {
     }
 
     //从本地获得收藏的物品
-    public static ArrayList<Goods> getCollectGoods(Context context) {
+    public  ArrayList<Goods> getCollectGoods(Context context) {
         ArrayList<Goods> list = new ArrayList<>();
         HashSet<String> set = (HashSet<String>) context.getSharedPreferences("user", context.MODE_PRIVATE).getStringSet("collect_goods", null);
         if (set != null && set.size() > 0) {
@@ -183,7 +183,7 @@ public class Interactor {
     }
 
     //给用户集添加出售商品集
-    public static ArrayList<User> getGoodsToUser(ArrayList<User> userList) {
+    public  ArrayList<User> getGoodsToUser(ArrayList<User> userList) {
         for (int i = 0; i < userList.size(); i++) {
             ArrayList<Goods> goodsList = (ArrayList<Goods>) Goods.find(Goods.class, "user_id=? and flag=?", String.valueOf(userList.get(i).getId()), "1");
             userList.get(i).setListSale(goodsList);
@@ -192,7 +192,7 @@ public class Interactor {
     }
 
     //更新用户描述
-    public static void updateUserDescribe(Context context, String describe) {
+    public  void updateUserDescribe(Context context, String describe) {
         //更新网络
         UploadImpl.getInstance(context).updateUser(describe, getId(context));
         //更新本地
@@ -200,7 +200,7 @@ public class Interactor {
     }
 
     //用户是否收藏了此物品
-    public static boolean isCollected(Context context, String id, int flag) {
+    public  boolean isCollected(Context context, String id, int flag) {
 
         Set<String> set;
         if (flag == 1) {
@@ -215,7 +215,7 @@ public class Interactor {
     }
 
     //删除一个收藏(本地及服务器)
-    public static void deletCollection(Context context, String obj_id, int flag) {
+    public  void deletCollection(Context context, String obj_id, int flag) {
         Set<String> set;
         if (flag == 1) {
             set = context.getSharedPreferences("user", Context.MODE_PRIVATE).getStringSet("collect_goods", null);
@@ -237,7 +237,7 @@ public class Interactor {
     }
 
     //添加一个收藏(本地以及服务器)
-    public static void addCollection(Context context, String obj_id, int flag) {
+    public  void addCollection(Context context, String obj_id, int flag) {
         Set<String> set;
         if (flag == 1) {
             set = context.getSharedPreferences("user", Context.MODE_PRIVATE).getStringSet("collect_goods", null);
@@ -259,7 +259,7 @@ public class Interactor {
     }
 
     //更具物品id获得用户的头像
-    public static String getIcon(String goods_id) {
+    public  String getIcon(String goods_id) {
         List<Goods> listGoods = Goods.find(Goods.class, "goodsid=?", goods_id);
         if (listGoods.size() > 0) {
             String user_id = listGoods.get(0).getUserId();
@@ -272,19 +272,19 @@ public class Interactor {
     }
 
     //删除物品
-    public static void deleteGoods(Context context, List<Goods> list) {
+    public  void deleteGoods(Context context, List<Goods> list) {
         for (Goods goods : list) {
             UploadImpl.getInstance(context).deleteGoods(goods.getGoods_id());
         }
     }
 
     //获得wifi设置
-    public static boolean onlyWifi(Context context) {
+    public  boolean onlyWifi(Context context) {
         return context.getSharedPreferences("user", Context.MODE_PRIVATE).getBoolean(App.SETTING_WIFI, false);
     }
 
     //清空本地设置
-    public static void clearSetting(Context context) {
+    public  void clearSetting(Context context) {
         SharedPreferences pf = context.getSharedPreferences("user", Context.MODE_PRIVATE);
         pf.edit().remove(App.SETTING_WIFI).commit();
         pf.edit().remove(App.SETTING_STALL).commit();
@@ -292,7 +292,7 @@ public class Interactor {
     }
 
     //请求通知
-    public static void getNotify(NetQuery query, Context context) {
+    public  void getNotify(NetQuery query, Context context) {
         boolean setting_goods = context.getSharedPreferences("user", Context.MODE_PRIVATE).getBoolean(App.SETTING_GOODS, false);
         boolean setting_stall = context.getSharedPreferences("user", Context.MODE_PRIVATE).getBoolean(App.SETTING_STALL, false);
         String account = context.getSharedPreferences("user", Context.MODE_PRIVATE).getString("account", null);
@@ -313,7 +313,7 @@ public class Interactor {
     }
 
     //价格改变通知
-    public static void sendNotifyGoods(ArrayList<Goods> list, Context context) {
+    public  void sendNotifyGoods(ArrayList<Goods> list, Context context) {
         if (list.size() > 0) {
             String title = list.get(0).getTitle();
             String msg;
@@ -338,7 +338,7 @@ public class Interactor {
     }
 
     //摊位改变通知
-    public static void sendNotifyStall(ArrayList<User> list, Context context) {
+    public void sendNotifyStall(ArrayList<User> list, Context context) {
         if (list.size() > 0) {
             String name = list.get(0).getName();
             String msg;
@@ -362,7 +362,7 @@ public class Interactor {
     }
 
     //更新物品价格
-    public static void updateGoods(Context context, Editable text, String goods_id) {
+    public  void updateGoods(Context context, Editable text, String goods_id) {
         if (text.length() > 0) {
             String price = String.valueOf(text);
             UploadImpl.getInstance(context).updateGoods(Integer.parseInt(goods_id), Integer.parseInt(price));

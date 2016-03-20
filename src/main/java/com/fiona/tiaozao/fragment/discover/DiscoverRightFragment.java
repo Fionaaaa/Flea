@@ -38,6 +38,7 @@ public class DiscoverRightFragment extends Fragment implements SwipeRefreshLayou
     RecyclerView recyclerView;
     SwipeRefreshLayout mSwipeLayout;
     Rvadapter adapter;
+    Interactor interactor;
 
 //    Handler handler;
 
@@ -49,6 +50,7 @@ public class DiscoverRightFragment extends Fragment implements SwipeRefreshLayou
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         EventBus.getDefault().register(this);
+        interactor=new Interactor();
 
         View view = inflater.inflate(R.layout.fragment_discover_right, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycle_discover_right);
@@ -78,7 +80,7 @@ public class DiscoverRightFragment extends Fragment implements SwipeRefreshLayou
     @Override
     public void onRefresh() {
         //开启网络请求
-        Interactor.getEmption(getActivity());
+        interactor.getEmption(getActivity());
     }
 
     /**
@@ -110,9 +112,9 @@ public class DiscoverRightFragment extends Fragment implements SwipeRefreshLayou
              */
             Goods goods = data.get(position);
             //用户头像
-            String icon = Interactor.getIcon(goods.getGoods_id());
+            String icon = interactor.getIcon(goods.getGoods_id());
             if (icon != null) {
-                if (!Interactor.onlyWifi(getActivity())) {
+                if (!interactor.onlyWifi(getActivity())) {
                     holder.imageView.setImageURI(Uri.parse(icon));
                 } else {
                     holder.imageView.setImageURI(Uri.parse(App.DEFAULT_PIC));
@@ -184,7 +186,7 @@ public class DiscoverRightFragment extends Fragment implements SwipeRefreshLayou
         if (msg.equals(App.QUERY_EMPTION)) {
             data=getData();
             adapter.notifyItemRangeChanged(0,data.size());
-            mSwipeLayout.setRefreshing(false);
         }
+        mSwipeLayout.setRefreshing(false);
     }
 }

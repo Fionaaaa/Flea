@@ -102,6 +102,9 @@ public class NetQueryImpl implements NetQuery {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 Log.d("debug", "请求物品列表：error");
+                //发送请求失败通知
+                EventBus.getDefault().post(App.QUERY_FAIL);
+
             }
         });
 
@@ -140,6 +143,7 @@ public class NetQueryImpl implements NetQuery {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 Log.d("debug", "error");
+                EventBus.getDefault().post(App.QUERY_FAIL);         //请求失败的通知
             }
         });
 
@@ -172,7 +176,12 @@ public class NetQueryImpl implements NetQuery {
                 //发送通知（总线）
                 EventBus.getDefault().post(App.QUERY_USER);
             }
-        }, null);
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                EventBus.getDefault().post(App.QUERY_FAIL);     //失败通知
+            }
+        });
         queue.add(request);
     }
 
@@ -207,6 +216,7 @@ public class NetQueryImpl implements NetQuery {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 Log.d("debug", "error");
+                EventBus.getDefault().post(App.QUERY_FAIL); //失败通知
             }
         }) {
             @Override
@@ -377,7 +387,7 @@ public class NetQueryImpl implements NetQuery {
                     }
 
                     //发送通知
-                    Interactor.sendNotifyGoods(listGoods, context);
+                    new Interactor().sendNotifyGoods(listGoods, context);
                 }
             }
         }, null) {
@@ -412,7 +422,7 @@ public class NetQueryImpl implements NetQuery {
                     }
 
                     //发送通知
-                    Interactor.sendNotifyStall(listUser, context);
+                    new Interactor().sendNotifyStall(listUser, context);
                 }
             }
         }, null) {

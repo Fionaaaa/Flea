@@ -27,7 +27,12 @@ import com.fiona.tiaozao.R;
 import com.fiona.tiaozao.bean.Goods;
 import com.fiona.tiaozao.interactor.Interactor;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,6 +50,7 @@ public class HomeFragment extends Fragment {
     boolean isAuto = false; //判断是否自动滑动
 
     RvAdapter adapter;
+    ArrayList<Goods> data = new ArrayList<>();
 
 //    public Handler handler = new MyHandler();
 
@@ -70,7 +76,11 @@ public class HomeFragment extends Fragment {
 
             @Override
             protected void onPostExecute(ArrayList<Goods> list) {
-                setAdapter(list);
+                data.clear();
+                for(Goods goods:list){
+                    data.add(goods);
+                }
+                adapter.notifyItemRangeChanged(0, data.size());
             }
         }.execute();
     }
@@ -80,6 +90,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_home, container, false);
+        EventBus.getDefault().register(this);
 
         viewDo1 = view.findViewById(R.id.dot_1);
         viewDo2 = view.findViewById(R.id.dot_2);
@@ -110,9 +121,12 @@ public class HomeFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_home);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, GridLayoutManager.VERTICAL));
 
-        recyclerView.setAdapter(new RvAdapter(getActivity(), new ArrayList<Goods>()));
+        adapter = new RvAdapter(getActivity(), data);
+        recyclerView.setAdapter(adapter);
 
         loadLocalSource();
+
+//        loadLocalSource();
 
         return view;
     }
@@ -121,6 +135,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     /**
@@ -160,8 +175,8 @@ public class HomeFragment extends Fragment {
         @Override
         public void onBindViewHolder(Holder holder, int position) {
 
-            if (!Interactor.onlyWifi(getActivity())) {
-                holder.imageView.setImageURI(Uri.parse(App.URL + data.get(position).getPic_location()+"small"));
+            if (!new Interactor().onlyWifi(getActivity())) {
+                holder.imageView.setImageURI(Uri.parse(App.URL + data.get(position).getPic_location() + "small"));
             }
 
             holder.textViewName.setText(data.get(position).getTitle());
@@ -190,7 +205,7 @@ public class HomeFragment extends Fragment {
             Intent intent = new Intent(getActivity(), ProductPagerActivity.class);
             intent.putExtra(App.ACTION_GOODS, data);
             intent.putExtra("position", v.getId());
-            intent.putExtra("where","home");
+            intent.putExtra("where", "home");
             startActivity(intent);
         }
 
@@ -404,6 +419,18 @@ public class HomeFragment extends Fragment {
 
             Intent intent = new Intent(getActivity(), AfficheActivity.class);
             startActivity(intent);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void netTaskCompleted(String msg) {
+        if (msg.equals(App.QUERY_SALE)) {
+            data.clear();
+            List<Goods>list =Goods.find(Goods.class, "flag=?", "1");
+            for(Goods goods:list){
+                data.add(goods);
+            }
+            adapter.notifyItemRangeChanged(0,data.size());
         }
     }
 }

@@ -11,6 +11,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.fiona.tiaozao.bean.User;
+import com.fiona.tiaozao.net.NetQueryImpl;
 import com.fiona.tiaozao.net.UploadImpl;
 
 import java.util.HashMap;
@@ -70,6 +71,9 @@ public class PurchaseActivity extends AppCompatActivity {
             map.put("describe", describe);
             map.put("user_id", userID);
             UploadImpl.getInstance(this).addGoods(null, map, false);
+
+            //发网络请求（求购物品）
+            NetQueryImpl.getInstance(this).getEmptionGoods();
 
             Toast.makeText(this, "提交成功", Toast.LENGTH_SHORT).show();
             finish();
